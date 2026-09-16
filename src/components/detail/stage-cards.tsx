@@ -25,29 +25,116 @@ const STATUS_STYLE: Record<StageStatus, string> = {
   skipped: "text-zinc-400 bg-zinc-50 border-zinc-200",
 };
 
+/**
+ * Citations in a draft: every chart line and clause id an assertion carries.
+ * The same count stage E validates, shown while the draft is still arriving.
+ */
+function countCitations(draft: ReturnType<typeof draftOutput>): number {
+  if (!draft) return 0;
+  return draft.draft.sections.reduce(
+    (total, section) =>
+      total +
+      section.assertions.reduce((n, a) => n + a.chart_line_ids.length + a.clause_ids.length, 0),
+    0,
+  );
+}
+
+/**
+ * The one-line result shown in a collapsed card's header, so a cached run reads
+ * top to bottom without opening anything.
+ */
+function stageSummary(stage: Stage, run: RunView | null): string | null {
+  const triage = triageOutput(run);
+  const classify = classifyOutput(run);
+  const retrieve = retrieveOutput(run);
+  const draft = draftOutput(run);
+  const verify = verifyOutput(run);
+
+  switch (stage) {
+    case "a_triage":
+      return triage
+        ? `${triage.decision.replace(/_/g, " ")} · ${formatDollars(triage.expected_value)} EV`
+        : null;
+    case "b_classify":
+      return classify
+        ? `${classify.category.replace(/_/g, " ")} · ${classify.root_cause.replace(/_/g, " ")} · ${classify.confidence.toFixed(2)}`
+        : null;
+    case "c_retrieve":
+      return retrieve
+        ? `${retrieve.clauses.length} clauses (${retrieve.clauses.filter((c) => c.required).length} required) · ${retrieve.precedents.length} precedents`
+        : null;
+    case "d_draft":
+      return draft
+        ? `${draft.draft.sections.reduce((n, s) => n + s.assertions.length, 0)} assertions · ${countCitations(draft)} citations`
+        : null;
+    case "e_verify":
+      return verify
+        ? `validity ${formatPercent(verify.citation.validityRate)} · coverage ${formatPercent(verify.coverage.coverage)}` +
+            (verify.judge ? ` · judge ${verify.judge.overall.toFixed(2)}` : " · judge skipped")
+        : null;
+  }
+}
+
+function ConfidenceBar({ value }: { value: number }) {
+  return (
+    <span className="inline-flex items-center gap-[7px]">
+      <span className="relative h-[6px] w-[110px] overflow-hidden rounded-full bg-zinc-200">
+        <span
+          className={cn(
+            "absolute inset-y-0 left-0 rounded-full transition-[width] duration-500 ease-out",
+            value >= 0.85 ? "bg-green-600" : value >= 0.6 ? "bg-amber-500" : "bg-red-500",
+          )}
+          style={{ width: `${Math.max(0, Math.min(1, value)) * 100}%` }}
+        />
+      </span>
+      <span className="font-mono text-[11.5px] tabular-nums">{value.toFixed(2)}</span>
+    </span>
+  );
+}
+
+/** Shown inside a stage that is running and has nothing to display yet. */
+function Working({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-[7px] text-[11.5px] text-zinc-500">
+      <span className="h-[6px] w-[6px] animate-pulse rounded-full bg-blue-500" />
+      {label}
+    </div>
+  );
+}
+
 function StageCard({
   stage,
   status,
   elapsed,
+  summary,
+  expanded,
+  onToggle,
   children,
 }: {
   stage: Stage;
   status: StageStatus;
   elapsed: string;
+  summary: string | null;
+  expanded: boolean;
+  onToggle: () => void;
   children?: React.ReactNode;
 }) {
   const meta = STAGE_META[stage];
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-[7px] border bg-white",
-        status === "running" ? "border-blue-200" : "border-zinc-200",
+        "overflow-hidden rounded-[7px] border bg-white transition-colors duration-300",
+        status === "running" ? "border-blue-300 shadow-[0_0_0_3px_rgba(59,130,246,0.08)]" : "border-zinc-200",
       )}
     >
-      <div
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={expanded}
         className={cn(
-          "flex items-center gap-2 px-[10px] py-[8px]",
+          "flex w-full items-center gap-2 px-[10px] py-[8px] text-left",
           status === "done" ? "bg-zinc-50/60" : status === "running" ? "bg-blue-50/40" : "bg-zinc-50",
+          "hover:bg-zinc-100/70",
         )}
       >
         <span className="flex h-5 w-5 items-center justify-center rounded bg-zinc-800 font-mono text-[11px] font-semibold text-white">
@@ -57,6 +144,9 @@ function StageCard({
         <span className="inline-flex h-[17px] items-center rounded-[3px] border border-zinc-300 bg-white px-[5px] font-mono text-[9.5px] font-semibold text-zinc-600">
           {meta.kind}
         </span>
+        {!expanded && summary ? (
+          <span className="truncate text-[11.5px] text-zinc-600">{summary}</span>
+        ) : null}
         <span className="flex-1" />
         <span className="font-mono text-[10.5px] text-zinc-500">{elapsed}</span>
         <span
@@ -67,8 +157,13 @@ function StageCard({
         >
           {status}
         </span>
-      </div>
-      {children ? <div className="border-t border-zinc-100 px-[10px] py-[9px]">{children}</div> : null}
+        <span className={cn("text-[10px] text-zinc-400 transition-transform", expanded && "rotate-90")}>
+          &#9654;
+        </span>
+      </button>
+      {expanded && children ? (
+        <div className="border-t border-zinc-100 px-[10px] py-[9px]">{children}</div>
+      ) : null}
     </div>
   );
 }
@@ -87,11 +182,18 @@ export function StageCards({
   statuses,
   liveElapsed,
   thresholdCents,
+  expanded,
+  onToggle,
+  draftPreview,
 }: {
   run: RunView | null;
   statuses: Record<Stage, StageStatus>;
   liveElapsed: Partial<Record<Stage, number>>;
   thresholdCents: number;
+  expanded: Record<Stage, boolean>;
+  onToggle: (stage: Stage) => void;
+  /** Tail of the draft text as it streams. Empty outside a live run. */
+  draftPreview: string;
 }) {
   const triage = triageOutput(run);
   const classify = classifyOutput(run);
@@ -111,11 +213,19 @@ export function StageCards({
     <div className="flex flex-col gap-2">
       {STAGE_ORDER.map((stage) => {
         const status = statuses[stage];
-        const show = status === "done";
+        const running = status === "running";
 
         return (
-          <StageCard key={stage} stage={stage} status={status} elapsed={elapsedFor(stage)}>
-            {!show ? null : stage === "a_triage" && triage ? (
+          <StageCard
+            key={stage}
+            stage={stage}
+            status={status}
+            elapsed={elapsedFor(stage)}
+            summary={stageSummary(stage, run)}
+            expanded={expanded[stage] ?? false}
+            onToggle={() => onToggle(stage)}
+          >
+            {stage === "a_triage" && triage ? (
               <div>
                 <div className="mb-[7px] flex flex-wrap items-center gap-[10px]">
                   <span
@@ -152,7 +262,9 @@ export function StageCards({
               <div>
                 <Row label="Category">{classify.category.replace(/_/g, " ")}</Row>
                 <Row label="Root cause">{classify.root_cause.replace(/_/g, " ")}</Row>
-                <Row label="Confidence">{classify.confidence.toFixed(2)}</Row>
+                <Row label="Confidence">
+                  <ConfidenceBar value={classify.confidence} />
+                </Row>
                 <div className="mt-[6px] mb-[3px] font-mono text-[9.5px] tracking-wide text-zinc-500 uppercase">
                   Key facts the payer relies on
                 </div>
@@ -170,8 +282,15 @@ export function StageCards({
                 <Row label="Query">
                   <span className="font-mono text-[11px] text-zinc-600">{retrieve.query}</span>
                 </Row>
-                <div className="mt-[7px] mb-[4px] font-mono text-[9.5px] tracking-wide text-zinc-500 uppercase">
-                  Clauses ({retrieve.clauses.length})
+                <div className="mt-[7px] mb-[4px] flex items-baseline gap-[8px]">
+                  <span className="font-mono text-[9.5px] tracking-wide text-zinc-500 uppercase">
+                    Clauses ({retrieve.clauses.length}, {retrieve.clauses.filter((c) => c.required).length} required)
+                  </span>
+                  {retrieve.clauses.length > 0 ? (
+                    <span className="font-mono text-[10px] text-zinc-400">
+                      top similarity {Math.max(...retrieve.clauses.map((c) => c.score)).toFixed(3)}
+                    </span>
+                  ) : null}
                 </div>
                 <div className="space-y-[3px]">
                   {retrieve.clauses.map((clause) => (
@@ -196,8 +315,15 @@ export function StageCards({
                     </div>
                   ))}
                 </div>
-                <div className="mt-[8px] mb-[4px] font-mono text-[9.5px] tracking-wide text-zinc-500 uppercase">
-                  Precedents ({retrieve.precedents.length})
+                <div className="mt-[8px] mb-[4px] flex items-baseline gap-[8px]">
+                  <span className="font-mono text-[9.5px] tracking-wide text-zinc-500 uppercase">
+                    Precedents ({retrieve.precedents.length})
+                  </span>
+                  {retrieve.precedents.length > 0 ? (
+                    <span className="font-mono text-[10px] text-zinc-400">
+                      top similarity {Math.max(...retrieve.precedents.map((p) => p.score)).toFixed(3)}
+                    </span>
+                  ) : null}
                 </div>
                 <div className="space-y-[3px]">
                   {retrieve.precedents.map((p) => (
@@ -218,7 +344,10 @@ export function StageCards({
                   {draft.draft.sections.reduce((n, s) => n + s.assertions.length, 0)} across{" "}
                   {draft.draft.sections.length} sections
                 </Row>
-                <Row label="Confidence">{draft.draft.draft_confidence.toFixed(2)}</Row>
+                <Row label="Citations">{countCitations(draft)} chart lines and clauses cited</Row>
+                <Row label="Confidence">
+                  <ConfidenceBar value={draft.draft.draft_confidence} />
+                </Row>
                 {draft.draft.unsupported_required.length > 0 ? (
                   <div className="mt-[8px] rounded-[5px] border border-blue-200 bg-blue-50 px-[8px] py-[6px]">
                     <div className="mb-[3px] font-mono text-[9.5px] font-semibold tracking-wide text-blue-800 uppercase">
@@ -284,6 +413,36 @@ export function StageCards({
                   <span className="text-[11.5px] text-zinc-700">{verify.decision.route_reason}</span>
                 </div>
               </div>
+            ) : running && stage === "d_draft" ? (
+              // The only stage with something to show before it finishes.
+              <div>
+                <div className="mb-[6px] flex items-center gap-[7px] text-[11.5px] text-zinc-500">
+                  <span className="h-[6px] w-[6px] animate-pulse rounded-full bg-blue-500" />
+                  drafting, {draftPreview.length > 0 ? "streaming" : "waiting for the first token"}
+                </div>
+                {draftPreview ? (
+                  <div className="max-h-[132px] overflow-hidden rounded-[5px] border border-zinc-200 bg-zinc-50 px-[8px] py-[6px] font-mono text-[10.5px] leading-[1.55] text-zinc-600">
+                    {draftPreview}
+                    <span className="ml-[2px] inline-block h-[11px] w-[6px] translate-y-[1px] animate-pulse bg-zinc-400" />
+                  </div>
+                ) : null}
+              </div>
+            ) : running ? (
+              <Working
+                label={
+                  stage === "b_classify"
+                    ? "reading the denial letter"
+                    : stage === "c_retrieve"
+                      ? "embedding the query and searching criteria"
+                      : stage === "e_verify"
+                        ? "checking citations, then the judge"
+                        : "working"
+                }
+              />
+            ) : status === "skipped" ? (
+              <div className="text-[11.5px] text-zinc-500">Skipped: triage stopped the run.</div>
+            ) : status === "pending" ? (
+              <div className="text-[11.5px] text-zinc-400">Not started.</div>
             ) : null}
           </StageCard>
         );

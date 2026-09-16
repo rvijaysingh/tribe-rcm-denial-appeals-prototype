@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { MockBadge, RouteBadge } from "@/components/route-badge";
 import type { Stage } from "@/lib/domain";
 import type { TriageOutput } from "@/lib/pipeline/a-triage";
@@ -38,6 +38,26 @@ const ALL_DONE: Record<Stage, StageStatus> = {
   d_draft: "done",
   e_verify: "done",
 };
+
+const ALL_COLLAPSED: Record<Stage, boolean> = {
+  a_triage: false,
+  b_classify: false,
+  c_retrieve: false,
+  d_draft: false,
+  e_verify: false,
+};
+
+/** Only the named stage open, which is how the live run walks down the list. */
+function onlyExpanded(stage: Stage): Record<Stage, boolean> {
+  return { ...ALL_COLLAPSED, [stage]: true };
+}
+
+/** Longest a demo case may sit finished before the case resets itself. */
+const AUTO_RESET_MS = 10 * 60 * 1000;
+/** Pause after the run lands before the review panel takes over (PRD 6.3 flow). */
+const AUTO_REVIEW_DELAY_MS = 1500;
+/** How much of the streaming draft to keep on screen. */
+const DRAFT_PREVIEW_CHARS = 900;
 
 function statusesFromRun(run: RunView | null): Record<Stage, StageStatus> {
   if (!run) return IDLE;
@@ -82,7 +102,34 @@ export function AccountDetail(props: AccountDetailProps) {
   const [banner, setBanner] = useState<{ tone: "info" | "error"; text: string } | null>(null);
   const [highlight, setHighlight] = useState<string | null>(null);
   const [draftChars, setDraftChars] = useState(0);
+  const [draftPreview, setDraftPreview] = useState("");
+  const [expanded, setExpanded] = useState<Record<Stage, boolean>>(ALL_COLLAPSED);
+  // True only for a run this page started, which is what gates every automatic
+  // behaviour below. A cached run never moves the page on its own.
+  const [liveRun, setLiveRun] = useState(false);
+  const [autoJumpArmed, setAutoJumpArmed] = useState(false);
+  const [justJumped, setJustJumped] = useState(false);
+  const [resetDeadline, setResetDeadline] = useState<number | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  // Refs, not state: the auto-reset timer fires from a callback that would
+  // otherwise close over a stale tab, and nothing on screen reads either value.
+  const tabRef = useRef<"pipeline" | "review">("pipeline");
+  const resetPendingRef = useRef(false);
+
+  // router.refresh() re-renders the server component but leaves this client
+  // component's state alone, so without this the run started above would never
+  // reach the panel: `run` would sit at null and the review tab stay locked.
+  const [syncedRunId, setSyncedRunId] = useState<string | null>(props.initialRun?.id ?? null);
+  const incomingRunId = props.initialRun?.id ?? null;
+  if (!running && incomingRunId !== syncedRunId) {
+    setSyncedRunId(incomingRunId);
+    setRun(props.initialRun);
+    setStatuses(statusesFromRun(props.initialRun));
+  }
+
+  const toggleStage = useCallback((stage: Stage) => {
+    setExpanded((prev) => ({ ...prev, [stage]: !prev[stage] }));
+  }, []);
 
   const runLive = useCallback(async () => {
     abortRef.current?.abort();
@@ -90,12 +137,19 @@ export function AccountDetail(props: AccountDetailProps) {
     abortRef.current = controller;
 
     setRunning(true);
+    setLiveRun(true);
     setBanner(null);
     setRun(null);
     setDraftChars(0);
+    setDraftPreview("");
     setLiveElapsed({});
     setStatuses(IDLE);
+    setExpanded(ALL_COLLAPSED);
+    tabRef.current = "pipeline";
     setTab("pipeline");
+    setAutoJumpArmed(false);
+    resetPendingRef.current = false;
+    setResetDeadline(null);
 
     try {
       const response = await fetch(`/api/pipeline/${props.denialId}`, {
@@ -128,11 +182,18 @@ export function AccountDetail(props: AccountDetailProps) {
 
           if (event.type === "stage_started") {
             setStatuses((prev) => ({ ...prev, [event.stage]: "running" }));
+            // Opening this stage closes the previous one. The presenter follows
+            // the pipeline without clicking; any card reopens on click.
+            setExpanded(onlyExpanded(event.stage));
           } else if (event.type === "stage_completed") {
             setStatuses((prev) => ({ ...prev, [event.stage]: event.skipped ? "skipped" : "done" }));
             setLiveElapsed((prev) => ({ ...prev, [event.stage]: event.ms }));
           } else if (event.type === "draft_token") {
             setDraftChars((n) => n + event.text.length);
+            setDraftPreview((prev) => (prev + event.text).slice(-DRAFT_PREVIEW_CHARS));
+          } else if (event.type === "run_completed") {
+            setAutoJumpArmed(true);
+            setResetDeadline(Date.now() + AUTO_RESET_MS);
           } else if (event.type === "run_failed") {
             setBanner({ tone: "error", text: `Run failed during ${event.stage ?? "setup"}: ${event.error}` });
           }
@@ -151,9 +212,13 @@ export function AccountDetail(props: AccountDetailProps) {
 
   const showCached = useCallback(() => {
     setBanner(null);
+    setLiveRun(false);
+    setAutoJumpArmed(false);
     setRun(props.initialRun);
     setStatuses(statusesFromRun(props.initialRun));
     setLiveElapsed({});
+    // A cached run opens collapsed with its summaries showing.
+    setExpanded(ALL_COLLAPSED);
     if (!props.initialRun) setBanner({ tone: "info", text: "No completed run for this case yet. Run it live." });
   }, [props.initialRun]);
 
@@ -167,12 +232,92 @@ export function AccountDetail(props: AccountDetailProps) {
     setRun(null);
     setStatuses(IDLE);
     setLiveElapsed({});
+    setExpanded(ALL_COLLAPSED);
+    tabRef.current = "pipeline";
     setTab("pipeline");
+    setLiveRun(false);
+    setResetDeadline(null);
+    resetPendingRef.current = false;
     setBanner({ tone: "info", text: `Reset: ${body.runsDeleted} run(s) deleted.` });
     router.refresh();
   }, [props.denialId, router]);
 
   const reviewReady = run !== null && run.route !== null && run.route !== "do_not_appeal";
+
+  const silentReset = useCallback(async () => {
+    // Deliberately quiet: no banner. The case goes back to unrun so the next
+    // rehearsal starts clean, which is the whole point of the timer.
+    try {
+      const response = await fetch(`/api/demo/reset/${props.denialId}`, { method: "POST" });
+      if (!response.ok) return;
+      setRun(null);
+      setStatuses(IDLE);
+      setLiveElapsed({});
+      setExpanded(ALL_COLLAPSED);
+      tabRef.current = "pipeline";
+      setTab("pipeline");
+      setLiveRun(false);
+      router.refresh();
+    } catch {
+      // A failed auto-reset must never surface during a demo. The presenter
+      // still has the Reset case control.
+    } finally {
+      setResetDeadline(null);
+      resetPendingRef.current = false;
+    }
+  }, [props.denialId, router]);
+
+  /** Every tab change goes through here so the deferred reset has a trigger. */
+  const changeTab = useCallback(
+    (next: "pipeline" | "review") => {
+      const previous = tabRef.current;
+      tabRef.current = next;
+      setTab(next);
+      if (previous === "review" && next !== "review" && resetPendingRef.current) {
+        void silentReset();
+      }
+    },
+    [silentReset],
+  );
+
+  // Once the run has landed in the database, hand the screen to the reviewer.
+  // Waiting on `run` rather than on the completion event alone means the panel
+  // always has something to render when it appears.
+  useEffect(() => {
+    if (!autoJumpArmed || !liveRun || !reviewReady) return;
+    const timer = setTimeout(() => {
+      changeTab("review");
+      setAutoJumpArmed(false);
+      setJustJumped(true);
+    }, AUTO_REVIEW_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, [autoJumpArmed, liveRun, reviewReady, changeTab]);
+
+  // Let the arrival highlight fade on its own.
+  useEffect(() => {
+    if (!justJumped) return;
+    const timer = setTimeout(() => setJustJumped(false), 1400);
+    return () => clearTimeout(timer);
+  }, [justJumped]);
+
+  // Auto-reset. Only demo cases can be reset server-side, so do not arm the
+  // timer anywhere else.
+  const resettable = props.demoControls && props.split === "demo";
+
+  useEffect(() => {
+    if (!resettable || resetDeadline === null) return;
+    const timer = setTimeout(
+      () => {
+        // Never pull the letter out from under someone reading it. On the
+        // review panel the reset waits until they navigate away.
+        if (tabRef.current === "review") resetPendingRef.current = true;
+        else void silentReset();
+      },
+      Math.max(0, resetDeadline - Date.now()),
+    );
+    return () => clearTimeout(timer);
+  }, [resettable, resetDeadline, silentReset]);
+
 
   return (
     <div>
@@ -234,7 +379,7 @@ export function AccountDetail(props: AccountDetailProps) {
             <div className="flex overflow-hidden rounded-[6px] border border-zinc-300">
               <button
                 type="button"
-                onClick={() => setTab("pipeline")}
+                onClick={() => changeTab("pipeline")}
                 className={cn(
                   "h-[28px] border-r border-zinc-300 px-3 text-[12px] font-medium",
                   tab === "pipeline" ? "bg-zinc-900 text-white" : "bg-white text-zinc-700 hover:bg-zinc-50",
@@ -244,7 +389,7 @@ export function AccountDetail(props: AccountDetailProps) {
               </button>
               <button
                 type="button"
-                onClick={() => reviewReady && setTab("review")}
+                onClick={() => reviewReady && changeTab("review")}
                 disabled={!reviewReady}
                 title={reviewReady ? undefined : "Opens once a run completes with a draft."}
                 className={cn(
@@ -307,22 +452,32 @@ export function AccountDetail(props: AccountDetailProps) {
 
           {tab === "pipeline" ? (
             <StageCards
-              run={run}
+                run={run}
               statuses={statuses}
               liveElapsed={liveElapsed}
               thresholdCents={props.triage.threshold_cents}
+              expanded={expanded}
+              onToggle={toggleStage}
+              draftPreview={draftPreview}
             />
           ) : (
-            <ReviewPanel
+            <div
+              className={cn(
+                "rounded-[8px] transition-shadow duration-700",
+                justJumped && "shadow-[0_0_0_3px_rgba(59,130,246,0.35)]",
+              )}
+            >
+              <ReviewPanel
               run={run}
-              denialId={props.denialId}
-              onCiteLine={setHighlight}
-              highlight={highlight}
-              onFeedbackSaved={() => router.refresh()}
-              payerName={props.payerName}
-              category={props.category}
-              payerOverturnRate={props.payerOverturnRate}
-            />
+                denialId={props.denialId}
+                onCiteLine={setHighlight}
+                highlight={highlight}
+                onFeedbackSaved={() => router.refresh()}
+                payerName={props.payerName}
+                category={props.category}
+                payerOverturnRate={props.payerOverturnRate}
+              />
+            </div>
           )}
 
           {run && tab === "pipeline" ? (
