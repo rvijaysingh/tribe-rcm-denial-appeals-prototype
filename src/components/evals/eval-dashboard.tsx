@@ -5,6 +5,7 @@ import {
   EVAL_BANNER,
   formatMetric,
   HISTORY_KEYS,
+  pickBaseline,
   REFERENCE_NOTE,
   specByKey,
   specsFor,
@@ -96,12 +97,7 @@ export function EvalDashboard({ runs }: { runs: EvalRunView[] }) {
   // Held as its own const so narrowing survives into the map callbacks below.
   const latestMetrics = latest?.metrics ?? null;
 
-  // PRD 9.3: the reference run is the comparison baseline. If the latest run
-  // is the reference, compare it to whatever ran before it instead.
-  const baselineRun =
-    latest && !latest.reference
-      ? (runs.find((r) => r.reference && r.id !== latest.id) ?? null)
-      : (runs[1] ?? null);
+  const baselineRun = pickBaseline(runs);
   const baseline = baselineRun?.metrics ?? null;
 
   return (
@@ -139,7 +135,7 @@ export function EvalDashboard({ runs }: { runs: EvalRunView[] }) {
                   <>
                     Change is measured against{" "}
                     <span className="font-mono text-zinc-700">{baselineRun.id}</span>
-                    {baselineRun.reference ? " (reference)" : " (previous run)"}. Green and red mean moved, not passed:
+                    {baselineRun.reference ? " (the reference run)" : " (the previous run)"}. Green and red mean moved, not passed:
                     the PRD sets no absolute target for any stage metric.
                   </>
                 ) : (

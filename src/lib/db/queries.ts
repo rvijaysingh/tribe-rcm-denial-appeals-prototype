@@ -519,8 +519,18 @@ export async function loadGroundTruthForSplit(split: Split): Promise<GroundTruth
   `);
 }
 
-/** Next sequential eval run id, er-0001 upward. */
+/**
+ * Next sequential eval run id, er-0001 upward.
+ *
+ * Derived from the highest id in use, not from the row count: deleting a run
+ * would otherwise make the next run reuse an id that history already spent,
+ * and the insert would collide on the primary key.
+ */
 export async function nextEvalRunId(): Promise<string> {
-  const rows = await getDb().execute<{ count: string }>(sql`SELECT count(*)::text AS count FROM eval_runs`);
-  return `er-${String(Number(rows[0]?.count ?? 0) + 1).padStart(4, "0")}`;
+  const rows = await getDb().execute<{ id: string }>(sql`SELECT id FROM eval_runs`);
+  const highest = rows.reduce((max, row) => {
+    const n = Number(/(\d+)\s*$/.exec(row.id)?.[1]);
+    return Number.isFinite(n) && n > max ? n : max;
+  }, 0);
+  return `er-${String(highest + 1).padStart(4, "0")}`;
 }

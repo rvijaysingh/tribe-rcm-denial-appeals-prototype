@@ -3,6 +3,8 @@ import {
   aggregate,
   failedCase,
   gradeCase,
+  inFalseWriteOffScope,
+  isFalseWriteOff,
   percentile,
   type CaseGrade,
 } from "../../scripts/eval/grade";
@@ -137,6 +139,14 @@ describe("gradeCase", () => {
     expect(gradeCase(truth({ winnable: false }), writeOff).grades.falseWriteOff).toBe(false);
   });
 
+  it("does not call a correct decline a false write-off", () => {
+    // Winnable means the clinical argument holds. A case can be arguable and
+    // still be one triage should decline on economics, and declining it is
+    // the right answer, not an error.
+    const declined = truth({ winnable: true, expectedRoute: "do_not_appeal" });
+    expect(gradeCase(declined, result({ route: "do_not_appeal" })).grades.falseWriteOff).toBe(false);
+  });
+
   it("leaves classify grades null when triage stopped the run", () => {
     const stopped = result({ route: "do_not_appeal", classify: null, retrieval: null, draft: null, verification: null });
     const g = gradeCase(truth(), stopped);
@@ -152,6 +162,39 @@ describe("gradeCase", () => {
       citation: { validityRate: 0.75, totalCitations: 8, invalidChartLineIds: ["L9"], invalidClauseIds: [] },
     };
     expect(gradeCase(truth(), r).actual.citationsValid).toBe(6);
+  });
+});
+
+describe("inFalseWriteOffScope", () => {
+  it("includes a winnable case the label says to work", () => {
+    expect(inFalseWriteOffScope({ winnable: true, expectedRoute: "ready" })).toBe(true);
+    expect(inFalseWriteOffScope({ winnable: true, expectedRoute: "needs_review" })).toBe(true);
+  });
+
+  it("excludes a case the label expects to be declined", () => {
+    expect(inFalseWriteOffScope({ winnable: true, expectedRoute: "do_not_appeal" })).toBe(false);
+  });
+
+  it("excludes a case that is not winnable", () => {
+    expect(inFalseWriteOffScope({ winnable: false, expectedRoute: "ready" })).toBe(false);
+  });
+});
+
+describe("isFalseWriteOff", () => {
+  it("is true only for a decline on an in-scope case", () => {
+    expect(isFalseWriteOff({ winnable: true, expectedRoute: "ready" }, "do_not_appeal")).toBe(true);
+  });
+
+  it("is false when the pipeline worked the case", () => {
+    expect(isFalseWriteOff({ winnable: true, expectedRoute: "ready" }, "needs_review")).toBe(false);
+  });
+
+  it("is false for a correct decline", () => {
+    expect(isFalseWriteOff({ winnable: true, expectedRoute: "do_not_appeal" }, "do_not_appeal")).toBe(false);
+  });
+
+  it("is false when the run crashed and produced no route", () => {
+    expect(isFalseWriteOff({ winnable: true, expectedRoute: "ready" }, null)).toBe(false);
   });
 });
 
@@ -267,6 +310,22 @@ describe("aggregate", () => {
       { ruleTests: null, reviewerAgreement: null },
     );
     expect(metrics.a.falseWriteOff).toEqual({ n: 1, of: 1 });
+  });
+
+  it("keeps cases the label expects to be declined out of the fraction", () => {
+    const base = grade({});
+    const declined = {
+      ...base,
+      expected: { ...base.expected, winnable: true, route: "do_not_appeal" },
+      grades: { ...base.grades, falseWriteOff: false },
+    };
+    const metrics = aggregate([grade({ falseWriteOff: false }), declined, declined], {
+      ruleTests: null,
+      reviewerAgreement: null,
+    });
+    // Only the one workable case is in scope; the two correct declines are in
+    // neither half of the fraction.
+    expect(metrics.a.falseWriteOff).toEqual({ n: 0, of: 1 });
   });
 
   it("derives faithfulness from unflagged assertions", () => {

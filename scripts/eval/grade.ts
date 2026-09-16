@@ -62,6 +62,35 @@ export interface CaseGrade {
 /** PRD 9.2 stage E: judge overall at or above this matches approve_as_is. */
 export const JUDGE_AGREEMENT_THRESHOLD = 0.85;
 
+/**
+ * Was this case in scope for the false write-off metric at all?
+ *
+ * `winnable` in the seed means the clinical argument holds: no required clause
+ * is unmet. It says nothing about economics, so a case can be winnable and
+ * still be one the label expects triage to decline, for an expired filing
+ * window or an expected value under the cost of working it.
+ *
+ * Those cases belong in neither half of the fraction. Counting them in the
+ * denominator understates the rate; counting a correct decline in the
+ * numerator calls the right answer an error, which is what the first version
+ * of this metric did (PRD 9.2, corrected).
+ */
+export function inFalseWriteOffScope(truth: { winnable: boolean; expectedRoute: string }): boolean {
+  return truth.winnable && truth.expectedRoute !== "do_not_appeal";
+}
+
+/**
+ * A false write-off is a do-not-appeal on a case the label says should have
+ * been worked. A do-not-appeal that matches the expected route is a correct
+ * write-off and is not counted.
+ */
+export function isFalseWriteOff(
+  truth: { winnable: boolean; expectedRoute: string },
+  route: string | null,
+): boolean {
+  return inFalseWriteOffScope(truth) && route === "do_not_appeal";
+}
+
 export function gradeCase(truth: GroundTruthCase, result: RunResult): CaseGrade {
   const classify = result.classify;
   const retrieval = result.retrieval;
@@ -140,8 +169,7 @@ export function gradeCase(truth: GroundTruthCase, result: RunResult): CaseGrade 
       clauseRecall,
       precedentHit,
       judgeAgrees,
-      // False write-off: the pipeline wrote off a case the label calls winnable.
-      falseWriteOff: truth.winnable && result.route === "do_not_appeal",
+      falseWriteOff: isFalseWriteOff(truth, result.route),
     },
   };
 }
@@ -254,7 +282,9 @@ export function aggregate(grades: readonly CaseGrade[], options: AggregateOption
     a: {
       falseWriteOff: {
         n: completed.filter((g) => g.grades.falseWriteOff).length,
-        of: completed.filter((g) => g.expected.winnable).length,
+        of: completed.filter((g) =>
+          inFalseWriteOffScope({ winnable: g.expected.winnable, expectedRoute: g.expected.route }),
+        ).length,
       },
       ruleTests: options.ruleTests,
     },

@@ -19,7 +19,10 @@ const mean = z.object({ value: z.number(), n: z.number() });
 
 export const evalMetricsSchema = z.object({
   a: z.object({
-    /** Do-not-appeal decisions on cases labeled winnable / all winnable. */
+    /**
+     * Do-not-appeal decisions on cases the label says should have been worked,
+     * over all such cases. A correct decline is in neither half (PRD 9.2).
+     */
     falseWriteOff: ratio,
     /** Unit test pass rate. Null when the harness ran without the suite. */
     ruleTests: ratio.nullable(),
@@ -114,7 +117,7 @@ export const METRIC_SPECS: MetricSpec[] = [
     short: "False w/o",
     direction: "down",
     format: "percent",
-    read: (m) => pct(m.a.falseWriteOff, "winnable"),
+    read: (m) => pct(m.a.falseWriteOff, "workable"),
   },
   {
     key: "ruleTests",
@@ -371,6 +374,27 @@ export function deltaAgainst(
   if (negligible) return { tone: "flat", text: "no change" };
   const better = spec.direction === "up" ? raw > 0 : raw < 0;
   return { tone: better ? "better" : "worse", text };
+}
+
+/**
+ * Which run the latest one is compared against.
+ *
+ * PRD 9.3 names the reference run as the comparison baseline, so it wins when
+ * one exists. Before the reference run has been marked, the run immediately
+ * before is still a real comparison and is better than showing no delta at
+ * all. When the latest run is itself the reference, it compares to the run
+ * before it rather than to itself.
+ *
+ * Takes the newest-first list the dashboard already holds.
+ */
+export function pickBaseline<T extends { id: string; reference: boolean }>(
+  runs: readonly T[],
+): T | null {
+  const latest = runs[0];
+  if (!latest) return null;
+  const previous = runs[1] ?? null;
+  if (latest.reference) return previous;
+  return runs.find((r) => r.reference && r.id !== latest.id) ?? previous;
 }
 
 /** PRD 6.5 banner. Says out loud that n=20 is noisy (PRD 9.3). */

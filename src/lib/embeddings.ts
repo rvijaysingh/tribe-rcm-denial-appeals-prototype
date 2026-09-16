@@ -10,7 +10,23 @@ import { EMBEDDING_DIM, EMBEDDING_MODEL, embeddingCostOf } from "./models";
 
 const ENDPOINT = "https://api.voyageai.com/v1/embeddings";
 const BATCH_SIZE = 64;
-const MAX_ATTEMPTS = 3;
+const MAX_ATTEMPTS = 5;
+
+/**
+ * Backoff for a rate-limited request.
+ *
+ * A key without a payment method is capped at 3 requests per minute, so a 429
+ * needs to wait out the window rather than retry inside it. Short exponential
+ * backoff (2s, 4s) burns every attempt in the same minute and fails a run that
+ * would have succeeded. Voyage does not always send Retry-After, so the
+ * fallback is long enough to clear a per-minute bucket on its own.
+ */
+export function backoffMs(attempt: number, status: number, retryAfter: string | null): number {
+  const seconds = Number(retryAfter);
+  if (Number.isFinite(seconds) && seconds > 0) return Math.min(seconds * 1000, 90_000);
+  if (status === 429) return Math.min(20_000 * 2 ** (attempt - 1), 60_000);
+  return 2000 * 2 ** (attempt - 1);
+}
 
 /** Voyage tunes embeddings differently for stored documents and search queries. */
 export type InputType = "document" | "query";
@@ -36,6 +52,8 @@ async function embedBatch(texts: string[], inputType: InputType): Promise<Voyage
   if (!key) throw new Error("VOYAGE_API_KEY is not set. Add it to .env.local.");
 
   let lastError: Error | undefined;
+  let lastStatus = 0;
+  let lastRetryAfter: string | null = null;
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     let response: Response | undefined;
     try {
@@ -48,18 +66,22 @@ async function embedBatch(texts: string[], inputType: InputType): Promise<Voyage
     } catch (error) {
       // Network failure or timeout: transient, retry.
       lastError = error as Error;
+      lastStatus = 0;
+      lastRetryAfter = null;
     }
 
     if (response) {
       const body = await response.text();
       if (response.ok) return JSON.parse(body) as VoyageResponse;
       lastError = new Error(`Voyage HTTP ${response.status}: ${body.slice(0, 300)}`);
+      lastStatus = response.status;
+      lastRetryAfter = response.headers.get("retry-after");
       // 401, 400 and other client errors will not succeed on retry.
       if (response.status !== 429 && response.status < 500) throw lastError;
     }
 
     if (attempt < MAX_ATTEMPTS) {
-      const wait = 2000 * 2 ** (attempt - 1);
+      const wait = backoffMs(attempt, lastStatus, lastRetryAfter);
       console.warn(`Voyage attempt ${attempt} failed (${lastError?.message}); retrying in ${wait}ms`);
       await sleep(wait);
     }

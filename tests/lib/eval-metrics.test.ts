@@ -7,6 +7,7 @@ import {
   METRIC_SPECS,
   readEvalMetrics,
   specByKey,
+  pickBaseline,
   specsFor,
   type EvalMetrics,
 } from "../../src/lib/eval/metrics";
@@ -197,5 +198,39 @@ describe("deltaAgainst", () => {
       tone: "better",
       text: "−2.6s",
     });
+  });
+});
+
+describe("pickBaseline", () => {
+  const run = (id: string, reference = false) => ({ id, reference });
+
+  it("returns null when there are no runs", () => {
+    expect(pickBaseline([])).toBeNull();
+  });
+
+  it("returns null when the only run is the latest", () => {
+    expect(pickBaseline([run("er-0002")])).toBeNull();
+  });
+
+  it("prefers the reference run over the previous run", () => {
+    const runs = [run("er-0003"), run("er-0002"), run("er-0001", true)];
+    expect(pickBaseline(runs)?.id).toBe("er-0001");
+  });
+
+  it("falls back to the previous run before a reference exists", () => {
+    // PRD 9.3 marks the reference run late, so most of the project runs
+    // without one. A real previous run beats showing no delta at all.
+    const runs = [run("er-0002"), run("er-0001")];
+    expect(pickBaseline(runs)?.id).toBe("er-0001");
+  });
+
+  it("compares the reference run against the run before it", () => {
+    const runs = [run("er-0003", true), run("er-0002"), run("er-0001")];
+    expect(pickBaseline(runs)?.id).toBe("er-0002");
+  });
+
+  it("never compares a run against itself", () => {
+    const runs = [run("er-0002", true), run("er-0001")];
+    expect(pickBaseline(runs)?.id).toBe("er-0001");
   });
 });
