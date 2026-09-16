@@ -52,8 +52,12 @@ function onlyExpanded(stage: Stage): Record<Stage, boolean> {
   return { ...ALL_COLLAPSED, [stage]: true };
 }
 
-/** Longest a demo case may sit finished before the case resets itself. */
-const AUTO_RESET_MS = 10 * 60 * 1000;
+/** How long the page must sit untouched before a finished demo case resets. */
+const AUTO_RESET_IDLE_MS = 10 * 60 * 1000;
+/** How often idleness is checked. Coarse on purpose: the deadline is minutes. */
+const IDLE_CHECK_MS = 20 * 1000;
+/** Anything here counts as the presenter still being on this case. */
+const ACTIVITY_EVENTS = ["mousemove", "mousedown", "keydown", "wheel", "scroll", "touchstart"] as const;
 /** Pause after the run lands before the review panel takes over (PRD 6.3 flow). */
 const AUTO_REVIEW_DELAY_MS = 1500;
 /** How much of the streaming draft to keep on screen. */
@@ -109,12 +113,12 @@ export function AccountDetail(props: AccountDetailProps) {
   const [liveRun, setLiveRun] = useState(false);
   const [autoJumpArmed, setAutoJumpArmed] = useState(false);
   const [justJumped, setJustJumped] = useState(false);
-  const [resetDeadline, setResetDeadline] = useState<number | null>(null);
+  const [resetArmed, setResetArmed] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
-  // Refs, not state: the auto-reset timer fires from a callback that would
-  // otherwise close over a stale tab, and nothing on screen reads either value.
+  // Refs, not state: these change on every mouse move and nothing renders from
+  // them, so writing here costs nothing and never triggers a render.
   const tabRef = useRef<"pipeline" | "review">("pipeline");
-  const resetPendingRef = useRef(false);
+  const lastActivityRef = useRef(Date.now());
 
   // router.refresh() re-renders the server component but leaves this client
   // component's state alone, so without this the run started above would never
@@ -148,8 +152,7 @@ export function AccountDetail(props: AccountDetailProps) {
     tabRef.current = "pipeline";
     setTab("pipeline");
     setAutoJumpArmed(false);
-    resetPendingRef.current = false;
-    setResetDeadline(null);
+    setResetArmed(false);
 
     try {
       const response = await fetch(`/api/pipeline/${props.denialId}`, {
@@ -193,7 +196,8 @@ export function AccountDetail(props: AccountDetailProps) {
             setDraftPreview((prev) => (prev + event.text).slice(-DRAFT_PREVIEW_CHARS));
           } else if (event.type === "run_completed") {
             setAutoJumpArmed(true);
-            setResetDeadline(Date.now() + AUTO_RESET_MS);
+            lastActivityRef.current = Date.now();
+            setResetArmed(true);
           } else if (event.type === "run_failed") {
             setBanner({ tone: "error", text: `Run failed during ${event.stage ?? "setup"}: ${event.error}` });
           }
@@ -236,8 +240,7 @@ export function AccountDetail(props: AccountDetailProps) {
     tabRef.current = "pipeline";
     setTab("pipeline");
     setLiveRun(false);
-    setResetDeadline(null);
-    resetPendingRef.current = false;
+    setResetArmed(false);
     setBanner({ tone: "info", text: `Reset: ${body.runsDeleted} run(s) deleted.` });
     router.refresh();
   }, [props.denialId, router]);
@@ -262,23 +265,15 @@ export function AccountDetail(props: AccountDetailProps) {
       // A failed auto-reset must never surface during a demo. The presenter
       // still has the Reset case control.
     } finally {
-      setResetDeadline(null);
-      resetPendingRef.current = false;
+      setResetArmed(false);
     }
   }, [props.denialId, router]);
 
-  /** Every tab change goes through here so the deferred reset has a trigger. */
-  const changeTab = useCallback(
-    (next: "pipeline" | "review") => {
-      const previous = tabRef.current;
-      tabRef.current = next;
-      setTab(next);
-      if (previous === "review" && next !== "review" && resetPendingRef.current) {
-        void silentReset();
-      }
-    },
-    [silentReset],
-  );
+  /** Tab changes go through here so tabRef stays in step with the state. */
+  const changeTab = useCallback((next: "pipeline" | "review") => {
+    tabRef.current = next;
+    setTab(next);
+  }, []);
 
   // Once the run has landed in the database, hand the screen to the reviewer.
   // Waiting on `run` rather than on the completion event alone means the panel
@@ -304,19 +299,30 @@ export function AccountDetail(props: AccountDetailProps) {
   // timer anywhere else.
   const resettable = props.demoControls && props.split === "demo";
 
+  // The timer measures idleness, not time since the run. Any mouse move, key
+  // or scroll anywhere on the page counts as the presenter still working this
+  // case, so a long stretch of questions never costs them the letter. It fires
+  // only when the page has genuinely been left alone.
   useEffect(() => {
-    if (!resettable || resetDeadline === null) return;
-    const timer = setTimeout(
-      () => {
-        // Never pull the letter out from under someone reading it. On the
-        // review panel the reset waits until they navigate away.
-        if (tabRef.current === "review") resetPendingRef.current = true;
-        else void silentReset();
-      },
-      Math.max(0, resetDeadline - Date.now()),
-    );
-    return () => clearTimeout(timer);
-  }, [resettable, resetDeadline, silentReset]);
+    if (!resettable || !resetArmed) return;
+
+    const bump = () => {
+      lastActivityRef.current = Date.now();
+    };
+    for (const event of ACTIVITY_EVENTS) {
+      window.addEventListener(event, bump, { passive: true });
+    }
+
+    const interval = setInterval(() => {
+      if (Date.now() - lastActivityRef.current < AUTO_RESET_IDLE_MS) return;
+      void silentReset();
+    }, IDLE_CHECK_MS);
+
+    return () => {
+      for (const event of ACTIVITY_EVENTS) window.removeEventListener(event, bump);
+      clearInterval(interval);
+    };
+  }, [resettable, resetArmed, silentReset]);
 
 
   return (
