@@ -6,7 +6,9 @@
       "Bash(npx:*)",
       "Bash(git:*)",
       "Bash(gh:*)",
-      "Bash(railway:*)"
+      "Bash(railway:*)",
+      "Bash(npx create-*)",
+      "Bash(npx shadcn*)"
     ],
     "deny": [
       "Read(./.env)",
