@@ -15,6 +15,8 @@ import type { AnyPgColumn, PgTable } from "drizzle-orm/pg-core";
 import type { db } from "../../src/lib/db/client";
 import {
   accounts,
+  chartDocs,
+  chartLines,
   criteriaClauses,
   criteriaSets,
   payerNotes,
@@ -22,6 +24,7 @@ import {
 } from "../../src/lib/db/schema";
 import type { CriteriaArtifact } from "./pass-a-criteria";
 import type { CaseSeed } from "./pass-b-cases";
+import type { ChartArtifact } from "./pass-c-charts";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -182,4 +185,43 @@ export async function loadAccounts(tx: Tx, cases: CaseSeed[], anchor: Date): Pro
   await upsertRows(tx, accounts, accounts.id, rows);
   const removed = await deleteOrphans(tx, accounts, accounts.id, rows.map((r) => r.id));
   return { accounts: { upserted: rows.length, removed } };
+}
+
+/**
+ * Pass C: chart documents and line-numbered chart lines.
+ *
+ * Line numbers run continuously across a case's documents, so "L47" is unique
+ * within a case and is what the drafter cites. The database ID prefixes the
+ * account ID ("ACC-017-L47") to stay unique across cases.
+ */
+export async function loadCharts(
+  tx: Tx,
+  cases: CaseSeed[],
+  charts: Map<string, ChartArtifact>,
+): Promise<LoadCounts> {
+  const docRows: (typeof chartDocs.$inferInsert)[] = [];
+  const lineRows: (typeof chartLines.$inferInsert)[] = [];
+
+  for (const seed of cases) {
+    const chart = charts.get(seed.denialId);
+    if (!chart) throw new Error(`No chart for ${seed.denialId}`);
+    let lineNo = 0;
+    chart.documents.forEach((doc, i) => {
+      const docId = `${seed.accountId}-D${i + 1}`;
+      docRows.push({ id: docId, accountId: seed.accountId, docType: doc.docType, text: doc.lines.join("\n") });
+      for (const text of doc.lines) {
+        lineNo += 1;
+        lineRows.push({ id: `${seed.accountId}-L${lineNo}`, docId, lineNo, text });
+      }
+    });
+  }
+
+  await upsertRows(tx, chartDocs, chartDocs.id, docRows);
+  await upsertRows(tx, chartLines, chartLines.id, lineRows);
+  const removedLines = await deleteOrphans(tx, chartLines, chartLines.id, lineRows.map((r) => r.id));
+  const removedDocs = await deleteOrphans(tx, chartDocs, chartDocs.id, docRows.map((r) => r.id));
+  return {
+    chart_docs: { upserted: docRows.length, removed: removedDocs },
+    chart_lines: { upserted: lineRows.length, removed: removedLines },
+  };
 }

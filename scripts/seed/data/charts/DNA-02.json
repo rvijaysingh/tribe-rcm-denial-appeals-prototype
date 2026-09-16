@@ -1,0 +1,70 @@
+{
+  "denialId": "DNA-02",
+  "accountId": "ACC-DNA-02",
+  "promptVersion": "chart.v1",
+  "model": "claude-opus-5",
+  "inputHash": "054557a19b38a8d01ac1ce7b06a890d7ace0fd676706b6a42061867ed2390e5c",
+  "generatedAt": "2026-09-16T12:44:05.799Z",
+  "attempts": 1,
+  "tokensIn": 1653,
+  "tokensOut": 2069,
+  "costUsd": 0.05999,
+  "documents": [
+    {
+      "docType": "hp",
+      "title": "H&P - Admission, COPD Exacerbation",
+      "lines": [
+        "HPI:",
+        "63 yo F with GOLD III COPD, ongoing 40 pack-yr tobacco use, presents at 01:20 with 3 days of worsening cough, thick yellow sputum and dyspnea at rest.",
+        "Home albuterol MDI used q2h today without relief. No fever chills. No chest pain. No leg swelling.",
+        "Somnolent on arrival, arousable to voice but falls asleep mid-sentence; wife reports this is new today.",
+        "ED course:",
+        "SpO2 89% at triage; 1L NC started, SpO2 92%.",
+        "Mild accessory muscle use noted at triage, resolved after first nebulizer; respiratory rate 22.",
+        "Three albuterol-ipratropium nebulizers given in the ED between 01:40 and 03:00 plus methylprednisolone 125 mg IV; persistent diffuse wheeze and dyspnea at rest afterward.",
+        "ABG at 03:15: pH 7.29, PaCO2 64, PaO2 58 on 4L.",
+        "PMH: COPD with 2 prior exacerbations in past yr, type 2 DM on metformin, GERD, osteoporosis.",
+        "Home meds: tiotropium 18 mcg daily, budesonide-formoterol 160/4.5 2 puffs BID, albuterol MDI prn, metformin 1000 mg BID, pantoprazole 40 mg daily, calcium-vit D.",
+        "Allergies: sulfa (rash).",
+        "Social: lives with wife, 1 flight of stairs at home, still smoking approx 1/2 ppd.",
+        "Exam:",
+        "T 37.1 HR 104 BP 148/82 RR 22 SpO2 92% on 1L NC.",
+        "Gen: drowsy, arouses to voice, answers in short phrases.",
+        "Lungs: diffuse expiratory wheeze bilaterally, prolonged expiratory phase, poor air movement at bases.",
+        "Abd: soft, nontender. Ext: no edema. Neuro: no asterixis, moves all 4, no focal deficit.",
+        "Labs: WBC 12.4, Hgb 13.1, Na 137, K 4.2, Cr 0.8, glucose 188, lactate 1.4.",
+        "CXR: hyperinflation, flattened diaphragms, no focal consolidation, no effusion.",
+        "Assessment/Plan:",
+        "1. Acute COPD exacerbation with acute hypercapnic respiratory acidosis - admit to stepdown, continuous pulse ox, titrate O2 to SpO2 88-92%.",
+        "2. Scheduled albuterol-ipratropium neb q4h with q2h prn; continue inhaled maintenance once more awake.",
+        "3. IV steroid: methylprednisolone 40 mg IV every 8 hours.",
+        "4. Azithromycin 500 mg IV x1 then 250 mg daily for purulent sputum.",
+        "5. Repeat ABG in 4 h; hold sedating meds given somnolence. Smoking cessation counseling, nicotine patch 14 mg offered.",
+        "6. DM: hold metformin, q6h POC glucose while on steroids."
+      ]
+    },
+    {
+      "docType": "discharge",
+      "title": "Discharge Summary - HD2",
+      "lines": [
+        "Discharge dx: acute COPD exacerbation with transient hypercapnia, steroid-induced hyperglycemia.",
+        "Admitted HD1 at 04:10 from ED for dyspnea at rest, purulent sputum and drowsiness.",
+        "Hospital course:",
+        "SpO2 89% at triage; 1L NC started, SpO2 92%. Mild accessory muscle use noted at triage, resolved after first nebulizer; respiratory rate 22.",
+        "Three albuterol-ipratropium nebulizers given in the ED between 01:40 and 03:00 plus methylprednisolone 125 mg IV; persistent diffuse wheeze and dyspnea at rest afterward.",
+        "ABG at 03:15: pH 7.29, PaCO2 64, PaO2 58 on 4L. Somnolent on arrival, arousable to voice but falls asleep mid-sentence; wife reports this is new today.",
+        "Managed with controlled O2 to target SpO2 88-92%, scheduled bronchodilators and steroids. Repeat ABG HD1 09:40: pH 7.36, PaCO2 49, PaO2 71 on 2L. Mentation back to baseline by 11:00.",
+        "IV steroid: methylprednisolone 40 mg IV every 8 hours; glucose rose to 342 requiring insulin sliding scale. Glucose 166-198 by HD2 morning off IV steroid.",
+        "Weaned to room air HD2 07:00, SpO2 93% at rest and 91% after ambulating hallway with RN.",
+        "Discharge exam: alert, oriented, RR 18, scattered mild end-expiratory wheeze, clear speech in full sentences.",
+        "Discharge meds: prednisone 40 mg PO daily x 4 more days, azithromycin 250 mg daily x 3 more days, tiotropium 18 mcg daily, budesonide-formoterol 160/4.5 2 puffs BID, albuterol MDI q4h prn.",
+        "Resume metformin 1000 mg BID; check fingerstick glucose BID while on prednisone, call if readings above 300.",
+        "Nicotine patch 14 mg daily dispensed; cessation counseling given, quitline info provided.",
+        "Follow up with primary care in 5-7 days, pulmonary clinic in 3 weeks with spirometry.",
+        "Return precautions: worsening dyspnea, confusion or unusual sleepiness, fever, inhaler not helping.",
+        "Inhaler technique reviewed with pt and wife by RN prior to discharge; teach-back adequate.",
+        "Discharged HD2 at 14:20, home with wife, ambulatory."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "denialId": "DNA-03",
+  "accountId": "ACC-DNA-03",
+  "promptVersion": "chart.v1",
+  "model": "claude-opus-5",
+  "inputHash": "c2e8feb8e0a6f184cfdfc418d3e0400e9cd811ec9b4cde0cafdaa7df7206d2d7",
+  "generatedAt": "2026-09-16T12:44:07.633Z",
+  "attempts": 1,
+  "tokensIn": 1581,
+  "tokensOut": 1980,
+  "costUsd": 0.057405,
+  "documents": [
+    {
+      "docType": "hp",
+      "title": "History and Physical - Admission",
+      "lines": [
+        "HPI:",
+        "57 yo F presents with 4 days of fever, productive cough with rusty sputum, R-sided pleuritic chest pain, and progressive dyspnea.",
+        "Reports subjective chills and rigors last night, poor oral intake today, lightheaded on standing.",
+        "Denies hemoptysis, leg swelling, calf pain, recent travel, or sick contacts other than grandchild with URI.",
+        "Brought in by daughter for increasing confusion this morning - pt intermittently disoriented to place per daughter.",
+        "PMH: type 2 DM, HTN, remote 20 pack-year smoking history, quit 12 yrs ago.",
+        "Home meds: metformin 1000 mg BID, lisinopril 20 mg daily, atorvastatin 40 mg daily.",
+        "Allergies: none known.",
+        "ED course / Vitals:",
+        "Triage: T 38.9, HR 118, BP 86/54, respiratory rate 32, SpO2 87% on RA.",
+        "Hypotension to 86/54 at triage; 2 L normal saline given; BP after fluids 96/58.",
+        "Placed on 3L NC with SpO2 93%; respiratory rate 30 at 4 hours (14:20).",
+        "Exam:",
+        "Gen: ill-appearing, mildly confused, answers slowly. Oriented to self and year of birth only.",
+        "HEENT: dry mucous membranes. Neck supple.",
+        "Resp: tachypneic, accessory muscle use, bronchial breath sounds and crackles R mid and base, dullness to percussion R base.",
+        "CV: tachycardic, regular, no murmur, no JVD. Cap refill 3 sec.",
+        "Abd: soft, nontender. Ext: no edema. Skin warm, no rash.",
+        "Data:",
+        "WBC 18.6 with 88% neutrophils, Hgb 12.1, plt 244. BUN 34, Cr 1.3, Na 132, K 3.6, glucose 216, lactate 2.8.",
+        "Chest x-ray: right lower and right middle lobe infiltrate with small right pleural effusion.",
+        "Blood cultures x2 and sputum Gram stain/culture sent; strep/legionella urinary antigens sent.",
+        "Assessment/Plan:",
+        "57 yo F with severe community-acquired pneumonia, RML/RLL, with hypoxemic respiratory failure, sepsis physiology, and acute confusion. CURB-65 of 3.",
+        "Ceftriaxone 1 g IV once in the ED plus azithromycin 500 mg IV; admit to stepdown for close monitoring.",
+        "Continue 3L NC, titrate for SpO2 >92%; q4h vitals; repeat lactate; hold lisinopril and metformin; SSI for glucose; incentive spirometer, OOB with assist."
+      ]
+    },
+    {
+      "docType": "discharge",
+      "title": "Discharge Summary - HD2",
+      "lines": [
+        "Admitting diagnosis: severe community-acquired pneumonia with hypoxemia and sepsis physiology.",
+        "Discharge diagnosis: community-acquired pneumonia, RML/RLL, with small right pleural effusion; resolved acute confusion; resolving AKI.",
+        "Hospital course:",
+        "Admitted from ED where triage SpO2 87% on RA; placed on 3L NC with SpO2 93%. Respiratory rate 32 at triage, 30 at 4 hours.",
+        "Hypotension to 86/54 at triage; 2 L normal saline given; BP after fluids 96/58. No vasopressors required.",
+        "CURB-65 of 3 documented in the admitting note; admitted to stepdown.",
+        "Chest x-ray: right lower and right middle lobe infiltrate with small right pleural effusion. Effusion small, not tapped.",
+        "Ceftriaxone 1 g IV once in the ED; tolerating oral diet and switched to oral cefpodoxime the next morning, with azithromycin continued.",
+        "HD2 06:40 - afebrile x18h, T 37.1, HR 88, BP 112/68, RR 20, mentation back to baseline per daughter. Cr down to 1.0, WBC 12.4, lactate 1.4.",
+        "Blood cultures no growth at 24h. Sputum with mixed flora. Urinary antigens negative.",
+        "Still on 3L NC on hospital day 2; ambulated hallway with RN at 11:15, saturations maintained 92-94% on 3L, pt declined further weaning trial this shift.",
+        "Home oxygen 2-3L NC arranged with delivery to home prior to discharge; RT provided teaching on tubing, concentrator, and no-smoking precautions with pt and daughter.",
+        "Discharge meds: cefpodoxime 200 mg PO BID x5 days, azithromycin 250 mg daily x3 more days, resume metformin and atorvastatin, hold lisinopril x3 days then resume if BP >110 systolic.",
+        "Home O2 as above with pulse oximeter and instructions to call if saturation <90% at rest.",
+        "Follow-up with primary care in 3-5 days for reassessment and oxygen weaning; repeat chest imaging in 6 weeks given smoking history.",
+        "Return precautions reviewed: worsening dyspnea, fever >38.5, confusion, chest pain, or inability to keep fluids down.",
+        "Discharged home with daughter at 15:30, ambulatory, stable on 3L NC."
+      ]
+    }
+  ]
+}

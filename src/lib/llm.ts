@@ -14,7 +14,7 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
-import type { z } from "zod";
+import { z } from "zod";
 import { SERVER_FALLBACK_BETA, SERVER_FALLBACK_MODELS, costOf } from "./models";
 
 let client: Anthropic | undefined;
@@ -40,6 +40,12 @@ export interface GenerateOptions<S extends z.ZodType> {
   schema: S;
   maxTokens: number;
   effort?: Effort;
+  /**
+   * Deterministic, lossless cleanup applied after schema validation and before
+   * the check, e.g. dropping blank separator lines. The returned value is what
+   * the caller receives.
+   */
+  normalize?: (data: z.infer<S>) => z.infer<S>;
   /**
    * Deterministic check on the parsed output. Return null when it passes or a
    * message describing the problem, which is fed back to the model on retry.
@@ -144,6 +150,11 @@ async function callOnce<S extends z.ZodType>(
   };
 }
 
+/** Keep error text fed back to the model short enough to be useful. */
+function capError(message: string, limit = 1500): string {
+  return message.length > limit ? `${message.slice(0, limit)} ... (truncated)` : message;
+}
+
 /** Validate raw text against the schema and the optional check. Returns data or an error string. */
 function validate<S extends z.ZodType>(
   opts: GenerateOptions<S>,
@@ -157,11 +168,12 @@ function validate<S extends z.ZodType>(
   }
   const parsed = opts.schema.safeParse(json);
   if (!parsed.success) {
-    return { ok: false, error: `schema validation failed: ${parsed.error.message}` };
+    return { ok: false, error: `schema validation failed: ${capError(z.prettifyError(parsed.error))}` };
   }
-  const problem = opts.check?.(parsed.data) ?? null;
-  if (problem) return { ok: false, error: `content check failed: ${problem}` };
-  return { ok: true, data: parsed.data };
+  const data = opts.normalize ? opts.normalize(parsed.data) : parsed.data;
+  const problem = opts.check?.(data) ?? null;
+  if (problem) return { ok: false, error: `content check failed: ${capError(problem)}` };
+  return { ok: true, data };
 }
 
 /** Generate schema-valid structured output, retrying once on validation failure. */
@@ -175,7 +187,21 @@ export async function generateStructured<S extends z.ZodType>(
   let prompt = opts.prompt;
 
   for (let attempt = 1; attempt <= 2; attempt++) {
-    const result = await callOnce(opts, prompt);
+    let result: Awaited<ReturnType<typeof callOnce>>;
+    try {
+      result = await callOnce(opts, prompt);
+    } catch (error) {
+      // The SDK validates structured output against the schema and throws on a
+      // mismatch. Treat that like any other validation failure so the retry
+      // runs, rather than letting it end the whole job.
+      const message = error instanceof Error ? error.message : String(error);
+      if (attempt === 1 && /failed to parse structured output/i.test(message)) {
+        console.error(`[llm:${opts.label}] attempt 1 rejected by the SDK parser: ${capError(message, 600)}`);
+        prompt = retryPrompt(opts.prompt, capError(message, 600));
+        continue;
+      }
+      throw error;
+    }
     tokensIn += result.tokensIn;
     tokensOut += result.tokensOut;
     costUsd += costOf(result.servedModel, result.tokensIn, result.tokensOut);
@@ -204,9 +230,14 @@ export async function generateStructured<S extends z.ZodType>(
         result.text,
       );
     }
-    prompt =
-      `${opts.prompt}\n\n---\nYour previous output was rejected: ${outcome.error}\n` +
-      `Produce the full output again, corrected. Follow every instruction above.`;
+    prompt = retryPrompt(opts.prompt, outcome.error);
   }
   throw new Error("unreachable");
+}
+
+function retryPrompt(original: string, error: string): string {
+  return (
+    `${original}\n\n---\nYour previous output was rejected: ${error}\n` +
+    `Produce the full output again, corrected. Follow every instruction above.`
+  );
 }

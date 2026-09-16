@@ -7,6 +7,7 @@
  *   "confus*" matches "confused" and "confusion".
  * - Shingle overlap, the leakage check: generated charts must not share a
  *   run of N words with any criteria clause text.
+ * - Date, name, and dash patterns shared by the chart and letter checks.
  */
 
 function escapeRegex(text: string): string {
@@ -59,3 +60,27 @@ export function sharedShingles(text: string, sources: readonly string[], n: numb
 
 /** Shingle length for the leakage check. Short enough to catch copied clauses, long enough to ignore common clinical phrases. */
 export const LEAKAGE_SHINGLE = 6;
+
+/**
+ * Calendar dates (M/D/YYYY), plausible years (1950 to 2039) not followed by a
+ * unit, and whole-word month names followed by a day. Deliberately misses
+ * "May 3": the verb "may" is too common in clinical text.
+ *
+ * Does not match: BP 118/72, 2000 mL, "decreased 2L", "may 3 doses".
+ */
+export const CALENDAR_DATE = new RegExp(
+  [
+    String.raw`\b\d{1,2}/\d{1,2}/\d{2,4}\b`,
+    String.raw`\b(?:19[5-9]\d|20[0-3]\d)\b(?!\s*(?:ml|mg|mcg|cc|l\b|units?|kcal|%))`,
+    String.raw`\b(?:january|february|march|april|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sept?|oct|nov|dec)\.? \d{1,2}\b`,
+  ].join("|"),
+  "i",
+);
+
+/** An honorific followed by a capitalized name, e.g. "Dr. Alvarez". */
+export const PERSON_NAME = /\b(?:Dr|Mr|Mrs|Ms)\.? [A-Z][a-z]+/;
+
+/** Replace em and en dashes with hyphens. Applied to accepted model output. */
+export function normalizeDashes(text: string): string {
+  return text.replace(/\s*—\s*/g, " - ").replace(/–/g, "-");
+}

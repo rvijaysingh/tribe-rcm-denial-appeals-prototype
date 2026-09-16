@@ -1,0 +1,69 @@
+{
+  "denialId": "DNA-01",
+  "accountId": "ACC-DNA-01",
+  "promptVersion": "chart.v1",
+  "model": "claude-opus-5",
+  "inputHash": "ee20aae0a0fc2802ebc99201b5ec66750676e982f332bffeb55a2073ff773d4c",
+  "generatedAt": "2026-09-16T12:44:04.856Z",
+  "attempts": 1,
+  "tokensIn": 1733,
+  "tokensOut": 1989,
+  "costUsd": 0.05839,
+  "documents": [
+    {
+      "docType": "hp",
+      "title": "H&P - Admission, Acute Decompensated Heart Failure",
+      "lines": [
+        "HPI:",
+        "79 y/o male with HFrEF (EF 30% by echo last yr), HTN, CKD3, T2DM presents with 5 days progressive dyspnea and leg swelling.",
+        "Cardiology clinic doubled home furosemide to 80 mg twice daily 5 days ago; patient reports adherence; weight gain of 4.5 kg over that period with worsening leg swelling.",
+        "Dyspnea now at rest. Orthopnea requiring 3 pillows, 2 episodes PND last night. No fever, no cough. Denies chest pain.",
+        "Diet: admits to canned soup and deli meat daily. Daughter reports he skips AM pill about twice a week - pt disagrees.",
+        "PMH: HFrEF, HTN, CKD stage 3, T2DM on metformin, gout, BPH.",
+        "Home meds: furosemide 80 mg BID, carvedilol 12.5 mg BID, sacubitril/valsartan 49-51 mg BID, spironolactone 25 mg daily, metformin 500 mg BID, allopurinol 100 mg daily, tamsulosin 0.4 mg qHS.",
+        "Allergies: sulfa (rash). Lives with wife, 1 flight of stairs, ambulates with cane.",
+        "ED course 21:40:",
+        "SpO2 86% on RA at triage; started on 4L NC with SpO2 up to 91%.",
+        "Furosemide 80 mg IV given in the ED.",
+        "Exam 23:15:",
+        "BP 158/92, HR 96, T 36.8, respiratory rate 28 with accessory muscle use; speaking 3 to 4 words per breath.",
+        "Gen: sitting upright, diaphoretic, in distress. JVP ~14 cm, positive hepatojugular reflux.",
+        "Lungs: bibasilar crackles to mid fields, no wheeze.",
+        "Cardiac: S3 present, PMI displaced, no murmur appreciated.",
+        "Abd: soft, mild RUQ fullness, liver edge 2 cm below costal margin.",
+        "Ext: 3+ pitting edema to mid thigh bilaterally, cool feet, pulses 1+.",
+        "Labs:",
+        "BNP 1,480 pg/mL on arrival (prior outpatient value 310 pg/mL).",
+        "Creatinine 2.1 mg/dL on arrival (baseline 1.3 mg/dL from clinic 2 months ago). BUN 48, Na 133, K 4.6, HCO3 24.",
+        "Hgb 11.8, WBC 8.2, plt 202. Trop 0.04 flat. LFTs: AST 44, ALT 38, alb 3.2.",
+        "Assessment/Plan:",
+        "Acute on chronic decompensated HFrEF, volume overloaded, with cardiorenal physiology. Congestion despite outpatient diuretic uptitration.",
+        "1. Diuresis: furosemide 80 mg IV every 12 hours. Strict I/O, daily standing weights, foley for accurate UOP.",
+        "2. Hold sacubitril/valsartan, spironolactone, metformin given renal function. Continue carvedilol.",
+        "3. O2 to keep SpO2 >92%, HOB elevated. 2 g Na diet, 1.5 L fluid restriction. BMP q12h. Cardiology consulted."
+      ]
+    },
+    {
+      "docType": "discharge",
+      "title": "Discharge Summary - HD3",
+      "lines": [
+        "Admit dx: acute on chronic decompensated HFrEF. Discharge dx: same, improved.",
+        "Hospital course:",
+        "Admitted HD1 with severe congestion. Furosemide 80 mg IV given in the ED, repeated at 80 mg IV every 12 hours.",
+        "On admission respiratory rate 28 with accessory muscle use; speaking 3 to 4 words per breath; orthopnea requiring 3 pillows.",
+        "SpO2 86% on RA at triage; started on 4L NC with SpO2 up to 91%; remained on 4L NC through hospital day 2.",
+        "BNP 1,480 pg/mL on arrival (prior outpatient value 310 pg/mL).",
+        "Creatinine 2.1 mg/dL on arrival (baseline 1.3 mg/dL from clinic 2 months ago), 2.4 mg/dL on hospital day 2.",
+        "Converted to furosemide infusion at 10 mg/hr on hospital day 2 for urine output under 500 mL.",
+        "HD2 18:00 UOP improved to 1,950 mL over subsequent 12 hrs. Net negative 4.1 L for stay; weight down 3.8 kg to 84.2 kg.",
+        "HD3 06:00: creatinine 2.2, K 3.7 (repleted 40 mEq PO), Na 135. Weaned to room air 08:10 with SpO2 94% ambulating in hall.",
+        "Exam at discharge: JVP ~8 cm, lungs clear to bases, 1+ ankle edema, speaking full sentences, RR 18.",
+        "Discharge meds: furosemide 80 mg PO BID, carvedilol 12.5 mg BID, allopurinol 100 mg daily, tamsulosin 0.4 mg qHS, KCl 20 mEq daily x5 days.",
+        "Held at discharge: sacubitril/valsartan, spironolactone, metformin - to be restarted by cardiology pending renal recovery.",
+        "Instructions: daily AM weights, call for gain >1 kg/day or 2 kg/week. 2 g Na diet, 1.5 L fluid restriction reviewed with pt and wife.",
+        "Follow-up: cardiology clinic in 5 days with BMP; primary care in 2 weeks. Home RN for weight and med review in 48 hrs.",
+        "Discharge condition: stable, ambulating with cane, room air. Discharged HD3 14:20 with daughter."
+      ]
+    }
+  ]
+}

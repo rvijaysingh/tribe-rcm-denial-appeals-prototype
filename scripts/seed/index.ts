@@ -3,24 +3,33 @@
  *
  * Builds each seed pass's artifact, then loads everything into DATABASE_URL
  * in one transaction. Idempotent: rerunning with unchanged artifacts makes no
- * API calls (embeddings are cached) and leaves the database identical.
+ * API calls (embeddings are cached, charts are committed) and leaves the
+ * database identical.
+ *
+ * This script never calls the Anthropic API unless --generate is passed. If a
+ * generated artifact is missing or stale, it stops and says which.
  *
  * Flags:
- *   --skip-load   build artifacts only, do not touch the database
+ *   --generate              generate missing or stale LLM artifacts (costs money)
+ *   --regenerate=<ids|all>  force regeneration for these denial IDs; implies --generate
+ *   --concurrency=<n>       parallel LLM calls, default 6
+ *   --skip-load             build artifacts only, do not touch the database
  */
 
 import "./load-env";
 import { closeDb, db } from "../../src/lib/db/client";
+import { parseSeedArgs } from "./args";
 import { writeArtifact } from "./artifacts";
 import { embedDocumentsCached } from "./embed-cache";
-import { loadAccounts, loadCriteria, seedAnchor, type LoadCounts } from "./load";
+import { loadAccounts, loadCharts, loadCriteria, seedAnchor, type LoadCounts } from "./load";
 import { buildCriteria } from "./pass-a-criteria";
 import { buildCaseSeeds } from "./pass-b-cases";
+import { runPassC } from "./pass-c-charts";
 
 async function main(): Promise<void> {
-  const args = new Set(process.argv.slice(2));
-  const skipLoad = args.has("--skip-load");
+  const args = parseSeedArgs(process.argv.slice(2));
   const started = Date.now();
+  let llmCost = 0;
 
   // ---- Pass A
   const criteria = buildCriteria();
@@ -41,7 +50,25 @@ async function main(): Promise<void> {
       (casesChanged ? " [artifact updated]" : ""),
   );
 
-  if (skipLoad) {
+  // ---- Pass C
+  const passC = await runPassC(cases, criteria, {
+    generate: args.generate,
+    regenerate: args.regenerate,
+    concurrency: args.concurrency,
+  });
+  llmCost += passC.costUsd;
+  const totalLines = [...passC.charts.values()].reduce(
+    (n, c) => n + c.documents.reduce((m, d) => m + d.lines.length, 0),
+    0,
+  );
+  console.log(
+    `Pass C: ${passC.charts.size} charts, ${totalLines} lines` +
+      (passC.generated.length > 0
+        ? ` [generated ${passC.generated.length}, $${passC.costUsd.toFixed(2)}]`
+        : ""),
+  );
+
+  if (args.skipLoad) {
     console.log("--skip-load: artifacts written, database untouched");
     return;
   }
@@ -63,6 +90,7 @@ async function main(): Promise<void> {
     return {
       ...(await loadCriteria(tx, criteria, vectors)),
       ...(await loadAccounts(tx, cases, anchor)),
+      ...(await loadCharts(tx, cases, passC.charts)),
     };
   });
 
@@ -70,12 +98,17 @@ async function main(): Promise<void> {
   for (const [table, { upserted, removed }] of Object.entries(counts)) {
     console.log(`  ${table.padEnd(18)} ${String(upserted).padStart(5)} upserted, ${removed} removed`);
   }
-  console.log(`Seed complete in ${((Date.now() - started) / 1000).toFixed(1)}s`);
+  console.log(
+    `Seed complete in ${((Date.now() - started) / 1000).toFixed(1)}s` +
+      (llmCost > 0 ? `, LLM spend $${llmCost.toFixed(2)}` : ""),
+  );
 }
 
-main()
-  .catch((error) => {
-    console.error("db:seed failed:", error instanceof Error ? (error.stack ?? error.message) : error);
-    process.exitCode = 1;
-  })
-  .finally(() => closeDb());
+if (process.argv[1]?.replace(/\\/g, "/").endsWith("scripts/seed/index.ts")) {
+  main()
+    .catch((error) => {
+      console.error("db:seed failed:", error instanceof Error ? error.message : error);
+      process.exitCode = 1;
+    })
+    .finally(() => closeDb());
+}
