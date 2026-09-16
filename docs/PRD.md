@@ -47,7 +47,7 @@ The presenter plays the nurse during the demo.
 - Show four demo cases covering the four routes.
 - Show a review panel where every clinical assertion in the draft is linked to a chart line and a criteria clause.
 - Capture reviewer approve / edit / escalate as feedback.
-- Show real eval results from a 30-case test split and real cost per case.
+- Show real eval results from a 20-case test split and real cost per case.
 - Be resettable in one click for repeated rehearsals.
 
 **Non-goals (stated on screen)**
@@ -58,7 +58,7 @@ The presenter plays the nurse during the demo.
 
 - All four demo cases run end to end with the expected route.
 - Citation validity 100% on demo cases (every cited line and clause exists).
-- Eval harness runs on 30 cases and reports every metric in section 9.
+- Eval harness runs on 20 cases and reports every metric in section 9.
 - Live run of demo case 1 completes in under 90 seconds on Railway.
 - `npm run demo:reset` returns any demo case to unprocessed in under 2 seconds.
 
@@ -121,7 +121,7 @@ Note under cost per case: "Synthetic charts are 2 to 4 pages. Production charts 
 
 ### 6.5 Eval dashboard
 
-Latest EvalRun with every metric in section 9, plus a small history table of prior runs (prompt version, model, metrics). Banner: "n=30 synthetic cases. Metrics stabilize with the ~200 labeled appeals per payer specified for Phase 1."
+Latest EvalRun with every metric in section 9, plus a small history table of prior runs (prompt version, model, metrics). The reference run (see 9.3) is badged as such. Banner: "n=20 synthetic test cases. Metrics stabilize with the ~200 labeled appeals per payer specified for Phase 1."
 
 ## 7. Pipeline specification
 
@@ -236,7 +236,7 @@ Tests: routing table, validity checker, coverage math.
 | PipelineRun | id, denial_id, status, started_at, completed_at, total_ms, total_cost, prompt_version, model_set |
 | StageOutput | id, run_id, stage, input_json, output_json, ms, tokens_in, tokens_out, cost |
 | ReviewerFeedback | id, run_id, action (approve / edit / escalate), edited_text, diff_json, reason, reviewer_minutes |
-| EvalRun | id, created_at, prompt_version, model_set, metrics_json, per_case_json |
+| EvalRun | id, created_at, prompt_version, model_set, metrics_json, per_case_json, reference (bool) |
 
 pgvector columns are `vector(1024)`. Use HNSW indexes.
 
@@ -250,7 +250,9 @@ Five passes. The point of the pass structure is to avoid leakage: chart text is 
 - **Pass D: Denial letters and precedents.** From the seed plus clause codes, generate the payer's denial letter with CARC/RARC codes. Separately generate 4 to 6 precedent appeals per payer × category with outcomes.
 - **Pass E: Ground truth.** Derived from the seed: category, root cause, met and unmet clauses, expected route (all required met and strong → ready; some weak → needs review; any required unmet → needs docs; triage fail → do not appeal), winnable, approve_as_is. Human spot-check on 8 cases, corrections recorded.
 
-Split: 24 dev, 12 test, 4 demo. Fixed at seed time. Demo cases are excluded from every eval and from prompt tuning.
+Split: 16 dev, 20 test, 4 demo, over the 40 cases from Pass B. Fixed at seed time. Demo cases are excluded from every eval and from prompt tuning. n=20 on test gives 5-point granularity on every percentage metric; n=12 would give 8-point granularity, which reads as noise on a dashboard. 16 dev cases is enough for prompt tuning.
+
+The three pre-triaged do-not-appeal rows in 8.3 are additional to the 40, for 43 denials total. All three are tagged `split = 'demo'` so they never enter an eval. Generate short charts for them anyway so the account detail page works if someone clicks one.
 
 Embeddings are computed at seed time with Voyage and stored.
 
@@ -263,13 +265,13 @@ Embeddings are computed at seed time with Voyage and stored.
 | DEMO-03 | Northgate | Sepsis | $22,000 | Chart lacks the lactate value and repeat vitals the payer's required clause needs | needs docs | Exact missing element named; RN can request records instead of arguing |
 | DEMO-04 | Meridian | Pneumonia | $9,800 | Supported but one assertion rests on a weak inference; judge flags it | needs review | RN edits the flagged sentence, diff is stored, agreement metric updates |
 
-Plus three pre-triaged do-not-appeal rows in the queue: expired window (day 184 of 180), EV below threshold ($900 at P=0.25), ineligible category for that payer.
+Plus three pre-triaged do-not-appeal rows in the queue, additional to the 40 and tagged `split = 'demo'`: expired window (day 184 of 180), EV below threshold ($900 at P=0.25), ineligible category for that payer. Each gets a short chart so the account detail page renders.
 
 ## 9. Evaluation
 
 ### 9.1 Harness
 
-`npm run eval` runs the pipeline on the 12 test cases (and optionally the 24 dev cases with `--split dev`), compares to GroundTruth, writes an EvalRun with aggregate metrics and per-case detail. Records prompt version and model set. Never touches demo cases.
+`npm run eval` runs the pipeline on the 20 test cases (and optionally the 16 dev cases with `--split dev`), compares to GroundTruth, writes an EvalRun with aggregate metrics and per-case detail. Records prompt version and model set. Never touches demo cases.
 
 ### 9.2 Metrics
 
@@ -296,7 +298,8 @@ Plus three pre-triaged do-not-appeal rows in the queue: expired window (day 184 
 - Never tune on the test split or demo cases.
 - Every prompt change gets an EvalRun before merge. Report deltas.
 - The judge uses a different model than the drafter and sees the source material, not just the letter.
-- Metrics at n=12 test cases are noisy. The dashboard says so.
+- Metrics at n=20 test cases are noisy. The dashboard says so.
+- Eval cost. During M2 to M4 iteration, run evals with `MODEL_DRAFT=claude-sonnet-5` to keep spend down. Before the demo, run one final eval on Opus and set `reference = true` on that EvalRun. The eval dashboard badges the reference run. Only the reference run is quoted as the prototype's result; iteration runs are for deltas.
 
 ## 10. Architecture and hosting
 
@@ -329,7 +332,7 @@ Production deltas, stated in the README and the interview: runs in the client's 
 3. Review panel. Click two citation chips. Show the evidence matrix. Approve.
 4. Open DEMO-03 (cached). Needs docs. Show the named missing element.
 5. Open DEMO-04 (cached). Needs review. Show the flagged assertion, edit it, save. Show the feedback row.
-6. Metrics dashboard, measured panel. Then eval dashboard. Say the n=12 caveat before anyone asks.
+6. Metrics dashboard, measured panel. Then eval dashboard. Say the n=20 caveat before anyone asks.
 7. Return to the deck with one line: what was mock, what Phase 1 uses.
 
 **Fallback**: if the live run fails, click Show cached and continue. If the site is down, play the recording.
