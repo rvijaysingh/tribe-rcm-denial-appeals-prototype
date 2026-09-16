@@ -238,7 +238,7 @@ const SEPSIS: ClinicalCriterion[] = [
       "Lactate 4.2 mmol/L at 02:10, 3.6 mmol/L repeat at 05:30. Post-bolus vitals at 04:45: HR 118, BP 88/50, RR 26, T 38.9 C.",
     weak: "Lactate 2.1 mmol/L at 02:10, not repeated. Vitals at 04:45 after fluids: HR 102, BP 104/62, RR 20.",
     omit:
-      "Do not include any lactate result. Record only the initial triage vital signs; do not record any later set of vital signs. Use normal saline for any fluids, never lactated Ringer's.",
+      "Do not include any lactate result. After the triage vital signs, never record another complete set of vital signs (heart rate, blood pressure, respiratory rate, and temperature together); an isolated blood pressure or heart rate reading is fine. Use normal saline for any fluids, never lactated Ringer's.",
     mention: "lactate",
     forbid: ["lactate", "lactic"],
     payerAssertion:

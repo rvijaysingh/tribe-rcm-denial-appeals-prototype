@@ -14,12 +14,37 @@ import { getTableColumns, notInArray, sql, type SQL } from "drizzle-orm";
 import type { AnyPgColumn, PgTable } from "drizzle-orm/pg-core";
 import type { db } from "../../src/lib/db/client";
 import {
+  accounts,
   criteriaClauses,
   criteriaSets,
   payerNotes,
   payers,
 } from "../../src/lib/db/schema";
 import type { CriteriaArtifact } from "./pass-a-criteria";
+import type { CaseSeed } from "./pass-b-cases";
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Anchor date for converting seed day offsets into dates: midnight UTC on the
+ * day the seed runs. Reseeding on a later day moves every date forward, which
+ * keeps days-left for each case exactly as the seed specifies.
+ */
+export function seedAnchor(now: Date = new Date()): Date {
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+}
+
+export function daysBefore(anchor: Date, days: number): Date {
+  return new Date(anchor.getTime() - days * DAY_MS);
+}
+
+/** Received, discharge and admit dates for a case, relative to the anchor. */
+export function caseDates(seed: CaseSeed, anchor: Date): { received: Date; discharge: Date; admit: Date } {
+  const received = daysBefore(anchor, seed.daysSinceReceived);
+  const discharge = daysBefore(received, seed.dischargeToDenialDays);
+  const admit = daysBefore(discharge, seed.patient.losDays);
+  return { received, discharge, admit };
+}
 
 export type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
@@ -137,4 +162,24 @@ export async function loadCriteria(
     criteria_clauses: { upserted: clauseRows.length, removed: removedClauses },
     payer_notes: { upserted: noteRows.length, removed: removedNotes },
   };
+}
+
+/** Pass B: accounts. Denials load with pass D, once letter text exists. */
+export async function loadAccounts(tx: Tx, cases: CaseSeed[], anchor: Date): Promise<LoadCounts> {
+  const rows: (typeof accounts.$inferInsert)[] = cases.map((c) => {
+    const { admit, discharge } = caseDates(c, anchor);
+    return {
+      id: c.accountId,
+      mrn: c.patient.mrn,
+      patientAge: c.patient.age,
+      admitDate: admit,
+      dischargeDate: discharge,
+      drg: c.patient.drg,
+      condition: c.condition,
+    };
+  });
+
+  await upsertRows(tx, accounts, accounts.id, rows);
+  const removed = await deleteOrphans(tx, accounts, accounts.id, rows.map((r) => r.id));
+  return { accounts: { upserted: rows.length, removed } };
 }

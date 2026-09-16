@@ -13,8 +13,9 @@ import "./load-env";
 import { closeDb, db } from "../../src/lib/db/client";
 import { writeArtifact } from "./artifacts";
 import { embedDocumentsCached } from "./embed-cache";
-import { loadCriteria, type LoadCounts } from "./load";
+import { loadAccounts, loadCriteria, seedAnchor, type LoadCounts } from "./load";
 import { buildCriteria } from "./pass-a-criteria";
+import { buildCaseSeeds } from "./pass-b-cases";
 
 async function main(): Promise<void> {
   const args = new Set(process.argv.slice(2));
@@ -28,6 +29,16 @@ async function main(): Promise<void> {
     `Pass A: ${criteria.criteriaSets.length} criteria sets, ${criteria.clauses.length} clauses ` +
       `(${criteria.clauses.filter((c) => c.required).length} required), ` +
       `${criteria.payerNotes.length} payer notes${criteriaChanged ? " [artifact updated]" : ""}`,
+  );
+
+  // ---- Pass B
+  const casesArtifact = buildCaseSeeds(criteria);
+  const { cases } = casesArtifact;
+  const casesChanged = writeArtifact("cases.json", casesArtifact);
+  const bySplit = (split: string) => cases.filter((c) => c.split === split).length;
+  console.log(
+    `Pass B: ${cases.length} case seeds (dev ${bySplit("dev")}, test ${bySplit("test")}, demo ${bySplit("demo")})` +
+      (casesChanged ? " [artifact updated]" : ""),
   );
 
   if (skipLoad) {
@@ -48,7 +59,11 @@ async function main(): Promise<void> {
 
   // ---- Load
   const counts: LoadCounts = await db.transaction(async (tx) => {
-    return { ...(await loadCriteria(tx, criteria, vectors)) };
+    const anchor = seedAnchor();
+    return {
+      ...(await loadCriteria(tx, criteria, vectors)),
+      ...(await loadAccounts(tx, cases, anchor)),
+    };
   });
 
   console.log("Loaded:");

@@ -1,0 +1,3733 @@
+{
+  "seed": 20260916,
+  "cases": [
+    {
+      "denialId": "DEMO-01",
+      "accountId": "ACC-DEMO-01",
+      "split": "demo",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "amount": 18500,
+      "daysSinceReceived": 139,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 71,
+        "sex": "F",
+        "losDays": 5,
+        "drg": "291",
+        "mrn": "SYN6509339"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C1",
+          "code": "CHF-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C2",
+          "code": "CHF-02",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C3",
+          "code": "CHF-03",
+          "key": "failed_outpatient",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C4",
+          "code": "CHF-04",
+          "key": "renal",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C5",
+          "code": "CHF-05",
+          "key": "bnp",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C6",
+          "code": "CHF-06",
+          "key": "pulm_edema_imaging",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C7",
+          "code": "CHF-07",
+          "key": "resp_distress",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C8",
+          "code": "CHF-08",
+          "key": "telemetry_arrhythmia",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": false,
+      "purpose": "Clean end-to-end run, live with streaming. Expected route: ready."
+    },
+    {
+      "denialId": "DEMO-02",
+      "accountId": "ACC-DEMO-02",
+      "split": "demo",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 2400,
+      "daysSinceReceived": 60,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 66,
+        "sex": "M",
+        "losDays": 3,
+        "drg": "191",
+        "mrn": "SYN5940419"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C46",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C47",
+          "code": "COPD-02",
+          "key": "accessory_muscles",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C48",
+          "code": "COPD-03",
+          "key": "abg_acidosis",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C49",
+          "code": "COPD-04",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C50",
+          "code": "COPD-05",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C51",
+          "code": "COPD-06",
+          "key": "niv",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C52",
+          "code": "COPD-07",
+          "key": "home_oxygen_escalation",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": false,
+      "purpose": "Threshold story: under the old $5K capacity cutoff this denial was never worked. Expected route: ready."
+    },
+    {
+      "denialId": "DEMO-03",
+      "accountId": "ACC-DEMO-03",
+      "split": "demo",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 22000,
+      "daysSinceReceived": 52,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_docs",
+      "patient": {
+        "age": 68,
+        "sex": "F",
+        "losDays": 6,
+        "drg": "871",
+        "mrn": "SYN6345865"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C65",
+          "code": "SEP-01",
+          "key": "lactate_repeat_vitals",
+          "required": true,
+          "omittable": true,
+          "support": "unmet"
+        },
+        {
+          "clauseId": "C66",
+          "code": "SEP-02",
+          "key": "source_infection",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C67",
+          "code": "SEP-03",
+          "key": "organ_dysfunction",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C68",
+          "code": "SEP-04",
+          "key": "vasopressor",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C69",
+          "code": "SEP-05",
+          "key": "hypotension_map",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C70",
+          "code": "SEP-06",
+          "key": "iv_antibiotics",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C71",
+          "code": "SEP-07",
+          "key": "sirs_fever_wbc",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C72",
+          "code": "SEP-08",
+          "key": "mental_status",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C73",
+          "code": "SEP-09",
+          "key": "resp_failure",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false,
+      "purpose": "Chart lacks the lactate value and repeat vitals the required clause needs. Expected route: needs docs."
+    },
+    {
+      "denialId": "DEMO-04",
+      "accountId": "ACC-DEMO-04",
+      "split": "demo",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "amount": 9800,
+      "daysSinceReceived": 85,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 74,
+        "sex": "M",
+        "losDays": 4,
+        "drg": "194",
+        "mrn": "SYN8500503"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C22",
+          "code": "PNA-01",
+          "key": "curb65",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C23",
+          "code": "PNA-02",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C24",
+          "code": "PNA-03",
+          "key": "imaging_multilobar",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C25",
+          "code": "PNA-04",
+          "key": "labs_bun",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C26",
+          "code": "PNA-05",
+          "key": "confusion",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C27",
+          "code": "PNA-06",
+          "key": "hemodynamic",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C28",
+          "code": "PNA-07",
+          "key": "failed_oral_antibiotics",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C29",
+          "code": "PNA-08",
+          "key": "resp_rate",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C30",
+          "code": "PNA-09",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false,
+      "purpose": "One assertion rests on a weak inference that the judge flags. Expected route: needs review."
+    },
+    {
+      "denialId": "DNA-01",
+      "accountId": "ACC-DNA-01",
+      "split": "demo",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 12400,
+      "daysSinceReceived": 184,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "expired",
+      "intendedRoute": "do_not_appeal",
+      "patient": {
+        "age": 79,
+        "sex": "M",
+        "losDays": 3,
+        "drg": "292",
+        "mrn": "SYN9720090"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C1",
+          "code": "CHF-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C2",
+          "code": "CHF-02",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C3",
+          "code": "CHF-03",
+          "key": "failed_outpatient",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C4",
+          "code": "CHF-04",
+          "key": "renal",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C5",
+          "code": "CHF-05",
+          "key": "bnp",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C6",
+          "code": "CHF-06",
+          "key": "pulm_edema_imaging",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C7",
+          "code": "CHF-07",
+          "key": "resp_distress",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C8",
+          "code": "CHF-08",
+          "key": "telemetry_arrhythmia",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": true,
+      "purpose": "Pre-triaged do not appeal: expired window, day 184 of 180. Clinically winnable."
+    },
+    {
+      "denialId": "DNA-02",
+      "accountId": "ACC-DNA-02",
+      "split": "demo",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "amount": 700,
+      "daysSinceReceived": 30,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "below_ev",
+      "intendedRoute": "do_not_appeal",
+      "patient": {
+        "age": 63,
+        "sex": "F",
+        "losDays": 2,
+        "drg": "192",
+        "mrn": "SYN2126526"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C74",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C75",
+          "code": "COPD-02",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C76",
+          "code": "COPD-03",
+          "key": "mental_status_hypercapnic",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C77",
+          "code": "COPD-04",
+          "key": "niv",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C78",
+          "code": "COPD-05",
+          "key": "accessory_muscles",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C79",
+          "code": "COPD-06",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C80",
+          "code": "COPD-07",
+          "key": "comorbidity",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C81",
+          "code": "COPD-08",
+          "key": "abg_acidosis",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": true,
+      "purpose": "Pre-triaged do not appeal: EV below threshold, $700 at the payer floor P=0.38, EV $266."
+    },
+    {
+      "denialId": "DNA-03",
+      "accountId": "ACC-DNA-03",
+      "split": "demo",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 6200,
+      "daysSinceReceived": 20,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "ineligible_category",
+      "intendedRoute": "do_not_appeal",
+      "patient": {
+        "age": 57,
+        "sex": "F",
+        "losDays": 2,
+        "drg": "195",
+        "mrn": "SYN6033078"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C82",
+          "code": "PNA-01",
+          "key": "curb65",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C83",
+          "code": "PNA-02",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C84",
+          "code": "PNA-03",
+          "key": "hemodynamic",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C85",
+          "code": "PNA-04",
+          "key": "failed_oral_antibiotics",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C86",
+          "code": "PNA-05",
+          "key": "imaging_multilobar",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C87",
+          "code": "PNA-06",
+          "key": "resp_rate",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C88",
+          "code": "PNA-07",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        }
+      ],
+      "shortChart": true,
+      "purpose": "Pre-triaged do not appeal: Northgate does not accept level of care appeals."
+    },
+    {
+      "denialId": "CASE-001",
+      "accountId": "ACC-001",
+      "split": "test",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 2200,
+      "daysSinceReceived": 84,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 48,
+        "sex": "F",
+        "losDays": 3,
+        "drg": "293",
+        "mrn": "SYN2802310"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C31",
+          "code": "CHF-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C32",
+          "code": "CHF-02",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C33",
+          "code": "CHF-03",
+          "key": "bnp",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C34",
+          "code": "CHF-04",
+          "key": "resp_distress",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C35",
+          "code": "CHF-05",
+          "key": "pulm_edema_imaging",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C36",
+          "code": "CHF-06",
+          "key": "failed_outpatient",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C37",
+          "code": "CHF-07",
+          "key": "hypotension_perfusion",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-002",
+      "accountId": "ACC-002",
+      "split": "dev",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 2600,
+      "daysSinceReceived": 26,
+      "dischargeToDenialDays": 16,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 56,
+        "sex": "M",
+        "losDays": 3,
+        "drg": "195",
+        "mrn": "SYN7633969"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C53",
+          "code": "PNA-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C54",
+          "code": "PNA-02",
+          "key": "resp_rate",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C55",
+          "code": "PNA-03",
+          "key": "confusion",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C56",
+          "code": "PNA-04",
+          "key": "curb65",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C57",
+          "code": "PNA-05",
+          "key": "imaging_multilobar",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C58",
+          "code": "PNA-06",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-003",
+      "accountId": "ACC-003",
+      "split": "test",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 15000,
+      "daysSinceReceived": 79,
+      "dischargeToDenialDays": 8,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 69,
+        "sex": "M",
+        "losDays": 6,
+        "drg": "191",
+        "mrn": "SYN1227118"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C46",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C47",
+          "code": "COPD-02",
+          "key": "accessory_muscles",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C48",
+          "code": "COPD-03",
+          "key": "abg_acidosis",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C49",
+          "code": "COPD-04",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C50",
+          "code": "COPD-05",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C51",
+          "code": "COPD-06",
+          "key": "niv",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C52",
+          "code": "COPD-07",
+          "key": "home_oxygen_escalation",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-004",
+      "accountId": "ACC-004",
+      "split": "test",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "category": "level_of_care",
+      "rootCause": "los_exceeds_expected",
+      "amount": 2600,
+      "daysSinceReceived": 82,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 62,
+        "sex": "F",
+        "losDays": 6,
+        "drg": "292",
+        "mrn": "SYN1121280"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C31",
+          "code": "CHF-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C32",
+          "code": "CHF-02",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C33",
+          "code": "CHF-03",
+          "key": "bnp",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C34",
+          "code": "CHF-04",
+          "key": "resp_distress",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C35",
+          "code": "CHF-05",
+          "key": "pulm_edema_imaging",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C36",
+          "code": "CHF-06",
+          "key": "failed_outpatient",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C37",
+          "code": "CHF-07",
+          "key": "hypotension_perfusion",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-005",
+      "accountId": "ACC-005",
+      "split": "test",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 15000,
+      "daysSinceReceived": 82,
+      "dischargeToDenialDays": 14,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 66,
+        "sex": "F",
+        "losDays": 2,
+        "drg": "193",
+        "mrn": "SYN1809163"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C22",
+          "code": "PNA-01",
+          "key": "curb65",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C23",
+          "code": "PNA-02",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C24",
+          "code": "PNA-03",
+          "key": "imaging_multilobar",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C25",
+          "code": "PNA-04",
+          "key": "labs_bun",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C26",
+          "code": "PNA-05",
+          "key": "confusion",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C27",
+          "code": "PNA-06",
+          "key": "hemodynamic",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C28",
+          "code": "PNA-07",
+          "key": "failed_oral_antibiotics",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C29",
+          "code": "PNA-08",
+          "key": "resp_rate",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C30",
+          "code": "PNA-09",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-006",
+      "accountId": "ACC-006",
+      "split": "dev",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "category": "level_of_care",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 35000,
+      "daysSinceReceived": 37,
+      "dischargeToDenialDays": 13,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 89,
+        "sex": "M",
+        "losDays": 3,
+        "drg": "291",
+        "mrn": "SYN7096794"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C31",
+          "code": "CHF-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C32",
+          "code": "CHF-02",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C33",
+          "code": "CHF-03",
+          "key": "bnp",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C34",
+          "code": "CHF-04",
+          "key": "resp_distress",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C35",
+          "code": "CHF-05",
+          "key": "pulm_edema_imaging",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C36",
+          "code": "CHF-06",
+          "key": "failed_outpatient",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C37",
+          "code": "CHF-07",
+          "key": "hypotension_perfusion",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-007",
+      "accountId": "ACC-007",
+      "split": "test",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 12000,
+      "daysSinceReceived": 5,
+      "dischargeToDenialDays": 21,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_docs",
+      "patient": {
+        "age": 91,
+        "sex": "M",
+        "losDays": 6,
+        "drg": "192",
+        "mrn": "SYN8466487"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C74",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C75",
+          "code": "COPD-02",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C76",
+          "code": "COPD-03",
+          "key": "mental_status_hypercapnic",
+          "required": true,
+          "omittable": true,
+          "support": "unmet"
+        },
+        {
+          "clauseId": "C77",
+          "code": "COPD-04",
+          "key": "niv",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C78",
+          "code": "COPD-05",
+          "key": "accessory_muscles",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C79",
+          "code": "COPD-06",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C80",
+          "code": "COPD-07",
+          "key": "comorbidity",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C81",
+          "code": "COPD-08",
+          "key": "abg_acidosis",
+          "required": false,
+          "omittable": true,
+          "support": "weak"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-008",
+      "accountId": "ACC-008",
+      "split": "test",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "category": "level_of_care",
+      "rootCause": "los_exceeds_expected",
+      "amount": 35000,
+      "daysSinceReceived": 19,
+      "dischargeToDenialDays": 8,
+      "eligible": true,
+      "triage": "ineligible_category",
+      "intendedRoute": "do_not_appeal",
+      "patient": {
+        "age": 84,
+        "sex": "F",
+        "losDays": 3,
+        "drg": "195",
+        "mrn": "SYN6065732"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C82",
+          "code": "PNA-01",
+          "key": "curb65",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C83",
+          "code": "PNA-02",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C84",
+          "code": "PNA-03",
+          "key": "hemodynamic",
+          "required": true,
+          "omittable": true,
+          "support": "unmet"
+        },
+        {
+          "clauseId": "C85",
+          "code": "PNA-04",
+          "key": "failed_oral_antibiotics",
+          "required": false,
+          "omittable": true,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C86",
+          "code": "PNA-05",
+          "key": "imaging_multilobar",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C87",
+          "code": "PNA-06",
+          "key": "resp_rate",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C88",
+          "code": "PNA-07",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-009",
+      "accountId": "ACC-009",
+      "split": "test",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "amount": 23500,
+      "daysSinceReceived": 112,
+      "dischargeToDenialDays": 8,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 74,
+        "sex": "F",
+        "losDays": 2,
+        "drg": "190",
+        "mrn": "SYN2140250"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C16",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C17",
+          "code": "COPD-02",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C18",
+          "code": "COPD-03",
+          "key": "niv",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C19",
+          "code": "COPD-04",
+          "key": "accessory_muscles",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C20",
+          "code": "COPD-05",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C21",
+          "code": "COPD-06",
+          "key": "abg_acidosis",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-010",
+      "accountId": "ACC-010",
+      "split": "dev",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "amount": 3700,
+      "daysSinceReceived": 40,
+      "dischargeToDenialDays": 20,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_docs",
+      "patient": {
+        "age": 63,
+        "sex": "F",
+        "losDays": 5,
+        "drg": "195",
+        "mrn": "SYN5294221"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C82",
+          "code": "PNA-01",
+          "key": "curb65",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C83",
+          "code": "PNA-02",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C84",
+          "code": "PNA-03",
+          "key": "hemodynamic",
+          "required": true,
+          "omittable": true,
+          "support": "unmet"
+        },
+        {
+          "clauseId": "C85",
+          "code": "PNA-04",
+          "key": "failed_oral_antibiotics",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C86",
+          "code": "PNA-05",
+          "key": "imaging_multilobar",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C87",
+          "code": "PNA-06",
+          "key": "resp_rate",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C88",
+          "code": "PNA-07",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-011",
+      "accountId": "ACC-011",
+      "split": "test",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "category": "level_of_care",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 16500,
+      "daysSinceReceived": 198,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "expired",
+      "intendedRoute": "do_not_appeal",
+      "patient": {
+        "age": 56,
+        "sex": "M",
+        "losDays": 3,
+        "drg": "871",
+        "mrn": "SYN1045777"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C9",
+          "code": "SEP-01",
+          "key": "lactate_repeat_vitals",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C10",
+          "code": "SEP-02",
+          "key": "hypotension_map",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C11",
+          "code": "SEP-03",
+          "key": "source_infection",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C12",
+          "code": "SEP-04",
+          "key": "organ_dysfunction",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C13",
+          "code": "SEP-05",
+          "key": "iv_antibiotics",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C14",
+          "code": "SEP-06",
+          "key": "sirs_fever_wbc",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C15",
+          "code": "SEP-07",
+          "key": "vasopressor",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-012",
+      "accountId": "ACC-012",
+      "split": "dev",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 2300,
+      "daysSinceReceived": 10,
+      "dischargeToDenialDays": 19,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 61,
+        "sex": "M",
+        "losDays": 4,
+        "drg": "872",
+        "mrn": "SYN2618169"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C9",
+          "code": "SEP-01",
+          "key": "lactate_repeat_vitals",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C10",
+          "code": "SEP-02",
+          "key": "hypotension_map",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C11",
+          "code": "SEP-03",
+          "key": "source_infection",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C12",
+          "code": "SEP-04",
+          "key": "organ_dysfunction",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C13",
+          "code": "SEP-05",
+          "key": "iv_antibiotics",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C14",
+          "code": "SEP-06",
+          "key": "sirs_fever_wbc",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C15",
+          "code": "SEP-07",
+          "key": "vasopressor",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-013",
+      "accountId": "ACC-013",
+      "split": "test",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 24500,
+      "daysSinceReceived": 21,
+      "dischargeToDenialDays": 20,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_docs",
+      "patient": {
+        "age": 77,
+        "sex": "F",
+        "losDays": 6,
+        "drg": "292",
+        "mrn": "SYN9856613"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C59",
+          "code": "CHF-01",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C60",
+          "code": "CHF-02",
+          "key": "failed_outpatient",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C61",
+          "code": "CHF-03",
+          "key": "pulm_edema_imaging",
+          "required": true,
+          "omittable": true,
+          "support": "unmet"
+        },
+        {
+          "clauseId": "C62",
+          "code": "CHF-04",
+          "key": "hypoxia",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C63",
+          "code": "CHF-05",
+          "key": "bnp",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C64",
+          "code": "CHF-06",
+          "key": "renal",
+          "required": false,
+          "omittable": true,
+          "support": "weak"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-014",
+      "accountId": "ACC-014",
+      "split": "dev",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 2600,
+      "daysSinceReceived": 49,
+      "dischargeToDenialDays": 10,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 91,
+        "sex": "M",
+        "losDays": 3,
+        "drg": "872",
+        "mrn": "SYN5283774"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C65",
+          "code": "SEP-01",
+          "key": "lactate_repeat_vitals",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C66",
+          "code": "SEP-02",
+          "key": "source_infection",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C67",
+          "code": "SEP-03",
+          "key": "organ_dysfunction",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C68",
+          "code": "SEP-04",
+          "key": "vasopressor",
+          "required": true,
+          "omittable": true,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C69",
+          "code": "SEP-05",
+          "key": "hypotension_map",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C70",
+          "code": "SEP-06",
+          "key": "iv_antibiotics",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C71",
+          "code": "SEP-07",
+          "key": "sirs_fever_wbc",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C72",
+          "code": "SEP-08",
+          "key": "mental_status",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C73",
+          "code": "SEP-09",
+          "key": "resp_failure",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-015",
+      "accountId": "ACC-015",
+      "split": "test",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "amount": 23000,
+      "daysSinceReceived": 46,
+      "dischargeToDenialDays": 20,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 87,
+        "sex": "F",
+        "losDays": 5,
+        "drg": "872",
+        "mrn": "SYN5181725"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C65",
+          "code": "SEP-01",
+          "key": "lactate_repeat_vitals",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C66",
+          "code": "SEP-02",
+          "key": "source_infection",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C67",
+          "code": "SEP-03",
+          "key": "organ_dysfunction",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C68",
+          "code": "SEP-04",
+          "key": "vasopressor",
+          "required": true,
+          "omittable": true,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C69",
+          "code": "SEP-05",
+          "key": "hypotension_map",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C70",
+          "code": "SEP-06",
+          "key": "iv_antibiotics",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C71",
+          "code": "SEP-07",
+          "key": "sirs_fever_wbc",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C72",
+          "code": "SEP-08",
+          "key": "mental_status",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C73",
+          "code": "SEP-09",
+          "key": "resp_failure",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-016",
+      "accountId": "ACC-016",
+      "split": "test",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 2700,
+      "daysSinceReceived": 22,
+      "dischargeToDenialDays": 19,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 82,
+        "sex": "F",
+        "losDays": 6,
+        "drg": "191",
+        "mrn": "SYN2342338"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C74",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C75",
+          "code": "COPD-02",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C76",
+          "code": "COPD-03",
+          "key": "mental_status_hypercapnic",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C77",
+          "code": "COPD-04",
+          "key": "niv",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C78",
+          "code": "COPD-05",
+          "key": "accessory_muscles",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C79",
+          "code": "COPD-06",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C80",
+          "code": "COPD-07",
+          "key": "comorbidity",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C81",
+          "code": "COPD-08",
+          "key": "abg_acidosis",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-017",
+      "accountId": "ACC-017",
+      "split": "dev",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 17500,
+      "daysSinceReceived": 60,
+      "dischargeToDenialDays": 7,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_docs",
+      "patient": {
+        "age": 73,
+        "sex": "M",
+        "losDays": 6,
+        "drg": "192",
+        "mrn": "SYN7473238"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C16",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C17",
+          "code": "COPD-02",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C18",
+          "code": "COPD-03",
+          "key": "niv",
+          "required": true,
+          "omittable": true,
+          "support": "unmet"
+        },
+        {
+          "clauseId": "C19",
+          "code": "COPD-04",
+          "key": "accessory_muscles",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C20",
+          "code": "COPD-05",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C21",
+          "code": "COPD-06",
+          "key": "abg_acidosis",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-018",
+      "accountId": "ACC-018",
+      "split": "test",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 41000,
+      "daysSinceReceived": 77,
+      "dischargeToDenialDays": 20,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 67,
+        "sex": "M",
+        "losDays": 3,
+        "drg": "291",
+        "mrn": "SYN5282191"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C1",
+          "code": "CHF-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C2",
+          "code": "CHF-02",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C3",
+          "code": "CHF-03",
+          "key": "failed_outpatient",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C4",
+          "code": "CHF-04",
+          "key": "renal",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C5",
+          "code": "CHF-05",
+          "key": "bnp",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C6",
+          "code": "CHF-06",
+          "key": "pulm_edema_imaging",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C7",
+          "code": "CHF-07",
+          "key": "resp_distress",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C8",
+          "code": "CHF-08",
+          "key": "telemetry_arrhythmia",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-019",
+      "accountId": "ACC-019",
+      "split": "test",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 380,
+      "daysSinceReceived": 76,
+      "dischargeToDenialDays": 9,
+      "eligible": true,
+      "triage": "below_ev",
+      "intendedRoute": "do_not_appeal",
+      "patient": {
+        "age": 50,
+        "sex": "F",
+        "losDays": 3,
+        "drg": "871",
+        "mrn": "SYN6583806"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C9",
+          "code": "SEP-01",
+          "key": "lactate_repeat_vitals",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C10",
+          "code": "SEP-02",
+          "key": "hypotension_map",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C11",
+          "code": "SEP-03",
+          "key": "source_infection",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C12",
+          "code": "SEP-04",
+          "key": "organ_dysfunction",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C13",
+          "code": "SEP-05",
+          "key": "iv_antibiotics",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C14",
+          "code": "SEP-06",
+          "key": "sirs_fever_wbc",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C15",
+          "code": "SEP-07",
+          "key": "vasopressor",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-020",
+      "accountId": "ACC-020",
+      "split": "dev",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "category": "level_of_care",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 24000,
+      "daysSinceReceived": 41,
+      "dischargeToDenialDays": 7,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 58,
+        "sex": "F",
+        "losDays": 6,
+        "drg": "292",
+        "mrn": "SYN9391611"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C1",
+          "code": "CHF-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C2",
+          "code": "CHF-02",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C3",
+          "code": "CHF-03",
+          "key": "failed_outpatient",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C4",
+          "code": "CHF-04",
+          "key": "renal",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C5",
+          "code": "CHF-05",
+          "key": "bnp",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C6",
+          "code": "CHF-06",
+          "key": "pulm_edema_imaging",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C7",
+          "code": "CHF-07",
+          "key": "resp_distress",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C8",
+          "code": "CHF-08",
+          "key": "telemetry_arrhythmia",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-021",
+      "accountId": "ACC-021",
+      "split": "test",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "amount": 23500,
+      "daysSinceReceived": 48,
+      "dischargeToDenialDays": 12,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 65,
+        "sex": "F",
+        "losDays": 5,
+        "drg": "293",
+        "mrn": "SYN1450421"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C59",
+          "code": "CHF-01",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C60",
+          "code": "CHF-02",
+          "key": "failed_outpatient",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C61",
+          "code": "CHF-03",
+          "key": "pulm_edema_imaging",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C62",
+          "code": "CHF-04",
+          "key": "hypoxia",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C63",
+          "code": "CHF-05",
+          "key": "bnp",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C64",
+          "code": "CHF-06",
+          "key": "renal",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-022",
+      "accountId": "ACC-022",
+      "split": "dev",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 3300,
+      "daysSinceReceived": 84,
+      "dischargeToDenialDays": 15,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 77,
+        "sex": "F",
+        "losDays": 5,
+        "drg": "872",
+        "mrn": "SYN9767439"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C38",
+          "code": "SEP-01",
+          "key": "hypotension_map",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C39",
+          "code": "SEP-02",
+          "key": "iv_antibiotics",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C40",
+          "code": "SEP-03",
+          "key": "organ_dysfunction",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C41",
+          "code": "SEP-04",
+          "key": "source_infection",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C42",
+          "code": "SEP-05",
+          "key": "sirs_fever_wbc",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C43",
+          "code": "SEP-06",
+          "key": "lactate_repeat_vitals",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C44",
+          "code": "SEP-07",
+          "key": "mental_status",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C45",
+          "code": "SEP-08",
+          "key": "resp_failure",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-023",
+      "accountId": "ACC-023",
+      "split": "dev",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 45000,
+      "daysSinceReceived": 22,
+      "dischargeToDenialDays": 16,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 91,
+        "sex": "F",
+        "losDays": 3,
+        "drg": "292",
+        "mrn": "SYN2240637"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C59",
+          "code": "CHF-01",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C60",
+          "code": "CHF-02",
+          "key": "failed_outpatient",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C61",
+          "code": "CHF-03",
+          "key": "pulm_edema_imaging",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C62",
+          "code": "CHF-04",
+          "key": "hypoxia",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C63",
+          "code": "CHF-05",
+          "key": "bnp",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C64",
+          "code": "CHF-06",
+          "key": "renal",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-024",
+      "accountId": "ACC-024",
+      "split": "dev",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 360,
+      "daysSinceReceived": 51,
+      "dischargeToDenialDays": 19,
+      "eligible": true,
+      "triage": "below_ev",
+      "intendedRoute": "do_not_appeal",
+      "patient": {
+        "age": 85,
+        "sex": "F",
+        "losDays": 4,
+        "drg": "193",
+        "mrn": "SYN4789154"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C53",
+          "code": "PNA-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C54",
+          "code": "PNA-02",
+          "key": "resp_rate",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C55",
+          "code": "PNA-03",
+          "key": "confusion",
+          "required": true,
+          "omittable": true,
+          "support": "unmet"
+        },
+        {
+          "clauseId": "C56",
+          "code": "PNA-04",
+          "key": "curb65",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C57",
+          "code": "PNA-05",
+          "key": "imaging_multilobar",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C58",
+          "code": "PNA-06",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-025",
+      "accountId": "ACC-025",
+      "split": "dev",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 2500,
+      "daysSinceReceived": 52,
+      "dischargeToDenialDays": 13,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 88,
+        "sex": "F",
+        "losDays": 3,
+        "drg": "291",
+        "mrn": "SYN4400273"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C1",
+          "code": "CHF-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C2",
+          "code": "CHF-02",
+          "key": "iv_diuretic",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C3",
+          "code": "CHF-03",
+          "key": "failed_outpatient",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C4",
+          "code": "CHF-04",
+          "key": "renal",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C5",
+          "code": "CHF-05",
+          "key": "bnp",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C6",
+          "code": "CHF-06",
+          "key": "pulm_edema_imaging",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C7",
+          "code": "CHF-07",
+          "key": "resp_distress",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C8",
+          "code": "CHF-08",
+          "key": "telemetry_arrhythmia",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-026",
+      "accountId": "ACC-026",
+      "split": "test",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 30000,
+      "daysSinceReceived": 130,
+      "dischargeToDenialDays": 8,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 59,
+        "sex": "M",
+        "losDays": 4,
+        "drg": "195",
+        "mrn": "SYN5505325"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C22",
+          "code": "PNA-01",
+          "key": "curb65",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C23",
+          "code": "PNA-02",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C24",
+          "code": "PNA-03",
+          "key": "imaging_multilobar",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C25",
+          "code": "PNA-04",
+          "key": "labs_bun",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C26",
+          "code": "PNA-05",
+          "key": "confusion",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C27",
+          "code": "PNA-06",
+          "key": "hemodynamic",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C28",
+          "code": "PNA-07",
+          "key": "failed_oral_antibiotics",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C29",
+          "code": "PNA-08",
+          "key": "resp_rate",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C30",
+          "code": "PNA-09",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-027",
+      "accountId": "ACC-027",
+      "split": "test",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "category": "level_of_care",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 26500,
+      "daysSinceReceived": 96,
+      "dischargeToDenialDays": 15,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 77,
+        "sex": "M",
+        "losDays": 2,
+        "drg": "190",
+        "mrn": "SYN7063371"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C46",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C47",
+          "code": "COPD-02",
+          "key": "accessory_muscles",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C48",
+          "code": "COPD-03",
+          "key": "abg_acidosis",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C49",
+          "code": "COPD-04",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C50",
+          "code": "COPD-05",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C51",
+          "code": "COPD-06",
+          "key": "niv",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C52",
+          "code": "COPD-07",
+          "key": "home_oxygen_escalation",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-028",
+      "accountId": "ACC-028",
+      "split": "dev",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "amount": 4300,
+      "daysSinceReceived": 78,
+      "dischargeToDenialDays": 21,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 82,
+        "sex": "M",
+        "losDays": 2,
+        "drg": "871",
+        "mrn": "SYN9573631"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C38",
+          "code": "SEP-01",
+          "key": "hypotension_map",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C39",
+          "code": "SEP-02",
+          "key": "iv_antibiotics",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C40",
+          "code": "SEP-03",
+          "key": "organ_dysfunction",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C41",
+          "code": "SEP-04",
+          "key": "source_infection",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C42",
+          "code": "SEP-05",
+          "key": "sirs_fever_wbc",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C43",
+          "code": "SEP-06",
+          "key": "lactate_repeat_vitals",
+          "required": false,
+          "omittable": true,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C44",
+          "code": "SEP-07",
+          "key": "mental_status",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C45",
+          "code": "SEP-08",
+          "key": "resp_failure",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-029",
+      "accountId": "ACC-029",
+      "split": "test",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "amount": 3100,
+      "daysSinceReceived": 63,
+      "dischargeToDenialDays": 19,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 85,
+        "sex": "M",
+        "losDays": 2,
+        "drg": "872",
+        "mrn": "SYN4928903"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C65",
+          "code": "SEP-01",
+          "key": "lactate_repeat_vitals",
+          "required": true,
+          "omittable": true,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C66",
+          "code": "SEP-02",
+          "key": "source_infection",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C67",
+          "code": "SEP-03",
+          "key": "organ_dysfunction",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C68",
+          "code": "SEP-04",
+          "key": "vasopressor",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C69",
+          "code": "SEP-05",
+          "key": "hypotension_map",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C70",
+          "code": "SEP-06",
+          "key": "iv_antibiotics",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C71",
+          "code": "SEP-07",
+          "key": "sirs_fever_wbc",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C72",
+          "code": "SEP-08",
+          "key": "mental_status",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C73",
+          "code": "SEP-09",
+          "key": "resp_failure",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-030",
+      "accountId": "ACC-030",
+      "split": "test",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 2600,
+      "daysSinceReceived": 68,
+      "dischargeToDenialDays": 17,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_docs",
+      "patient": {
+        "age": 55,
+        "sex": "F",
+        "losDays": 5,
+        "drg": "194",
+        "mrn": "SYN1654878"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C53",
+          "code": "PNA-01",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C54",
+          "code": "PNA-02",
+          "key": "resp_rate",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C55",
+          "code": "PNA-03",
+          "key": "confusion",
+          "required": true,
+          "omittable": true,
+          "support": "unmet"
+        },
+        {
+          "clauseId": "C56",
+          "code": "PNA-04",
+          "key": "curb65",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C57",
+          "code": "PNA-05",
+          "key": "imaging_multilobar",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C58",
+          "code": "PNA-06",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-031",
+      "accountId": "ACC-031",
+      "split": "test",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "category": "level_of_care",
+      "rootCause": "los_exceeds_expected",
+      "amount": 8000,
+      "daysSinceReceived": 30,
+      "dischargeToDenialDays": 21,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_docs",
+      "patient": {
+        "age": 69,
+        "sex": "M",
+        "losDays": 2,
+        "drg": "190",
+        "mrn": "SYN3046197"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C46",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C47",
+          "code": "COPD-02",
+          "key": "accessory_muscles",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C48",
+          "code": "COPD-03",
+          "key": "abg_acidosis",
+          "required": true,
+          "omittable": true,
+          "support": "unmet"
+        },
+        {
+          "clauseId": "C49",
+          "code": "COPD-04",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C50",
+          "code": "COPD-05",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C51",
+          "code": "COPD-06",
+          "key": "niv",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C52",
+          "code": "COPD-07",
+          "key": "home_oxygen_escalation",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-032",
+      "accountId": "ACC-032",
+      "split": "dev",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 3500,
+      "daysSinceReceived": 124,
+      "dischargeToDenialDays": 9,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_review",
+      "patient": {
+        "age": 52,
+        "sex": "F",
+        "losDays": 5,
+        "drg": "191",
+        "mrn": "SYN2868795"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C16",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C17",
+          "code": "COPD-02",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C18",
+          "code": "COPD-03",
+          "key": "niv",
+          "required": true,
+          "omittable": true,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C19",
+          "code": "COPD-04",
+          "key": "accessory_muscles",
+          "required": false,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C20",
+          "code": "COPD-05",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C21",
+          "code": "COPD-06",
+          "key": "abg_acidosis",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-033",
+      "accountId": "ACC-033",
+      "split": "dev",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "category": "level_of_care",
+      "rootCause": "los_exceeds_expected",
+      "amount": 1800,
+      "daysSinceReceived": 147,
+      "dischargeToDenialDays": 14,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 67,
+        "sex": "F",
+        "losDays": 4,
+        "drg": "194",
+        "mrn": "SYN5835716"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C22",
+          "code": "PNA-01",
+          "key": "curb65",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C23",
+          "code": "PNA-02",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C24",
+          "code": "PNA-03",
+          "key": "imaging_multilobar",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C25",
+          "code": "PNA-04",
+          "key": "labs_bun",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C26",
+          "code": "PNA-05",
+          "key": "confusion",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C27",
+          "code": "PNA-06",
+          "key": "hemodynamic",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C28",
+          "code": "PNA-07",
+          "key": "failed_oral_antibiotics",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C29",
+          "code": "PNA-08",
+          "key": "resp_rate",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C30",
+          "code": "PNA-09",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-034",
+      "accountId": "ACC-034",
+      "split": "dev",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "amount": 12500,
+      "daysSinceReceived": 41,
+      "dischargeToDenialDays": 17,
+      "eligible": false,
+      "triage": "account_flagged",
+      "intendedRoute": "do_not_appeal",
+      "patient": {
+        "age": 50,
+        "sex": "F",
+        "losDays": 4,
+        "drg": "192",
+        "mrn": "SYN5650696"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C74",
+          "code": "COPD-01",
+          "key": "hypoxia_hypercapnia",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C75",
+          "code": "COPD-02",
+          "key": "failed_ed_treatment",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C76",
+          "code": "COPD-03",
+          "key": "mental_status_hypercapnic",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C77",
+          "code": "COPD-04",
+          "key": "niv",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C78",
+          "code": "COPD-05",
+          "key": "accessory_muscles",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C79",
+          "code": "COPD-06",
+          "key": "steroid_iv",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C80",
+          "code": "COPD-07",
+          "key": "comorbidity",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C81",
+          "code": "COPD-08",
+          "key": "abg_acidosis",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-035",
+      "accountId": "ACC-035",
+      "split": "dev",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 26000,
+      "daysSinceReceived": 17,
+      "dischargeToDenialDays": 19,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "needs_docs",
+      "patient": {
+        "age": 77,
+        "sex": "M",
+        "losDays": 4,
+        "drg": "195",
+        "mrn": "SYN8327554"
+      },
+      "carc": "CO-50",
+      "rarc": "N115",
+      "clauses": [
+        {
+          "clauseId": "C82",
+          "code": "PNA-01",
+          "key": "curb65",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C83",
+          "code": "PNA-02",
+          "key": "hypoxia",
+          "required": true,
+          "omittable": false,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C84",
+          "code": "PNA-03",
+          "key": "hemodynamic",
+          "required": true,
+          "omittable": true,
+          "support": "unmet"
+        },
+        {
+          "clauseId": "C85",
+          "code": "PNA-04",
+          "key": "failed_oral_antibiotics",
+          "required": false,
+          "omittable": true,
+          "support": "weak"
+        },
+        {
+          "clauseId": "C86",
+          "code": "PNA-05",
+          "key": "imaging_multilobar",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C87",
+          "code": "PNA-06",
+          "key": "resp_rate",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C88",
+          "code": "PNA-07",
+          "key": "iv_antibiotic_need",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    },
+    {
+      "denialId": "CASE-036",
+      "accountId": "ACC-036",
+      "split": "test",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "amount": 26000,
+      "daysSinceReceived": 20,
+      "dischargeToDenialDays": 16,
+      "eligible": true,
+      "triage": "appeal",
+      "intendedRoute": "ready",
+      "patient": {
+        "age": 88,
+        "sex": "F",
+        "losDays": 6,
+        "drg": "872",
+        "mrn": "SYN7446301"
+      },
+      "carc": "CO-50",
+      "rarc": "N130",
+      "clauses": [
+        {
+          "clauseId": "C38",
+          "code": "SEP-01",
+          "key": "hypotension_map",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C39",
+          "code": "SEP-02",
+          "key": "iv_antibiotics",
+          "required": true,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C40",
+          "code": "SEP-03",
+          "key": "organ_dysfunction",
+          "required": true,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C41",
+          "code": "SEP-04",
+          "key": "source_infection",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C42",
+          "code": "SEP-05",
+          "key": "sirs_fever_wbc",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C43",
+          "code": "SEP-06",
+          "key": "lactate_repeat_vitals",
+          "required": false,
+          "omittable": true,
+          "support": "absent"
+        },
+        {
+          "clauseId": "C44",
+          "code": "SEP-07",
+          "key": "mental_status",
+          "required": false,
+          "omittable": true,
+          "support": "strong"
+        },
+        {
+          "clauseId": "C45",
+          "code": "SEP-08",
+          "key": "resp_failure",
+          "required": false,
+          "omittable": false,
+          "support": "strong"
+        }
+      ],
+      "shortChart": false
+    }
+  ]
+}
