@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-003",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "24be9a51b14e96914265a802215f48065ef96561b22011a0be88952d9dde71ba",
+  "generatedAt": "2026-09-16T12:58:20.807Z",
+  "attempts": 2,
+  "tokensIn": 2180,
+  "tokensOut": 2077,
+  "costUsd": 0.062825,
+  "memberId": "MBR621265628",
+  "claimNumber": "CLM51171834543",
+  "citedCodes": [
+    "COPD-01",
+    "COPD-02"
+  ],
+  "letterTemplate": "CASCADE MUTUAL\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR621265628\nClaim Number: CLM51171834543\nService Reviewed: Inpatient admission for COPD exacerbation, DRG 191\nDates of Service: [[ADMIT_DATE]] to [[DISCHARGE_DATE]]\nDetermination: Adverse determination, medical necessity\n\nNOTICE OF ADVERSE DETERMINATION\n\nCascade Mutual has completed a medical necessity review of the inpatient admission identified above. Based on the clinical information submitted by the facility and the attending physician, the requested inpatient level of care does not meet the applicable medical necessity criteria. Payment for the inpatient admission billed under DRG 191 is denied.\n\nCLAIM ADJUSTMENT CODES\nCARC CO-50\nRARC N115\n\nBASIS FOR DETERMINATION\nThe review was conducted using the MCG-style criteria set, edition in effect for the dates of service.\n\nCOPD-01: Oxygenation was near baseline and did not require inpatient care.\nCOPD-02: Work of breathing was not significantly increased.\n\nOverall rationale: The services provided could have been delivered safely at a lower level of care, such as observation.\n\nThis determination applies to the medical necessity of the inpatient level of care only. It is not a statement that the care delivered was unnecessary, and it does not direct the treating provider's clinical judgment. The member is not financially liable for services denied under the codes cited above where provider contract terms apply.\n\nAPPEAL RIGHTS\nYou, your authorized representative, or your treating provider may request an appeal of this adverse determination. Submit a written appeal addressed to Utilization Management, Cascade Mutual. The appeal should reference the guideline code and the specific finding being contested for each argument raised, addressing COPD-01 and COPD-02 separately. Supporting documentation may include the admission history and physical, physician progress notes, nursing assessments, and respiratory therapy records for the period from [[ADMIT_DATE]] to [[DISCHARGE_DATE]].\n\nA physician attestation line must be included and signed by the attending or reviewing physician.\n\nPhysician attestation: I attest that the clinical information submitted with this appeal is accurate and complete to the best of my knowledge. ______________________________\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that time may not be accepted for review.\n\nA peer-to-peer discussion with the reviewing physician may be requested by contacting Utilization Management at the number listed on the member identification card.\n\nSincerely,\n\nMedical Director, Utilization Management\nCascade Mutual"
+}

@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-014",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "d2a34c1eea4c53ba707932e8f8f3415387ddae63d54d10bffe71b844b742f83a",
+  "generatedAt": "2026-09-16T12:59:08.057Z",
+  "attempts": 2,
+  "tokensIn": 2198,
+  "tokensOut": 2105,
+  "costUsd": 0.063615,
+  "memberId": "MBR627366006",
+  "claimNumber": "CLM93579436228",
+  "citedCodes": [
+    "SEP-01",
+    "SEP-04"
+  ],
+  "letterTemplate": "Northgate Advantage\nUtilization Management Department\n\nNotice of Adverse Determination - Medical Necessity\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR627366006\nClaim Number: CLM93579436228\nService Reviewed: Inpatient admission for Sepsis, DRG 872\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nCriteria Set Applied: MCG-style criteria, current edition on file\n\nDETERMINATION\n\nFollowing review of the submitted clinical documentation, Northgate Advantage has issued an adverse determination based on medical necessity for the inpatient admission identified above. The documentation available at the time of admission did not meet inpatient criteria.\n\nCRITERIA REVIEWED AND FINDINGS\n\nSEP-01: Not met. Laboratory and vital sign findings did not show sepsis with persistent instability after initial treatment.\n\nSEP-04: Not met. No vasopressor support was required.\n\nNo other criteria codes were applied in reaching this adverse determination.\n\nCLAIM ADJUSTMENT CODING\n\nThe following codes apply to this claim:\n\nCARC CO-50\nRARC N115\n\nThis adverse determination is a medical necessity determination. It was made by a physician reviewer applying the criteria set identified above to the documentation submitted with the claim and any records received during the review period.\n\nAPPEAL RIGHTS AND INSTRUCTIONS\n\nA reconsideration request may be submitted within the applicable filing window. The request must include a written clinical rationale that maps each clinical finding to a numbered criterion cited in this notice. Submissions that do not provide this mapping may be returned without substantive review.\n\nLevel of care denials are not eligible for provider appeal.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Requests received after that deadline will be closed as untimely.\n\nSupporting documentation, including records generated between [[ADMIT_DATE]] and [[DISCHARGE_DATE]] that were not available at the time of the initial review, should accompany the reconsideration request.\n\nThe member is not responsible for charges denied under the codes listed above except as permitted by the member's plan documents and applicable contract terms.\n\nQuestions regarding this notice may be directed to the Utilization Management Department using the contact information on the reverse of this letter. Please reference the claim number and member ID in all correspondence.\n\nSincerely,\n\nMedical Director, Utilization Management\nNorthgate Advantage"
+}

@@ -1,0 +1,18 @@
+{
+  "denialId": "DEMO-04",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "dc440affb10cdae00221fd0ce0315e70487c4558124ded61ad88ab0d21c2820f",
+  "generatedAt": "2026-09-16T12:57:52.054Z",
+  "attempts": 2,
+  "tokensIn": 2202,
+  "tokensOut": 1801,
+  "costUsd": 0.056035,
+  "memberId": "MBR067083070",
+  "claimNumber": "CLM77259837020",
+  "citedCodes": [
+    "PNA-02",
+    "PNA-04"
+  ],
+  "letterTemplate": "Meridian Health Plan\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nRE: Adverse Determination - Medical Necessity\nMember ID: MBR067083070\nClaim Number: CLM77259837020\nService Reviewed: Inpatient admission, Community-acquired pneumonia, DRG 194\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\n\nDear Member,\n\nMeridian Health Plan has completed review of the above inpatient admission. This notice is an adverse determination based on medical necessity. Benefits for the inpatient level of care billed under DRG 194 for the period [[ADMIT_DATE]] through [[DISCHARGE_DATE]] are denied.\n\nBASIS FOR DETERMINATION\n\nThe submitted medical record does not document clinical severity sufficient to require inpatient admission. Review was performed by a physician reviewer applying the InterQual-style criteria set adopted by the plan.\n\nCriteria not met:\n\nPNA-02: The patient did not have hypoxemia requiring inpatient oxygen.\n\nPNA-04: Laboratory values were within acceptable limits.\n\nNo other criteria codes were applied to this determination.\n\nCLAIM ADJUSTMENT CODING\n\nThis claim has been adjudicated with the following codes:\n\nCARC CO-50\nRARC N115\n\nAPPEAL RIGHTS\n\nYou or your authorized representative, including the treating provider acting on your behalf, may request a Level 1 appeal of this medical necessity determination. The appeal may be submitted by letter or by document upload through the plan provider portal.\n\nYour appeal should address the criteria codes cited above inline, identifying PNA-02 and PNA-04 by code and responding to each finding stated in this notice. Please attach the History and Physical and all progress notes for the admission under review. Appeal submissions are subject to a five page limit, excluding attached clinical records.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Submissions received after that date may not be eligible for Level 1 review.\n\nThis determination addresses medical necessity for the inpatient admission only. Questions regarding member cost share, provider billing, or coordination of benefits should be directed to the customer service number printed on the member identification card.\n\nSincerely,\n\nMedical Director, Utilization Management\nMeridian Health Plan"
+}

@@ -21,10 +21,20 @@ import { closeDb, db } from "../../src/lib/db/client";
 import { parseSeedArgs } from "./args";
 import { writeArtifact } from "./artifacts";
 import { embedDocumentsCached } from "./embed-cache";
-import { loadAccounts, loadCharts, loadCriteria, seedAnchor, type LoadCounts } from "./load";
+import {
+  loadAccounts,
+  loadCharts,
+  loadCriteria,
+  loadDenialsAndPrecedents,
+  loadGroundTruth,
+  seedAnchor,
+  type LoadCounts,
+} from "./load";
 import { buildCriteria } from "./pass-a-criteria";
 import { buildCaseSeeds } from "./pass-b-cases";
 import { runPassC } from "./pass-c-charts";
+import { runPassD } from "./pass-d-letters";
+import { runPassE } from "./pass-e-truth";
 
 async function main(): Promise<void> {
   const args = parseSeedArgs(process.argv.slice(2));
@@ -68,13 +78,49 @@ async function main(): Promise<void> {
         : ""),
   );
 
+  // ---- Pass D
+  const passD = await runPassD(cases, criteria, {
+    generate: args.generate,
+    regenerate: args.regenerate,
+    concurrency: args.concurrency,
+  });
+  llmCost += passD.costUsd;
+  console.log(
+    `Pass D: ${passD.letters.size} denial letters, ${passD.precedents.length} precedents` +
+      (passD.generated.length > 0
+        ? ` [generated ${passD.generated.length}, ${passD.costUsd.toFixed(2)}]`
+        : ""),
+  );
+
+  // ---- Pass E
+  const passE = runPassE(cases, criteria);
+  const truthChanged = writeArtifact("ground-truth.json", passE.artifact);
+  const routeTally = (route: string) =>
+    passE.artifact.cases.filter((c) => c.expectedRoute === route).length;
+  console.log(
+    `Pass E: ground truth for ${passE.artifact.cases.length} cases ` +
+      `(ready ${routeTally("ready")}, needs_review ${routeTally("needs_review")}, ` +
+      `needs_docs ${routeTally("needs_docs")}, do_not_appeal ${routeTally("do_not_appeal")})` +
+      (truthChanged ? " [artifact updated]" : ""),
+  );
+  console.log(
+    `  human spot checks: ${passE.spotChecked} of ${passE.spotCheckTotal} complete` +
+      (passE.spotChecked < passE.spotCheckTotal
+        ? " (see scripts/seed/data/spot-check-sheet.md)"
+        : ""),
+  );
+
   if (args.skipLoad) {
     console.log("--skip-load: artifacts written, database untouched");
     return;
   }
 
   // ---- Embeddings
-  const texts = [...criteria.clauses.map((c) => c.text), ...criteria.payerNotes.map((n) => n.text)];
+  const texts = [
+    ...criteria.clauses.map((c) => c.text),
+    ...criteria.payerNotes.map((n) => n.text),
+    ...passD.precedents.map((p) => p.summary),
+  ];
   const embedded = await embedDocumentsCached(texts);
   const vectors = new Map(texts.map((t, i) => [t, embedded.vectors[i]]));
   console.log(
@@ -91,6 +137,8 @@ async function main(): Promise<void> {
       ...(await loadCriteria(tx, criteria, vectors)),
       ...(await loadAccounts(tx, cases, anchor)),
       ...(await loadCharts(tx, cases, passC.charts)),
+      ...(await loadDenialsAndPrecedents(tx, cases, criteria, passD.letters, passD.precedents, vectors, anchor)),
+      ...(await loadGroundTruth(tx, passE.artifact.cases)),
     };
   });
 

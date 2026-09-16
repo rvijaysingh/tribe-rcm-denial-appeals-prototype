@@ -1,0 +1,59 @@
+{
+  "payerId": "meridian",
+  "category": "medical_necessity",
+  "promptVersion": "precedent.v1",
+  "model": "claude-opus-5",
+  "inputHash": "0aeff1eeb3172d6cd314324b2300b5807c475793a03013e4cf7774b00266d6b2",
+  "generatedAt": "2026-09-16T13:00:44.470Z",
+  "attempts": 1,
+  "tokensIn": 1336,
+  "tokensOut": 1807,
+  "costUsd": 0.051855,
+  "precedents": [
+    {
+      "id": "P1",
+      "payerId": "meridian",
+      "category": "medical_necessity",
+      "condition": "chf_exacerbation",
+      "outcome": "overturned",
+      "summary": "A patient presented with acute decompensated heart failure and the payer denied inpatient status, stating the documentation available at admission did not meet inpatient criteria. The appeal supplied telemetry strips and rhythm documentation explaining why continuous monitoring was ordered, along with the arrival creatinine compared against a prior outpatient baseline showing decline. The denial was overturned.",
+      "letterExcerpt": "We respectfully disagree with the determination that the admission documentation failed to meet inpatient criteria. Enclosed are the telemetry strips and the accompanying rhythm interpretation that prompted continuous cardiac monitoring from the time of arrival, together with the nursing and physician notes describing the clinical concern that monitoring was intended to address. We have also included the creatinine drawn on arrival alongside a prior value from the outpatient record, which together demonstrate a measurable decline in renal function in the setting of decompensation and diuresis. Read together, these records establish that the treating team faced an unstable rhythm and evolving renal impairment requiring inpatient-level assessment and titration. We ask that the inpatient determination be reinstated."
+    },
+    {
+      "id": "P2",
+      "payerId": "meridian",
+      "category": "medical_necessity",
+      "condition": "sepsis",
+      "outcome": "upheld",
+      "summary": "The admission was for sepsis, and the payer denied inpatient status on the basis that the record did not document clinical severity sufficient to require admission. The appeal was unable to produce antibiotic administration times relative to arrival or documentation of the plan for intravenous versus oral therapy. The determination was upheld.",
+      "letterExcerpt": "We submit this appeal on behalf of the admission for sepsis and ask that the inpatient determination be reconsidered based on the clinical narrative in the emergency department and admitting notes. We acknowledge that we have been unable to locate a medication administration record establishing the timing of antibiotic delivery relative to arrival, and the chart does not contain an explicit statement of the plan for intravenous versus oral therapy or the criteria for transition. We recognize that these elements bear directly on the question of whether treatment required an inpatient setting. We rely instead on the documented clinical impression and the treating physician's admission rationale, and we request review of the record as submitted."
+    },
+    {
+      "id": "P3",
+      "payerId": "meridian",
+      "category": "medical_necessity",
+      "condition": "copd_exacerbation",
+      "outcome": "upheld",
+      "summary": "A patient treated for COPD exacerbation had inpatient status denied because the payer concluded care could have been furnished safely at a lower level, such as observation. The appeal was unable to supply documentation of comorbid condition status, including echocardiographic results and relevant examination findings. The denial was upheld.",
+      "letterExcerpt": "We appeal the determination that this COPD exacerbation could have been managed safely in observation. Our position is that the patient's underlying comorbid burden materially changed the risk profile of the exacerbation and made a lower level of care unsafe. We must acknowledge, however, that we have been unable to retrieve cardiac imaging results or contemporaneous examination findings characterizing the status of those comorbid conditions during the stay. Without that documentation, the record does not independently corroborate the treating team's stated concern. We submit the respiratory assessments, treatment record, and admitting rationale that are available and ask that the reviewer weigh the clinical judgment reflected in the admission note."
+    },
+    {
+      "id": "P4",
+      "payerId": "meridian",
+      "category": "medical_necessity",
+      "condition": "pneumonia",
+      "outcome": "overturned",
+      "summary": "The admission involved community-acquired pneumonia, and the payer denied inpatient status for insufficient documented clinical severity. The appeal furnished urgent care records showing the antibiotic previously prescribed, when it was started, and the absence of response, together with the radiology report describing multilobar involvement and an effusion. The denial was overturned.",
+      "letterExcerpt": "We appeal the finding that the record lacks documented severity sufficient to support inpatient admission. Enclosed are the outpatient urgent care records identifying the antibiotic prescribed before presentation, the point at which therapy was started, and the documented clinical course showing failure to respond to that regimen. We also enclose the formal radiology report, which describes the specific lobes involved and the presence of a pleural effusion. Outpatient therapy failure combined with multilobar consolidation and effusion is precisely the presentation for which escalation to inpatient parenteral therapy and serial reassessment is indicated. The treating physician's admission rationale is consistent with these findings, and we ask that the inpatient determination be reinstated."
+    },
+    {
+      "id": "P5",
+      "payerId": "meridian",
+      "category": "medical_necessity",
+      "condition": "chf_exacerbation",
+      "outcome": "overturned",
+      "summary": "A patient admitted with CHF exacerbation had inpatient status denied because the payer found the record did not document clinical severity sufficient to require admission. The appeal provided the natriuretic peptide result drawn at presentation with a prior baseline for comparison, along with telemetry strips and rhythm documentation supporting the need for monitoring. The denial was overturned.",
+      "letterExcerpt": "We respectfully appeal the determination that the record does not establish severity sufficient for inpatient admission. Enclosed is the natriuretic peptide result obtained at presentation, presented alongside a prior baseline value from the patient's record, which demonstrates a clear interval rise consistent with acute decompensation rather than chronic elevation. We further enclose the telemetry strips and the rhythm documentation that prompted the order for continuous cardiac monitoring, with the accompanying nursing and physician notes describing the clinical concern. Taken together, this evidence shows an acutely decompensated patient requiring monitored diuresis and serial reassessment that could not have been delivered safely in a lower level of care. We ask that the inpatient determination be reinstated."
+    }
+  ]
+}

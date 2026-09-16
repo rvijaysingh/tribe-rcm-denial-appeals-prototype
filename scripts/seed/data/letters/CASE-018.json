@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-018",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "6a5bfaeca1dc503caa8f68df54fe0007b14cbab9b0b88a0076b67e42ed22ab4a",
+  "generatedAt": "2026-09-16T12:59:36.475Z",
+  "attempts": 1,
+  "tokensIn": 1091,
+  "tokensOut": 883,
+  "costUsd": 0.02753,
+  "memberId": "MBR111945267",
+  "claimNumber": "CLM36689744129",
+  "citedCodes": [
+    "CHF-02",
+    "CHF-04"
+  ],
+  "letterTemplate": "Meridian Health Plan\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR111945267\nClaim Number: CLM36689744129\nService Under Review: Inpatient admission for congestive heart failure exacerbation, DRG 291\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nCriteria Set Applied: InterQual-style, version 2026.1\n\nDETERMINATION\n\nMeridian Health Plan has completed a level of care review of the above referenced inpatient admission. This is an adverse determination regarding level of care, inpatient versus observation. Based on the information submitted, the services provided could have been delivered safely at a lower level of care, such as observation. Inpatient level of care is therefore not certified for the dates of service listed above.\n\nCRITERIA FINDINGS\n\nCHF-02: Not met. Diuresis was achieved with a single intravenous dose and could have been managed with oral medication.\n\nCHF-04: Not met. Renal function was at baseline and did not require inpatient monitoring.\n\nNo other criteria codes were applied in reaching this determination.\n\nCLAIM ADJUSTMENT CODING\n\nThe following codes will appear on the remittance advice associated with claim CLM36689744129:\n\nCARC CO-50\nRARC N130\n\nThis determination addresses level of care only. It is not a statement regarding the medical judgment of the treating practitioner, and the member remains responsible only as provided under the terms of the plan document.\n\nAPPEAL RIGHTS\n\nThe member, or a provider acting as the member's authorized representative, may request a Level 1 appeal of this adverse determination. The appeal may be submitted by letter or by portal upload. The appeal submission should cite the applicable criteria codes inline, specifically CHF-02 and CHF-04, and should address the findings stated above. Please attach the History and Physical and all progress notes for the admission. Appeal submissions are subject to a five page limit, exclusive of attached medical records.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that date may not be eligible for review.\n\nA copy of the specific criteria used in this review is available upon request at no charge. To discuss this determination with the reviewing physician, contact the Utilization Management Department at the number listed on the member identification card.\n\nSincerely,\n\nMedical Director, Utilization Management\nMeridian Health Plan"
+}

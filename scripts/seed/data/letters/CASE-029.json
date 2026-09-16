@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-029",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "a65274cf4267d188e42eff82dee85aa696811743cdc408d94bab14221cd40b63",
+  "generatedAt": "2026-09-16T13:00:09.547Z",
+  "attempts": 2,
+  "tokensIn": 2200,
+  "tokensOut": 2089,
+  "costUsd": 0.063225,
+  "memberId": "MBR364707722",
+  "claimNumber": "CLM17170314447",
+  "citedCodes": [
+    "SEP-01",
+    "SEP-02"
+  ],
+  "letterTemplate": "Northgate Advantage\nUtilization Management Department\n\nDate of Determination: [[LETTER_DATE]]\n\nMember ID: MBR364707722\nClaim Number: CLM17170314447\nService Reviewed: Inpatient admission for Sepsis, DRG 872\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\n\nNOTICE OF ADVERSE DETERMINATION - MEDICAL NECESSITY\n\nThis letter constitutes an adverse determination based on medical necessity for the inpatient admission identified above. The submitted records were reviewed against the MCG-style criteria set applied by this plan for the review period in effect, and against the plan's benefit provisions.\n\nDETERMINATION\n\nCoverage for the inpatient admission from [[ADMIT_DATE]] through [[DISCHARGE_DATE]] is denied. The medical record does not document clinical severity sufficient to require inpatient admission.\n\nCRITERIA REVIEWED AND FINDINGS\n\nSEP-01: Not met. Laboratory and vital sign findings did not show sepsis with persistent instability after initial treatment.\n\nSEP-02: Not met. An infectious source was not established.\n\nNo additional criteria were applied to this determination.\n\nCLAIM ADJUSTMENT CODING\n\nCARC CO-50\nRARC N115\n\nThis adverse determination was made by a physician reviewer. It is an adverse determination on medical necessity grounds and is described as such throughout this notice.\n\nAPPEAL RIGHTS AND INSTRUCTIONS\n\nA request for reconsideration may be submitted within the filing window applicable to this claim. The clinical rationale accompanying any reconsideration request must map each submitted finding to a numbered criterion as cited above. Submissions that do not correlate findings to the numbered criteria may be returned without substantive review.\n\nLevel of care denials are not eligible for provider appeal.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Requests received after that time may be closed without further review.\n\nSupporting documentation, including the complete medical record for the admission under review, should accompany the reconsideration request. The member or the member's authorized representative may request a copy of the specific criteria used in this determination at no charge by contacting the Utilization Management Department at the number listed on the member identification card.\n\nThis determination addresses coverage and payment only and does not direct or restrict the treatment decisions of the treating practitioner.\n\nSincerely,\n\nMedical Director, Utilization Management\nNorthgate Advantage"
+}

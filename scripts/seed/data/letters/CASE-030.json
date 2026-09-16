@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-030",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "999be56eff63d303cc0a4ac724374afc2f84b1ac1e34f99eff97c4d5966d684b",
+  "generatedAt": "2026-09-16T13:00:20.289Z",
+  "attempts": 2,
+  "tokensIn": 2180,
+  "tokensOut": 1878,
+  "costUsd": 0.05785,
+  "memberId": "MBR779445100",
+  "claimNumber": "CLM38692115170",
+  "citedCodes": [
+    "PNA-01",
+    "PNA-03"
+  ],
+  "letterTemplate": "CASCADE MUTUAL\nUtilization Management Department\n\nNotice of Adverse Determination - Medical Necessity\n\nDate of Notice: [[LETTER_DATE]]\nMember ID: MBR779445100\nClaim Number: CLM38692115170\nService Reviewed: Inpatient admission, Community-acquired pneumonia, DRG 194\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nCriteria Set Applied: MCG-style criteria, current edition in effect on the date of admission\n\nDETERMINATION\n\nCascade Mutual has completed review of the above inpatient admission and has issued an adverse determination, medical necessity. Benefits for the inpatient level of care billed under DRG 194 for the period [[ADMIT_DATE]] through [[DISCHARGE_DATE]] are denied.\n\nBASIS FOR DETERMINATION\n\nThe documentation available at the time of admission did not meet inpatient criteria.\n\nThe following guideline codes were reviewed and found not met:\n\nPNA-01: Not met. The patient did not have hypoxemia requiring inpatient oxygen.\n\nPNA-03: Not met. Mental status was at baseline.\n\nNo additional guideline codes were applied to this adverse determination, medical necessity.\n\nCLAIM ADJUSTMENT CODING\n\nThis determination is transmitted with the following codes: CARC CO-50; RARC N115.\n\nAPPEAL RIGHTS\n\nYou or your authorized representative may request reconsideration of this adverse determination, medical necessity. Appeals must be submitted in writing and addressed to Utilization Management, Cascade Mutual.\n\nTo support efficient review, the written appeal should:\n\n1. Reference the guideline code at issue - PNA-01 or PNA-03 - and respond to the specific finding stated above for each argument presented.\n2. Identify the records, pages, or entries relied upon for each argument.\n3. Include the following physician attestation line, completed and signed by the treating or reviewing physician: \"I attest that the clinical information submitted in support of this appeal is accurate and was documented during the admission under review.\"\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that date may be closed without clinical review.\n\nThis notice addresses medical necessity for the inpatient level of care only. The member is not liable for charges denied under this determination except as permitted by the applicable plan document and provider agreement.\n\nA copy of the guideline codes applied is available to the treating provider upon written request to Utilization Management.\n\nSincerely,\n\nMedical Director, Utilization Management\nCascade Mutual"
+}

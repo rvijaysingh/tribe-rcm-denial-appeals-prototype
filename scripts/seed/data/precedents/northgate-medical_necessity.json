@@ -1,0 +1,68 @@
+{
+  "payerId": "northgate",
+  "category": "medical_necessity",
+  "promptVersion": "precedent.v1",
+  "model": "claude-opus-5",
+  "inputHash": "6ef15cf95de4fdd9ee29915ddfb0fde7163026142bf903eb871512cf8c9d6e73",
+  "generatedAt": "2026-09-16T13:01:05.116Z",
+  "attempts": 1,
+  "tokensIn": 1381,
+  "tokensOut": 2134,
+  "costUsd": 0.060255,
+  "precedents": [
+    {
+      "id": "P23",
+      "payerId": "northgate",
+      "category": "medical_necessity",
+      "condition": "copd_exacerbation",
+      "outcome": "upheld",
+      "summary": "Inpatient admission for a COPD exacerbation was denied on the basis that the record did not document clinical severity sufficient to require inpatient care. The appeal relied on narrative progress notes describing increased work of breathing, but could not produce the triage oxygen saturation with the oxygen level in use at that time or any blood gas result. The denial was upheld.",
+      "letterExcerpt": "We ask the plan to reconsider this determination in light of the treating team's contemporaneous assessment of respiratory distress and the escalation of bronchodilator and steroid therapy described throughout the first hospital day. We acknowledge that the record as submitted does not include a triage oxygen saturation paired with the oxygen delivery in place at that moment, and no blood gas was obtained during the encounter. We have searched the emergency department flowsheets and the respiratory therapy record without locating those values. Our position is that the clinical narrative, taken as a whole, describes a patient who could not have been safely managed outside the hospital, and we ask that the reviewer weigh the documented treatment intensity even in the absence of the specific measurements the plan has requested."
+    },
+    {
+      "id": "P24",
+      "payerId": "northgate",
+      "category": "medical_necessity",
+      "condition": "pneumonia",
+      "outcome": "upheld",
+      "summary": "A community-acquired pneumonia admission was denied because the documentation available at the time of admission did not meet inpatient criteria. The appeal described the admitting physician's clinical impression and antibiotic selection but could not supply the radiology report identifying the lobes involved or the presence of any effusion. The denial was upheld.",
+      "letterExcerpt": "We submit that the admitting clinician documented a clear impression of pneumonia and initiated parenteral antibiotic therapy consistent with that impression on arrival. We recognize, however, that the plan has specifically requested the radiology report characterizing the extent of the infiltrate and the presence or absence of a pleural effusion, and that this report is not contained within the material available to us. We have queried the imaging archive and the admitting service without obtaining it. We therefore rest this appeal on the treating physician's documented judgment, the route and timing of antibiotic administration, and the nursing assessments of respiratory status recorded during the initial hours of the stay, and we ask that these be considered in the absence of the requested report."
+    },
+    {
+      "id": "P25",
+      "payerId": "northgate",
+      "category": "medical_necessity",
+      "condition": "chf_exacerbation",
+      "outcome": "overturned",
+      "summary": "An admission for CHF exacerbation was denied on the grounds that documentation available at the time of admission did not meet inpatient criteria. The appeal supplied room air saturation readings at presentation, the oxygen flow rate required across the first 24 hours, and the radiology report for chest imaging performed on arrival. The denial was overturned.",
+      "letterExcerpt": "We are providing the documentation the plan identified as missing from its initial review. The emergency department record contains room air oxygen saturation readings taken at presentation, and the respiratory therapy flowsheet documents the oxygen flow rate required continuously across the first twenty-four hours of the stay, including the points at which flow was increased. We are also enclosing the radiology report for the chest imaging obtained on arrival. Taken together, these records establish that the patient arrived hypoxemic on room air, required sustained supplemental oxygen that could not have been delivered or monitored in an outpatient setting, and had imaging findings consistent with decompensation. We respectfully request that the inpatient level of care be approved as originally ordered."
+    },
+    {
+      "id": "P26",
+      "payerId": "northgate",
+      "category": "medical_necessity",
+      "condition": "sepsis",
+      "outcome": "upheld",
+      "summary": "A sepsis admission was denied because the documentation available at the time of admission did not meet inpatient criteria. The appeal pointed to the admitting diagnosis and the intensity of nursing monitoring, but could not supply culture orders with collection times, culture results, or documentation of the suspected source. The denial was upheld.",
+      "letterExcerpt": "We ask the reviewer to consider the admitting team's documented concern for sepsis and the frequency of vital sign monitoring and reassessment ordered on arrival, both of which reflect a judgment that this patient required hospital-level observation and intervention. We acknowledge the plan's request for the culture orders with their collection times, the resulting culture data, and an explicit statement of the suspected source of infection. Despite review of the laboratory record and the admitting documentation, we are unable to supply those items in support of this appeal. We submit the record as it exists and ask that the treating clinicians' contemporaneous assessment of infectious risk be given weight, while recognizing that the specific elements the plan has requested are not available."
+    },
+    {
+      "id": "P27",
+      "payerId": "northgate",
+      "category": "medical_necessity",
+      "condition": "copd_exacerbation",
+      "outcome": "upheld",
+      "summary": "An admission for COPD exacerbation was denied on the basis that the services could have been delivered safely at a lower level of care such as observation. The appeal argued that altered mental status justified inpatient care but could not supply the arrival neurologic exam, any family or facility report of baseline, or a blood gas from the same time window. The denial was upheld.",
+      "letterExcerpt": "Our position is that this patient presented with a change from baseline that made observation-level care unsafe and that the treating team reasonably determined an inpatient stay was required. We recognize that substantiating this position requires the arrival neurologic examination, a source statement from family or the referring facility establishing the patient's usual baseline, and a blood gas drawn in the same time window to correlate the presentation with respiratory status. None of these elements appear in the record available to us, and our review of the emergency department and admitting documentation has not produced them. We accordingly submit the remaining clinical narrative and treatment record for consideration, understanding that the specific corroborating documentation the plan has requested cannot be furnished."
+    },
+    {
+      "id": "P28",
+      "payerId": "northgate",
+      "category": "medical_necessity",
+      "condition": "pneumonia",
+      "outcome": "overturned",
+      "summary": "Inpatient admission for community-acquired pneumonia was denied because the record was said not to document clinical severity sufficient to require inpatient care. The appeal supplied documentation of the patient's baseline mental status alongside the arrival orientation exam, together with the radiology report describing the lobes involved and any effusion. The denial was overturned.",
+      "letterExcerpt": "We are submitting the documentation that addresses the plan's severity determination directly. The record contains a documented baseline mental status obtained from the patient's usual environment, and the emergency department orientation examination performed on arrival, which together establish an acute deviation from that baseline rather than a chronic finding. We are also enclosing the radiology report, which characterizes the lobar distribution of the infiltrate and addresses the presence of pleural fluid. Confusion representing a change from baseline, occurring alongside the imaging findings described in the enclosed report, is a recognized marker of pneumonia severity that supports admission rather than outpatient or observation management. We respectfully request that the inpatient determination be approved as originally ordered by the treating physician."
+    }
+  ]
+}

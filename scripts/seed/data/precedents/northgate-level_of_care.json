@@ -1,0 +1,59 @@
+{
+  "payerId": "northgate",
+  "category": "level_of_care",
+  "promptVersion": "precedent.v1",
+  "model": "claude-opus-5",
+  "inputHash": "c66845fb19bdf33d90260a2875ad1ee4dbfd45b72420f74a45e4b22048a3ead3",
+  "generatedAt": "2026-09-16T13:01:11.178Z",
+  "attempts": 1,
+  "tokensIn": 1302,
+  "tokensOut": 1935,
+  "costUsd": 0.054885,
+  "precedents": [
+    {
+      "id": "P29",
+      "payerId": "northgate",
+      "category": "level_of_care",
+      "condition": "pneumonia",
+      "outcome": "upheld",
+      "summary": "A patient admitted with community-acquired pneumonia had inpatient status denied on the basis that care could have been delivered safely in observation. The appeal described the clinical picture and treatment course but could not produce a severity score calculation with its component elements documented at the time of admission. Without that contemporaneous risk stratification, the payer found the record insufficient to support inpatient status, and the denial was upheld.",
+      "letterExcerpt": "We ask that inpatient status be reinstated for this admission for community-acquired pneumonia. The record reflects a patient who required supplemental oxygen, parenteral antibiotics, and frequent reassessment through the early hospital course, and the admitting physician documented a clinical judgment that outpatient or observation management carried unacceptable risk. We acknowledge that the chart does not contain a severity score with its individual components recorded at the time of the admission decision, and we are unable to reconstruct one retrospectively without introducing values not present in the contemporaneous documentation. We submit instead the narrative admission assessment, the oxygen requirement as charted, and the treatment orders as evidence that the intensity of service met inpatient expectations, and we ask that the reviewer weigh the totality of the documented course."
+    },
+    {
+      "id": "P30",
+      "payerId": "northgate",
+      "category": "level_of_care",
+      "condition": "chf_exacerbation",
+      "outcome": "overturned",
+      "summary": "Inpatient admission for a CHF exacerbation was denied as appropriate for observation only. The appeal submitted room air saturation readings at presentation together with the oxygen flow rate required across the first 24 hours, and the radiology report for chest imaging obtained on arrival. The payer accepted that the documented hypoxemia and imaging findings supported inpatient intensity, and the denial was overturned.",
+      "letterExcerpt": "We appeal the reduction of this heart failure admission to observation. The nursing record documents the room air saturation obtained at presentation and the oxygen flow rate the patient required continuously across the first twenty-four hours, showing a sustained rather than transient supplemental oxygen need. The radiology report for the chest imaging performed on arrival, submitted in full with this appeal, describes findings consistent with acute decompensation and corroborates the admitting assessment. Taken together, these contemporaneous records show a patient whose respiratory status did not stabilize within an observation window and who required ongoing diuresis with close monitoring and titration. We respectfully submit that inpatient status was medically necessary at the point of the admission decision and ask that the original determination be reversed."
+    },
+    {
+      "id": "P31",
+      "payerId": "northgate",
+      "category": "level_of_care",
+      "condition": "sepsis",
+      "outcome": "overturned",
+      "summary": "A sepsis admission was denied on the ground that documentation available at admission did not satisfy inpatient criteria. The appeal supplied respiratory rate, oxygen saturation, and oxygen flow documentation across the first 12 hours, along with creatinine, platelet count, and bilirubin on arrival compared against prior baseline values. The payer agreed the record demonstrated acute organ dysfunction present at admission, and the denial was overturned.",
+      "letterExcerpt": "We appeal the denial of inpatient status for this sepsis admission. The flowsheet record documents respiratory rate, oxygen saturation, and oxygen flow at intervals across the first twelve hours, establishing a respiratory trajectory that was monitored and actively supported rather than observed. We further submit the arrival creatinine, platelet count, and bilirubin alongside the patient's prior values from our own records, which together demonstrate a measurable acute change from baseline in more than one organ system at the time of the admission decision. This is not retrospective reasoning; these results were available to the admitting clinician and are reflected in the admission note. We respectfully submit that the documentation contemporaneously available met inpatient criteria and ask that the determination be reversed."
+    },
+    {
+      "id": "P32",
+      "payerId": "northgate",
+      "category": "level_of_care",
+      "condition": "copd_exacerbation",
+      "outcome": "upheld",
+      "summary": "A COPD exacerbation admission was denied on the basis that the length of stay exceeded what the documented clinical condition supported. The appeal argued that the patient's respiratory status warranted continued inpatient care, but could not supply a triage saturation with the corresponding oxygen level or any blood gas result. Lacking objective respiratory data anchoring the stay, the payer upheld the denial.",
+      "letterExcerpt": "We ask for reconsideration of the length of stay determination for this COPD exacerbation. The progress notes describe ongoing dyspnea, continued bronchodilator therapy, and a clinician judgment that the patient was not ready for discharge earlier in the stay. We recognize that the triage documentation does not record the oxygen saturation together with the oxygen level in place at the time it was obtained, and that no blood gas analysis was performed during this encounter. We therefore cannot offer the objective respiratory measurements that would most directly substantiate the duration of inpatient care. We submit the narrative reassessments and the respiratory therapy record in their place and ask that the reviewer consider whether the documented treatment intensity supports the days billed."
+    },
+    {
+      "id": "P33",
+      "payerId": "northgate",
+      "category": "level_of_care",
+      "condition": "pneumonia",
+      "outcome": "upheld",
+      "summary": "An admission for community-acquired pneumonia was denied because the length of stay exceeded what the documented clinical condition supported. The appeal relied on narrative progress notes and the treatment record but could not supply a severity score calculation with its components documented at the time of admission. The payer found no objective risk stratification to justify the extended stay, and the denial was upheld.",
+      "letterExcerpt": "We appeal the length of stay determination for this admission for community-acquired pneumonia. The daily notes document continued antibiotic therapy, ongoing supplemental oxygen as charted, and clinician assessments that the patient had not yet met discharge criteria. We acknowledge, however, that the record does not include a severity score with its component elements documented at the time of admission, and we will not construct one after the fact from data the admitting clinician did not record. Without that baseline risk stratification, we are limited to the narrative course and the medication administration record as support for the days billed. We submit those materials and ask the reviewer to consider whether the documented intensity of service justifies the duration of the inpatient stay."
+    }
+  ]
+}

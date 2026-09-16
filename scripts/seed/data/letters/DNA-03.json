@@ -1,0 +1,18 @@
+{
+  "denialId": "DNA-03",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "f20b469429310caecc20d463821ceea674f7862e1ecaca710cccd9bdf78c1176",
+  "generatedAt": "2026-09-16T12:58:15.932Z",
+  "attempts": 2,
+  "tokensIn": 2236,
+  "tokensOut": 1876,
+  "costUsd": 0.05808,
+  "memberId": "MBR130359927",
+  "claimNumber": "CLM19849840201",
+  "citedCodes": [
+    "PNA-01",
+    "PNA-03"
+  ],
+  "letterTemplate": "Northgate Advantage\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR130359927\nClaim Number: CLM19849840201\nService Under Review: Inpatient admission for Community-acquired pneumonia, DRG 195\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\n\nNOTICE OF ADVERSE DETERMINATION - LEVEL OF CARE, INPATIENT VERSUS OBSERVATION\n\nThis letter is to advise you that following review of the clinical information submitted, Northgate Advantage has issued an adverse determination for level of care. The inpatient level of care billed for the above dates of service is not approved. Based on the records reviewed, the services provided could have been delivered safely at a lower level of care, such as observation.\n\nBASIS FOR DETERMINATION\n\nThe review was conducted using the applicable MCG-style inpatient admission criteria for the condition under review. The following criteria were found not met:\n\nPNA-01: Not met. Pneumonia severity scores indicated low risk suitable for outpatient treatment.\n\nPNA-03: Not met. Blood pressure was stable without need for resuscitation.\n\nNo additional criteria codes were applied in reaching this determination.\n\nCLAIM ADJUSTMENT INFORMATION\n\nThe following codes apply to this claim: CARC CO-50, RARC N130.\n\nThis is an adverse determination of level of care, inpatient versus observation. It addresses only the appropriateness of the inpatient level of care billed for the dates of service identified above.\n\nAPPEAL AND RECONSIDERATION RIGHTS\n\nA request for reconsideration may be submitted within the applicable filing window. Any clinical rationale submitted in support of reconsideration must map each finding to a numbered criterion as cited in this notice. Submissions that do not identify the specific numbered criterion associated with each clinical finding may be returned without substantive review.\n\nPlease note that level of care denials are not eligible for provider appeal. Appeals must be received by [[APPEAL_DEADLINE]]. Requests received after that date will be closed without review.\n\nSupporting documentation should reference the member ID and claim number shown above and be directed to the Utilization Management Department at the address printed on this notice.\n\nA copy of the criteria used in this review is available upon written request at no charge.\n\nSincerely,\n\nMedical Director, Utilization Management\nNorthgate Advantage"
+}

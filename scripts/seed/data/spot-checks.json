@@ -1,0 +1,44 @@
+{
+  "cases": [
+    {
+      "denialId": "DEMO-01",
+      "checked": false,
+      "note": ""
+    },
+    {
+      "denialId": "DEMO-02",
+      "checked": false,
+      "note": ""
+    },
+    {
+      "denialId": "DEMO-03",
+      "checked": false,
+      "note": ""
+    },
+    {
+      "denialId": "DEMO-04",
+      "checked": false,
+      "note": ""
+    },
+    {
+      "denialId": "CASE-008",
+      "checked": false,
+      "note": ""
+    },
+    {
+      "denialId": "CASE-007",
+      "checked": false,
+      "note": ""
+    },
+    {
+      "denialId": "CASE-024",
+      "checked": false,
+      "note": ""
+    },
+    {
+      "denialId": "CASE-010",
+      "checked": false,
+      "note": ""
+    }
+  ]
+}

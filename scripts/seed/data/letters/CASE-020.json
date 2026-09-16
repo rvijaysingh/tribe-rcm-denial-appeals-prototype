@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-020",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "d38bac202fc1f09e39eb920b6c422fdabf17c4110a3246303f3f85a6ff30bf50",
+  "generatedAt": "2026-09-16T12:59:35.683Z",
+  "attempts": 1,
+  "tokensIn": 1089,
+  "tokensOut": 858,
+  "costUsd": 0.026895,
+  "memberId": "MBR610794706",
+  "claimNumber": "CLM64606959045",
+  "citedCodes": [
+    "CHF-02",
+    "CHF-04"
+  ],
+  "letterTemplate": "Meridian Health Plan\nUtilization Management Department\n\nDate of this notice: [[LETTER_DATE]]\n\nRE: Adverse Determination - Level of Care (Inpatient versus Observation)\nMember ID: MBR610794706\nClaim Number: CLM64606959045\nService Under Review: Inpatient admission for CHF exacerbation, DRG 292\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nCriteria Set Applied: InterQual-style, version 2026.1\n\nThis letter serves as notice of an adverse determination regarding the level of care billed for the admission identified above. Following review of the submitted medical record against the applicable criteria set, Meridian Health Plan has determined that the documentation available at the time of admission did not meet inpatient criteria. The requested inpatient level of care is therefore not approved.\n\nCriteria reviewed and findings:\n\nCHF-02 - Not met. Finding: Diuresis was achieved with a single intravenous dose and could have been managed with oral medication.\n\nCHF-04 - Not met. Finding: Renal function was at baseline and did not require inpatient monitoring.\n\nNo other criteria codes were applied in reaching this level of care determination.\n\nClaim adjustment reporting for this determination is as follows:\nCARC CO-50\nRARC N130\n\nThis is an adverse determination of level of care, inpatient versus observation. It addresses only the appropriateness of the inpatient level of care for the dates of service shown.\n\nAppeal Rights\n\nThe member, the member's authorized representative, or the treating provider acting on the member's behalf may request a Level 1 appeal. Appeals may be submitted by letter or by document upload through the provider portal. The appeal submission should cite the applicable criteria codes inline, specifically CHF-02 and CHF-04, and should state the basis on which the level of care is asserted to be supported.\n\nPlease attach the History and Physical and the progress notes for the admission. Appeal submissions are subject to a five page limit, excluding the attached records. Appeals must be received by [[APPEAL_DEADLINE]]. Submissions received after that date may not be eligible for Level 1 review.\n\nA copy of the specific criteria used in this review is available upon written request at no charge.\n\nSincerely,\n\nMedical Director, Utilization Management\nMeridian Health Plan"
+}

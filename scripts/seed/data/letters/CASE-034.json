@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-034",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "186afd4cc19e756b68648781c9f51a1454b1d909048ea6c00da059281c727aff",
+  "generatedAt": "2026-09-16T13:00:25.786Z",
+  "attempts": 2,
+  "tokensIn": 2194,
+  "tokensOut": 2093,
+  "costUsd": 0.063295,
+  "memberId": "MBR127412000",
+  "claimNumber": "CLM41040600279",
+  "citedCodes": [
+    "COPD-01",
+    "COPD-02"
+  ],
+  "letterTemplate": "Northgate Advantage\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR127412000\nClaim Number: CLM41040600279\nService Reviewed: Inpatient admission for COPD exacerbation, DRG 192, from [[ADMIT_DATE]] to [[DISCHARGE_DATE]]\nDetermination: Adverse determination, medical necessity\n\nNOTICE OF ADVERSE DETERMINATION\n\nNorthgate Advantage has completed review of the above inpatient admission. Based on the clinical information submitted, an adverse determination, medical necessity has been issued for the inpatient admission billed under DRG 192 for the period [[ADMIT_DATE]] through [[DISCHARGE_DATE]].\n\nBasis for Determination\n\nThe documentation available at the time of admission did not meet inpatient criteria.\n\nThe review was conducted using the MCG-style criteria set in effect for the service period. The following criteria were found not met:\n\nCOPD-01: Oxygenation was near baseline and did not require inpatient care.\n\nCOPD-02: Symptoms improved with emergency department treatment.\n\nNo other criteria codes were applied in this determination.\n\nClaim Adjustment Information\n\nThe following codes apply to this claim: CARC CO-50; RARC N115.\n\nAppeal Rights and Instructions\n\nA reconsideration request may be submitted within the applicable filing window. Any clinical rationale submitted in support of reconsideration must map each finding to a numbered criterion as cited above. Submissions that do not identify the specific numbered criterion for each clinical finding may be returned without substantive review.\n\nLevel of care denials are not eligible for provider appeal.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Requests received after that date will be closed as untimely.\n\nSupporting documentation for reconsideration should include the complete admission record, physician orders, and any progress notes covering [[ADMIT_DATE]] through [[DISCHARGE_DATE]], referenced to criteria COPD-01 and COPD-02.\n\nThis adverse determination, medical necessity addresses medical necessity of the inpatient admission only and does not constitute a statement regarding the member's benefit eligibility or other coverage provisions of the plan. Questions regarding this notice may be directed to the Utilization Management Department using the contact information printed on the member identification card.\n\nA physician reviewer is available to discuss this adverse determination, medical necessity with the attending provider upon request.\n\nSincerely,\n\nMedical Director, Utilization Management\nNorthgate Advantage"
+}

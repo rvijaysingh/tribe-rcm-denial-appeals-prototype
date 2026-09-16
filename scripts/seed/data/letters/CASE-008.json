@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-008",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "32308263bc7a9edc431fbbba463c1f214306b35f4e83ac731f6a80d848d6ccbe",
+  "generatedAt": "2026-09-16T12:58:42.367Z",
+  "attempts": 2,
+  "tokensIn": 2228,
+  "tokensOut": 1890,
+  "costUsd": 0.05839,
+  "memberId": "MBR299781426",
+  "claimNumber": "CLM78102137004",
+  "citedCodes": [
+    "PNA-01",
+    "PNA-03"
+  ],
+  "letterTemplate": "Northgate Advantage\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR299781426\nClaim Number: CLM78102137004\nService Reviewed: Inpatient admission, Community-acquired pneumonia, DRG 195\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\n\nNOTICE OF ADVERSE DETERMINATION - LEVEL OF CARE, INPATIENT VERSUS OBSERVATION\n\nThis letter constitutes an adverse determination of level of care, inpatient versus observation, for the admission identified above. The submitted records were reviewed against the MCG-style criteria set, current published edition, in effect on the date of admission.\n\nDETERMINATION\n\nBased on the documentation submitted, the requested inpatient level of care is not approved. The observation level of care is the level supported by the record. The length of stay exceeded what the documented clinical condition supported.\n\nCRITERIA APPLIED AND FINDINGS\n\nPNA-01: Not met. Pneumonia severity scores indicated low risk suitable for outpatient treatment.\n\nPNA-03: Not met. Blood pressure was stable without need for resuscitation.\n\nNo other criteria codes were applied to this determination.\n\nCLAIM ADJUSTMENT CODING\n\nThe following codes apply to the associated claim line:\n\nCARC CO-50\nRARC N130\n\nAPPEAL RIGHTS AND INSTRUCTIONS\n\nThe member, or an authorized representative acting on the member's behalf, may submit a request for reconsideration within the applicable filing window. Level of care denials are not eligible for provider appeal.\n\nAny clinical rationale submitted in support of reconsideration must map each asserted finding to the corresponding numbered criterion cited in this notice. Submissions that do not identify the specific numbered criterion addressed may be returned without substantive review.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Requests received after that date may be closed as untimely.\n\nSupporting documentation should reference the member ID and claim number shown above and should be directed to the Utilization Management Appeals Unit at the address printed on the member identification card.\n\nThis determination addresses level of care, inpatient versus observation, only. It does not address benefit eligibility, coordination of benefits, or member cost share, which are determined separately under the terms of the plan document.\n\nA copy of the criteria code list applied in this review is available upon written request at no charge.\n\nSincerely,\n\nMedical Director, Utilization Management\nNorthgate Advantage"
+}

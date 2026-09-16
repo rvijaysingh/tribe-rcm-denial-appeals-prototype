@@ -1,0 +1,18 @@
+{
+  "denialId": "DNA-02",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "3cd626ef29c7149ae6e96c6c728ad116f450da6a114586a1f84eb246be084797",
+  "generatedAt": "2026-09-16T12:57:55.263Z",
+  "attempts": 2,
+  "tokensIn": 2198,
+  "tokensOut": 2039,
+  "costUsd": 0.061965,
+  "memberId": "MBR813242160",
+  "claimNumber": "CLM00918786035",
+  "citedCodes": [
+    "COPD-01",
+    "COPD-02"
+  ],
+  "letterTemplate": "Northgate Advantage\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR813242160\nClaim Number: CLM00918786035\nService Reviewed: Inpatient admission for COPD exacerbation, DRG 192, dates of service [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nCriteria Set Applied: MCG-style inpatient and surgical care guidelines\n\nNOTICE OF ADVERSE DETERMINATION - MEDICAL NECESSITY\n\nThis letter constitutes an adverse determination based on medical necessity for the service identified above. Following review of the submitted medical record by a physician reviewer, Northgate Advantage has determined that the requested inpatient level of service does not meet the applicable medical necessity criteria. The medical record does not document clinical severity sufficient to require inpatient admission.\n\nCRITERIA REVIEWED AND FINDINGS\n\nCOPD-01: Not met. Oxygenation was near baseline and did not require inpatient care.\n\nCOPD-02: Not met. Symptoms improved with emergency department treatment.\n\nNo other criteria were applied in reaching this determination.\n\nCLAIM ADJUSTMENT CODING\n\nThe following codes will appear on the associated remittance advice for claim CLM00918786035:\n\nCARC CO-50\nRARC N115\n\nFINANCIAL RESPONSIBILITY\n\nBecause this determination is based on medical necessity, payment for the inpatient admission billed under DRG 192 for the period [[ADMIT_DATE]] through [[DISCHARGE_DATE]] is denied. The member is not liable for charges denied under the codes referenced above where contractual provisions apply.\n\nAPPEAL RIGHTS AND INSTRUCTIONS\n\nA reconsideration request may be submitted within the applicable filing window. The submission must include a written clinical rationale that maps each finding stated in this notice to the corresponding numbered criterion referenced above. Supporting documentation from the medical record should be attached and indexed to each criterion addressed.\n\nLevel of care denials are not eligible for provider appeal.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Requests received after that deadline may be closed without clinical review.\n\nA peer-to-peer discussion with the reviewing physician may be requested through the Utilization Management Department prior to the deadline stated above. Requests for a copy of the specific criteria applied in this review may be made in writing.\n\nSincerely,\n\nMedical Director, Utilization Management\nNorthgate Advantage"
+}

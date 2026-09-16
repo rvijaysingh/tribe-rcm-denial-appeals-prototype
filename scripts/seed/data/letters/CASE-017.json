@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-017",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "30b41b84405d8705d1b04091627c08c5f7f5256f8813f485b7b401acd917fbf0",
+  "generatedAt": "2026-09-16T12:59:09.864Z",
+  "attempts": 2,
+  "tokensIn": 2206,
+  "tokensOut": 1889,
+  "costUsd": 0.058255,
+  "memberId": "MBR749141000",
+  "claimNumber": "CLM47783364810",
+  "citedCodes": [
+    "COPD-02",
+    "COPD-03"
+  ],
+  "letterTemplate": "Meridian Health Plan\nUtilization Management Department\n\nDate of this notice: [[LETTER_DATE]]\n\nRE: Adverse determination - level of care, inpatient versus observation\nMember ID: MBR749141000\nClaim number: CLM47783364810\nService under review: Inpatient admission for COPD exacerbation, DRG 192, from [[ADMIT_DATE]] to [[DISCHARGE_DATE]]\n\nNOTICE OF ADVERSE DETERMINATION\n\nMeridian Health Plan has completed review of the above inpatient admission. Based on the records submitted, an adverse determination has been issued with respect to the level of care billed. The requested inpatient level of care is not approved. This adverse determination addresses level of care, inpatient versus observation, only.\n\nBASIS FOR DETERMINATION\n\nReview was conducted using the plan's adopted InterQual-style criteria set, current version, applicable to the admitting condition. The following criteria codes were reviewed and found not met:\n\n- COPD-02: Not met. Finding: Symptoms improved with emergency department treatment.\n- COPD-03: Not met. Finding: Noninvasive ventilation was not required on a sustained basis.\n\nOverall rationale: The services provided could have been delivered safely at a lower level of care, such as observation.\n\nCLAIM DISPOSITION\n\nThe claim has been adjudicated with the following codes:\n\nCARC CO-50\nRARC N130\n\nThe member is not liable for charges denied under this determination beyond any applicable cost share for covered services rendered at the appropriate level of care.\n\nAPPEAL RIGHTS\n\nThe provider or an authorized representative may request a Level 1 appeal of this adverse determination. Appeals may be submitted by letter or by portal upload. Appeal submissions should cite the criteria codes inline, specifically COPD-02 and COPD-03, and address the findings stated above. Please attach the History and Physical and all progress notes for the period under review. Appeal submissions are subject to a five page limit, exclusive of attached clinical records. Appeals must be received by [[APPEAL_DEADLINE]]. Submissions received after that time may not be eligible for Level 1 review.\n\nThis determination was made by a physician reviewer. A copy of the specific criteria used in this review is available on request at no charge.\n\nSincerely,\n\nMedical Director, Utilization Management\nMeridian Health Plan"
+}

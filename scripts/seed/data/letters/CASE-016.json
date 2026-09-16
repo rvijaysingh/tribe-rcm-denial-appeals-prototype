@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-016",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "c5a42f944f92546bea271f091bac473a031da3430e166ad76c1abb4f2585a327",
+  "generatedAt": "2026-09-16T12:59:16.702Z",
+  "attempts": 2,
+  "tokensIn": 2194,
+  "tokensOut": 2023,
+  "costUsd": 0.061545,
+  "memberId": "MBR677808141",
+  "claimNumber": "CLM18000976226",
+  "citedCodes": [
+    "COPD-01",
+    "COPD-02"
+  ],
+  "letterTemplate": "Northgate Advantage\nUtilization Management Department\n\nNotice of Adverse Determination\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR677808141\nClaim Number: CLM18000976226\nService Reviewed: Inpatient admission for COPD exacerbation, DRG 191\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nCriteria Set Applied: MCG-style criteria, current published edition\n\nDetermination\n\nNorthgate Advantage has completed review of the above referenced claim and has issued an adverse determination, medical necessity. The documentation available at the time of admission did not meet inpatient criteria. This adverse determination, medical necessity is issued for the inpatient admission identified above for the dates [[ADMIT_DATE]] through [[DISCHARGE_DATE]].\n\nClaim Adjustment Codes\n\nCARC CO-50\nRARC N115\n\nCriteria Findings\n\nCOPD-01: Not met. Payer finding: Oxygenation was near baseline and did not require inpatient care.\n\nCOPD-02: Not met. Payer finding: Symptoms improved with emergency department treatment.\n\nNo other criteria codes were applied to this review. The findings stated above are the only findings supporting this adverse determination, medical necessity.\n\nReconsideration Rights\n\nA request for reconsideration may be submitted within the applicable filing window. The submitted clinical rationale must map each finding to a numbered criterion as cited in this notice. Submissions that do not identify the specific numbered criterion associated with each clinical statement may be returned without substantive review.\n\nLevel of care denials are not eligible for provider appeal.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Requests received after [[APPEAL_DEADLINE]] will be closed as untimely.\n\nSupporting documentation for reconsideration should reference Member ID MBR677808141 and Claim Number CLM18000976226, and should be directed to the Utilization Management Department at the address listed on the reverse of this notice or through the payer provider portal.\n\nThis notice reflects a coverage determination under the terms of the member benefit plan and does not constitute medical advice or direct the care rendered by the treating practitioner. The member and the servicing facility are receiving copies of this notice.\n\nA copy of the specific criteria used in this review is available upon written request at no charge.\n\nIssued by:\nMedical Director, Utilization Management\nNorthgate Advantage"
+}

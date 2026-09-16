@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-006",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "86936b5067f95f5f75c6b92b0cc9a3de22853ddaf0127a185d0df48b38aa1d04",
+  "generatedAt": "2026-09-16T12:58:41.398Z",
+  "attempts": 2,
+  "tokensIn": 2252,
+  "tokensOut": 1924,
+  "costUsd": 0.05936,
+  "memberId": "MBR771712740",
+  "claimNumber": "CLM30640188600",
+  "citedCodes": [
+    "CHF-01",
+    "CHF-02"
+  ],
+  "letterTemplate": "Cascade Mutual\nUtilization Management Department\n\nNotice of Adverse Determination\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR771712740\nClaim Number: CLM30640188600\nService Reviewed: Inpatient admission for CHF exacerbation, DRG 291\nDates of Service: [[ADMIT_DATE]] to [[DISCHARGE_DATE]]\nType of Review: Adverse determination, level of care, inpatient versus observation\n\nDetermination\n\nCascade Mutual has completed a level of care review of the above admission and has issued an adverse determination regarding the billed inpatient level of care. The documentation available at the time of admission did not meet inpatient criteria. This adverse determination addresses level of care only, inpatient versus observation.\n\nClaim Adjustment Codes Applied\n\nCARC CO-50\nRARC N130\n\nCriteria Applied and Findings\n\nReview was conducted using MCG-style criteria. The following criteria codes were found not met:\n\nCHF-01: Oxygen saturation at presentation did not show hypoxemia requiring inpatient oxygen therapy.\n\nCHF-02: Diuresis was achieved with a single intravenous dose and could have been managed with oral medication.\n\nNo other criteria codes were applied in this level of care determination.\n\nEffect of This Determination\n\nThe inpatient level of care billed for the period from [[ADMIT_DATE]] to [[DISCHARGE_DATE]] is not certified. This notice concerns the level of care only and does not address any other aspect of the claim.\n\nAppeal Rights\n\nYou or your authorized representative may submit a written appeal addressed to Utilization Management, Cascade Mutual. The appeal should reference the guideline code and the specific finding being disputed for each argument presented. An appeal that addresses CHF-01 should respond to the finding stated above for that code, and an appeal that addresses CHF-02 should respond to the finding stated above for that code.\n\nThe appeal submission must include a physician attestation line signed by the treating or reviewing physician.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that time may not be eligible for review.\n\nSupporting documentation, including the admission record and physician orders relied upon, may be submitted with the written appeal.\n\nSincerely,\n\nMedical Director, Utilization Management\nCascade Mutual"
+}

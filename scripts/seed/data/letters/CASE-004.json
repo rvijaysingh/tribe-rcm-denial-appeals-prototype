@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-004",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "74e8cf45d5ea800b30c300747ba163b7844b745627dd52a71e83463733528d2c",
+  "generatedAt": "2026-09-16T12:58:19.524Z",
+  "attempts": 2,
+  "tokensIn": 2228,
+  "tokensOut": 1863,
+  "costUsd": 0.057715,
+  "memberId": "MBR585176363",
+  "claimNumber": "CLM99087861525",
+  "citedCodes": [
+    "CHF-01",
+    "CHF-03"
+  ],
+  "letterTemplate": "Cascade Mutual\nUtilization Management Department\n\nNotice of Adverse Determination\n\nDate of Notice: [[LETTER_DATE]]\nMember ID: MBR585176363\nClaim Number: CLM99087861525\nService Reviewed: Inpatient admission for CHF exacerbation, DRG 292, dates of service [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nReview Type: Adverse determination, level of care, inpatient versus observation\n\nDetermination\n\nCascade Mutual has completed its review of the above inpatient admission and has issued an adverse determination of level of care, inpatient versus observation. Based on the records submitted, the billed inpatient level of care is not certified. The length of stay exceeded what the documented clinical condition supported. The services are considered supportable at an observation level of care.\n\nBasis for Determination\n\nThis review was conducted against the MCG-style criteria set applied by the plan for the admitting condition. The following guideline codes were found not met:\n\nCHF-01: Not met. Oxygen saturation at presentation did not show hypoxemia requiring inpatient oxygen therapy.\n\nCHF-03: Not met. Laboratory values did not show significant cardiac decompensation.\n\nNo other guideline codes were applied in reaching this determination.\n\nClaim Adjustment Information\n\nThe claim has been adjudicated with the following codes:\n\nCARC CO-50\nRARC N130\n\nAppeal Rights\n\nThe member, the member's authorized representative, or the treating provider acting on the member's behalf may submit a written appeal of this adverse determination of level of care, inpatient versus observation. Written appeals must be addressed to Utilization Management at the address shown on the reverse of this notice.\n\nTo support reconsideration, the appeal should reference each guideline code listed above and respond to the specific finding stated for that code. Documentation submitted should be organized by guideline code so that each argument is matched to the corresponding finding. The appeal must include a physician attestation line signed by the treating or attending physician.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that date may not be eligible for review.\n\nThis determination addresses coverage of the level of care billed and does not direct or alter the care rendered by the treating provider. A copy of the specific guideline criteria used in this review is available upon written request.\n\nSincerely,\n\nMedical Director, Utilization Management\nCascade Mutual"
+}

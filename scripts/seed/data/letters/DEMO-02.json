@@ -1,0 +1,18 @@
+{
+  "denialId": "DEMO-02",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "3515525a9f11ddd2432cac1ac9126a1c4758e80f22dbc77f8b3af343b909a7c5",
+  "generatedAt": "2026-09-16T12:57:54.171Z",
+  "attempts": 2,
+  "tokensIn": 2206,
+  "tokensOut": 2045,
+  "costUsd": 0.062155,
+  "memberId": "MBR647606895",
+  "claimNumber": "CLM22268385230",
+  "citedCodes": [
+    "COPD-01",
+    "COPD-03"
+  ],
+  "letterTemplate": "Cascade Mutual\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR647606895\nClaim Number: CLM22268385230\nService Reviewed: Inpatient admission for COPD exacerbation, DRG 191, from [[ADMIT_DATE]] to [[DISCHARGE_DATE]]\n\nNOTICE OF ADVERSE DETERMINATION - LEVEL OF CARE, INPATIENT VERSUS OBSERVATION\n\nThis letter is to advise you that Cascade Mutual has completed a level of care review of the above service and has issued an adverse determination regarding the level of care billed. The requested inpatient level of care is not certified. Based on the information submitted for the stay from [[ADMIT_DATE]] to [[DISCHARGE_DATE]], the services provided could have been delivered safely at a lower level of care, such as observation.\n\nBASIS FOR DETERMINATION\n\nThe clinical record was reviewed against the MCG-style guidelines applicable to this admission. The following guideline codes were not met:\n\nCOPD-01: Payer finding - oxygenation was near baseline and did not require inpatient care.\n\nCOPD-03: Payer finding - blood gas values did not show acute respiratory acidosis.\n\nNo other guideline codes were applied in this level of care determination.\n\nCLAIM ADJUSTMENT CODING\n\nThe following codes apply to this adverse determination:\n\nCARC CO-50\nRARC N130\n\nThis determination addresses the level of care only, inpatient versus observation. It is not a statement regarding the medical necessity of any other component of the member's care.\n\nAPPEAL RIGHTS\n\nThe member, or the provider acting as the member's authorized representative, may submit a written appeal of this level of care determination. Written appeals must be addressed to Utilization Management at the address shown on this notice.\n\nTo support review, each argument in the appeal should reference the applicable guideline code, COPD-01 or COPD-03, and respond to the specific payer finding stated above for that code. The appeal must include a physician attestation line signed by the treating or reviewing physician.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that time may not be eligible for reconsideration under the plan's utilization management procedures.\n\nAdditional clinical documentation relevant to the level of care rendered between [[ADMIT_DATE]] and [[DISCHARGE_DATE]] may be submitted with the written appeal.\n\nSincerely,\n\nMedical Director, Utilization Management\nCascade Mutual"
+}

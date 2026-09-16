@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-002",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "3292bb563cf9b614b2268ccfa243ca669d473dd0b053930019d4967b2ad07568",
+  "generatedAt": "2026-09-16T12:58:19.559Z",
+  "attempts": 2,
+  "tokensIn": 2190,
+  "tokensOut": 1972,
+  "costUsd": 0.06025,
+  "memberId": "MBR272192506",
+  "claimNumber": "CLM92598392170",
+  "citedCodes": [
+    "PNA-01",
+    "PNA-02"
+  ],
+  "letterTemplate": "Cascade Mutual\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR272192506\nClaim Number: CLM92598392170\nService Reviewed: Inpatient admission for community-acquired pneumonia, DRG 195\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nCriteria Set Applied: MCG-style inpatient and surgical care guidelines, edition in effect on the date of service\n\nDETERMINATION: ADVERSE DETERMINATION - MEDICAL NECESSITY\n\nThis letter is notice of an adverse determination for medical necessity regarding the inpatient admission identified above. Cascade Mutual has completed clinical review of the submitted records. Based on that review, the documentation available at the time of admission did not meet inpatient criteria.\n\nCLAIM ADJUSTMENT CODES\nCARC CO-50\nRARC N115\n\nCRITERIA REVIEWED AND FINDINGS\nPNA-01: Not met. Finding: The patient did not have hypoxemia requiring inpatient oxygen.\nPNA-02: Not met. Finding: Respiratory rate was not in the severe range.\n\nNo other guideline codes were applied to this determination. This adverse determination is based on medical necessity for the inpatient level of care requested for the admission spanning [[ADMIT_DATE]] to [[DISCHARGE_DATE]]. The member is not financially liable beyond any applicable benefit provisions as described in the plan documents.\n\nAPPEAL RIGHTS\nYou, the member, or the treating provider acting as the member's authorized representative may request an appeal of this medical necessity adverse determination. Appeals must be submitted in writing and addressed to Utilization Management at the address shown on the reverse of this notice. To support efficient reconsideration, each argument in the appeal should reference the applicable guideline code (PNA-01 or PNA-02) and respond directly to the specific finding stated above for that code. Submissions should include any additional clinical documentation from the admission that was not available at the time of the initial review.\n\nThe appeal must include the following physician attestation line, completed and signed by the treating physician:\n\"I attest that the clinical information submitted in support of this appeal is accurate and complete to the best of my knowledge.\" ______________________________ (Treating Physician)\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that deadline may be closed without clinical reconsideration.\n\nA copy of the specific guideline criteria applied in this review is available upon written request at no charge.\n\nSincerely,\nMedical Director, Utilization Management\nCascade Mutual"
+}

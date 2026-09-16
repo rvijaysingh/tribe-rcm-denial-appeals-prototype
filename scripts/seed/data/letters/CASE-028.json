@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-028",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "6ea738acdbcb09c567708410aa6ca2a7f797d8d44c571382f9aa13a722146b6f",
+  "generatedAt": "2026-09-16T13:00:00.212Z",
+  "attempts": 2,
+  "tokensIn": 2186,
+  "tokensOut": 1858,
+  "costUsd": 0.05738,
+  "memberId": "MBR712450985",
+  "claimNumber": "CLM14758811700",
+  "citedCodes": [
+    "SEP-02",
+    "SEP-03"
+  ],
+  "letterTemplate": "Cascade Mutual\nUtilization Management Department\n\nDate of this notice: [[LETTER_DATE]]\n\nMember ID: MBR712450985\nClaim number: CLM14758811700\nService reviewed: Inpatient admission for Sepsis, DRG 871\nDates of service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\n\nNOTICE OF ADVERSE DETERMINATION - MEDICAL NECESSITY\n\nCascade Mutual has completed a medical necessity review of the inpatient admission identified above. Based on the submitted medical record, this request is denied as an adverse determination for medical necessity. The admission does not meet the applicable inpatient criteria under the MCG-style guideline set applied by this plan.\n\nBasis for determination:\nThe medical record does not document clinical severity sufficient to require inpatient admission.\n\nGuideline codes reviewed and findings:\n\nSEP-02 - Not met. Finding: Antibiotic therapy could have been given in an outpatient or observation setting.\n\nSEP-03 - Not met. Finding: There was no evidence of new organ dysfunction.\n\nNo other guideline codes were applied in reaching this adverse determination for medical necessity.\n\nClaim adjustment codes applied to this claim:\nCARC CO-50\nRARC N115\n\nThis determination addresses medical necessity only. The review was conducted by a physician reviewer, and the findings above reflect the documentation available in the record submitted for the admission spanning [[ADMIT_DATE]] to [[DISCHARGE_DATE]].\n\nAppeal rights and instructions:\nThe member, the member's authorized representative, or the treating provider may request an appeal of this adverse determination. Appeals must be submitted in writing and addressed to Utilization Management at the address shown on this notice. Each written appeal argument should reference the applicable guideline code (SEP-02 or SEP-03) and respond to the specific finding stated above for that code. The appeal submission must include a physician attestation line signed by the treating physician. Supporting records relevant to the cited findings should be attached.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that deadline may be closed without review of the merits.\n\nA copy of the specific guideline provisions used in this review is available upon written request at no charge.\n\nSincerely,\n\nMedical Director, Utilization Management\nCascade Mutual"
+}

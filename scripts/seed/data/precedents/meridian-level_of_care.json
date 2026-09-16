@@ -1,0 +1,68 @@
+{
+  "payerId": "meridian",
+  "category": "level_of_care",
+  "promptVersion": "precedent.v1",
+  "model": "claude-opus-5",
+  "inputHash": "0b392dcfd8749a860f583e77dcba5b2792d7c3d98e65bbcdc445baffaf458924",
+  "generatedAt": "2026-09-16T13:00:47.812Z",
+  "attempts": 1,
+  "tokensIn": 1440,
+  "tokensOut": 2106,
+  "costUsd": 0.05985,
+  "precedents": [
+    {
+      "id": "P6",
+      "payerId": "meridian",
+      "category": "level_of_care",
+      "condition": "sepsis",
+      "outcome": "upheld",
+      "summary": "A patient treated for sepsis was denied inpatient status on the basis that care could have been delivered safely in observation. The appeal cited infection source documentation and the admitting assessment, but could not produce a serum lactate result or a full repeat set of vital signs after fluid resuscitation. The payer's determination was upheld.",
+      "letterExcerpt": "We ask reconsideration of the observation downgrade for this admission for sepsis. The record documents a suspected infectious source, the sepsis order set, and the treating team's assessment that the patient required close monitoring and intravenous therapy beyond a brief observation window. We acknowledge that we are unable to supply a serum lactate result, and the chart does not contain a complete repeat set of vital signs recorded after the fluid resuscitation phase. We submit that the narrative documentation of persistent physiologic instability, together with the frequency of nursing reassessment, supports the inpatient decision made at the bedside. We recognize the limits of what we can produce and ask that the clinical judgment reflected in the progress notes be weighed on review."
+    },
+    {
+      "id": "P7",
+      "payerId": "meridian",
+      "category": "level_of_care",
+      "condition": "copd_exacerbation",
+      "outcome": "overturned",
+      "summary": "An admission for COPD exacerbation was denied on the basis that the length of stay exceeded what the documented condition supported. The appeal supplied steroid orders with route and frequency, glucose monitoring results, and a respiratory therapy flowsheet showing BiPAP start and stop times with settings. The denial was overturned.",
+      "letterExcerpt": "We appeal the length of stay reduction applied to this admission for COPD exacerbation. The respiratory therapy flowsheet documents each BiPAP episode with start and stop times and the settings in use, establishing that noninvasive ventilatory support continued beyond the first day and was titrated in response to the patient's work of breathing. Systemic steroid orders are recorded with route and frequency, and the associated glucose monitoring results show the additional surveillance that therapy required. Taken together, these records demonstrate an ongoing need for services that cannot be delivered outside an inpatient setting, and they account for each day under review. We therefore request that the full authorized stay be reinstated as billed."
+    },
+    {
+      "id": "P8",
+      "payerId": "meridian",
+      "category": "level_of_care",
+      "condition": "pneumonia",
+      "outcome": "overturned",
+      "summary": "A community-acquired pneumonia admission was denied because documentation available at admission was said not to meet inpatient criteria. The appeal produced a severity score calculation with its components recorded at the time of admission, along with antibiotic orders specifying route and documentation of oral intake tolerance. The denial was overturned.",
+      "letterExcerpt": "We appeal the determination that admission documentation for this patient with community-acquired pneumonia did not support inpatient status. The admitting record contains a severity score calculation with each contributing component documented contemporaneously, not reconstructed after the fact, and that score placed the patient in a risk category for which inpatient management is the accepted standard. Antibiotic orders show the parenteral route selected at admission, and nursing documentation of oral intake tolerance explains why a transition to oral therapy was not appropriate at that time. The information the reviewer describes as absent was in fact available to the admitting physician and is present in the submitted chart. We ask that inpatient status be reinstated on that basis."
+    },
+    {
+      "id": "P9",
+      "payerId": "meridian",
+      "category": "level_of_care",
+      "condition": "chf_exacerbation",
+      "outcome": "upheld",
+      "summary": "An admission for CHF exacerbation was denied on length of stay grounds. The appeal relied on diuretic administration records and daily weights but could not supply room air saturation readings at presentation or the oxygen flow rate required across the first twenty-four hours. The payer's determination was upheld.",
+      "letterExcerpt": "We ask reconsideration of the length of stay denial for this admission for CHF exacerbation. The record documents intravenous diuresis, daily weights, and intake and output tracking across the stay, together with the treating team's assessment of congestion that had not resolved at the point the reviewer identifies as the end of medical necessity. We are unable to supply room air saturation readings taken at presentation, and the chart does not record the oxygen flow rate required during the first twenty-four hours. We recognize that the absence of this respiratory documentation limits our ability to demonstrate the degree of hypoxemia present, and we ask that the remaining contemporaneous records be considered in full on review."
+    },
+    {
+      "id": "P10",
+      "payerId": "meridian",
+      "category": "level_of_care",
+      "condition": "sepsis",
+      "outcome": "overturned",
+      "summary": "A sepsis admission was denied on the basis that the stay exceeded what the documented condition supported. The appeal submitted creatinine, platelet count, and bilirubin values on arrival alongside prior baselines, plus respiratory rate, oxygen saturation, and oxygen flow documentation across the first twelve hours. The denial was overturned.",
+      "letterExcerpt": "We appeal the length of stay determination for this admission for sepsis. Laboratory results obtained on arrival, presented against this patient's own prior baseline values, document acute derangement in renal, hematologic, and hepatic parameters rather than chronic abnormality. Respiratory rate, oxygen saturation, and oxygen flow are recorded at intervals across the first twelve hours and show a supplemental oxygen requirement that persisted and was adjusted during that period. This combination of organ dysfunction and ongoing respiratory support establishes an acuity that required continued inpatient monitoring and intravenous therapy for the duration billed. The reviewer's conclusion appears to rest on the arrival values alone without reference to baseline comparison. We request reinstatement of the full inpatient stay."
+    },
+    {
+      "id": "P11",
+      "payerId": "meridian",
+      "category": "level_of_care",
+      "condition": "copd_exacerbation",
+      "outcome": "upheld",
+      "summary": "An admission for COPD exacerbation was denied on the basis that care could have been delivered safely at the observation level. The appeal described bronchodilator therapy and nursing assessments but could not supply a respiratory therapy flowsheet showing BiPAP start and stop times and settings. The payer's determination was upheld.",
+      "letterExcerpt": "We ask reconsideration of the observation downgrade applied to this admission for COPD exacerbation. The record documents scheduled bronchodilator therapy, systemic steroid administration, and repeated nursing assessments of work of breathing and mental status during the stay. The physician notes reference the use of noninvasive ventilatory support as the basis for the inpatient decision. We are unable to supply a respiratory therapy flowsheet showing BiPAP start and stop times with the settings in use, and no equivalent contemporaneous record of that support exists in the chart. We acknowledge that this gap leaves the duration and intensity of ventilatory support undocumented, and we ask that the remaining treatment records and physician narrative be weighed on review."
+    }
+  ]
+}

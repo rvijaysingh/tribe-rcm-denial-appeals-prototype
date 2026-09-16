@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-005",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "8818f6f0f51dda18f345842408ce8946cf6b1afb69dff5aa537183a9abe629f0",
+  "generatedAt": "2026-09-16T12:58:19.759Z",
+  "attempts": 2,
+  "tokensIn": 2206,
+  "tokensOut": 2043,
+  "costUsd": 0.062105,
+  "memberId": "MBR856632008",
+  "claimNumber": "CLM65170763088",
+  "citedCodes": [
+    "PNA-01",
+    "PNA-04"
+  ],
+  "letterTemplate": "Meridian Health Plan\nUtilization Management Department\n\nNOTICE OF ADVERSE DETERMINATION - MEDICAL NECESSITY\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR856632008\nClaim Number: CLM65170763088\nService Reviewed: Inpatient admission, Community-acquired pneumonia, DRG 193\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\n\nDETERMINATION\n\nMeridian Health Plan has completed a medical necessity review of the inpatient admission identified above. Based on the clinical information submitted, an adverse determination has been issued. This is an adverse determination based on medical necessity. The documentation available at the time of admission did not meet inpatient criteria.\n\nCRITERIA APPLIED\n\nReview was conducted using the InterQual-style criteria set applicable to the admission under review. The following criteria were found not met:\n\nPNA-01: Pneumonia severity scores indicated low risk suitable for outpatient treatment.\n\nPNA-04: Laboratory values were within acceptable limits.\n\nNo other criteria codes were applied to this determination.\n\nCLAIM ADJUSTMENT CODING\n\nThe claim will be adjudicated with the following codes:\n\nCARC CO-50\nRARC N115\n\nThis determination addresses medical necessity for the inpatient level of care only. It is not a statement regarding the quality of care rendered by the treating provider or facility. The treating provider retains responsibility for all treatment decisions. The member is not financially liable for services denied under CARC CO-50 except as permitted under the terms of the member's benefit plan and any applicable provider agreement.\n\nAPPEAL RIGHTS\n\nThe member, the member's authorized representative, or the treating provider acting on the member's behalf may request a Level 1 appeal of this adverse determination. Appeals may be submitted by letter or by document upload through the Meridian Health Plan provider and member portal.\n\nAppeal submissions should cite the criteria codes inline, specifically PNA-01 and PNA-04, and address the findings stated above. Please attach the History and Physical and all progress notes for the admission spanning [[ADMIT_DATE]] through [[DISCHARGE_DATE]]. Appeal submissions are limited to five pages, excluding attached medical records.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that date may not be eligible for review.\n\nA copy of the criteria applied in this review is available upon written request at no charge.\n\nSincerely,\n\nMedical Director, Utilization Management\nMeridian Health Plan"
+}

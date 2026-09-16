@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-031",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "c33c6bb214734cefd4dfd47d74903e338b3b8358a743756340f333e859504098",
+  "generatedAt": "2026-09-16T13:00:20.205Z",
+  "attempts": 2,
+  "tokensIn": 2198,
+  "tokensOut": 1870,
+  "costUsd": 0.05774,
+  "memberId": "MBR526445914",
+  "claimNumber": "CLM00466768162",
+  "citedCodes": [
+    "COPD-01",
+    "COPD-03"
+  ],
+  "letterTemplate": "Cascade Mutual\nUtilization Management Department\n\nNotice of Adverse Determination\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR526445914\nClaim Number: CLM00466768162\nService Reviewed: Inpatient admission for COPD exacerbation, DRG 190\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nType of Review: Adverse determination, level of care, inpatient versus observation\n\nDetermination\n\nCascade Mutual has completed a level of care review of the above admission and has issued an adverse determination. Based on the records submitted, the billed inpatient level of care is not supported. The documented clinical condition supported an observation level of care rather than an inpatient stay, and the length of stay exceeded what the documented clinical condition supported.\n\nCriteria Applied\n\nThis review was conducted using the payer's MCG-style criteria set. The following guideline codes were reviewed and found not met:\n\nCOPD-01: Oxygenation was near baseline and did not require inpatient care.\n\nCOPD-03: Blood gas values did not show acute respiratory acidosis.\n\nNo other guideline codes were applied in this level of care determination.\n\nClaim Adjustment Information\n\nThe claim has been adjusted with the following codes:\n\nCARC CO-50\nRARC N130\n\nAppeal Rights\n\nYou or your authorized representative may request reconsideration of this level of care determination. Appeals must be submitted in writing and addressed to Utilization Management at the address shown on this notice. Each argument should reference the applicable guideline code, either COPD-01 or COPD-03, and respond to the specific finding stated above for that code. Supporting documentation from the medical record should be attached and clearly labeled.\n\nThe written appeal must include a physician attestation line signed by the treating or reviewing physician.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that date may not be eligible for review.\n\nThis determination addresses the level of care billed for the admission described above. The member is not financially liable beyond applicable plan cost sharing where provider liability applies under the participation agreement.\n\nQuestions regarding this notice may be directed to the Utilization Management Department using the contact information on the member identification card.\n\nSincerely,\n\nMedical Director, Utilization Management\nCascade Mutual"
+}

@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-013",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "cd5b8654220b72d07db24c958aa22a1ec46f6220e1ba596260c37ef9559efb00",
+  "generatedAt": "2026-09-16T12:59:06.871Z",
+  "attempts": 2,
+  "tokensIn": 2222,
+  "tokensOut": 1963,
+  "costUsd": 0.060185,
+  "memberId": "MBR532016904",
+  "claimNumber": "CLM39378183961",
+  "citedCodes": [
+    "CHF-01",
+    "CHF-03"
+  ],
+  "letterTemplate": "NORTHGATE ADVANTAGE\nUtilization Management Department\nNotice of Adverse Determination\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR532016904\nClaim Number: CLM39378183961\nService Reviewed: Inpatient admission for CHF exacerbation, DRG 292\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nReview Type: Adverse determination, medical necessity\nCriteria Source: MCG-style criteria set, version on file with the plan\n\nDETERMINATION\n\nNorthgate Advantage has completed a medical necessity review of the inpatient admission identified above. Based on the clinical information submitted and available at the time of admission, an adverse determination, medical necessity, has been issued. The documentation available at the time of admission did not meet inpatient criteria.\n\nCLAIM ADJUSTMENT CODING\n\nCARC CO-50\nRARC N115\n\nCRITERIA APPLIED AND FINDINGS\n\nCHF-01: Not met. Diuresis was achieved with a single intravenous dose and could have been managed with oral medication.\n\nCHF-03: Not met. Imaging did not demonstrate acute pulmonary edema.\n\nNo additional criteria codes were applied to this determination.\n\nThis notice reflects a medical necessity adverse determination for the admission described. The member is not financially liable for services denied under this determination beyond any applicable cost sharing permitted by the plan documents and applicable regulations.\n\nAPPEAL RIGHTS AND INSTRUCTIONS\n\nA request for reconsideration may be submitted within the filing window established by the plan. Any clinical rationale submitted in support of reconsideration must map each finding to the corresponding numbered criterion cited above. Submissions that do not address the numbered criteria individually may be returned without substantive review.\n\nLevel of care denials are not eligible for provider appeal.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Requests received after that date may be closed without further review. Supporting documentation should reference the claim number and member ID shown above.\n\nA physician reviewer is available to discuss this determination with the treating practitioner upon request through the Utilization Management Department at the number listed on the member identification card.\n\nSincerely,\n\nMedical Director, Utilization Management\nNorthgate Advantage"
+}

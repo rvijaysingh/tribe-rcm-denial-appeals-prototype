@@ -1,0 +1,68 @@
+{
+  "payerId": "cascade",
+  "category": "level_of_care",
+  "promptVersion": "precedent.v1",
+  "model": "claude-opus-5",
+  "inputHash": "e5505f655f3e55c84fa5069824b1697f6cdef3be150fae2a3bcd76d640b38381",
+  "generatedAt": "2026-09-16T13:00:54.560Z",
+  "attempts": 1,
+  "tokensIn": 1402,
+  "tokensOut": 2071,
+  "costUsd": 0.058785,
+  "precedents": [
+    {
+      "id": "P17",
+      "payerId": "cascade",
+      "category": "level_of_care",
+      "condition": "copd_exacerbation",
+      "outcome": "overturned",
+      "summary": "A patient admitted with a COPD exacerbation was denied inpatient status on the rationale that care could have been delivered safely in observation. The appeal submitted documentation of comorbid condition status, including echocardiographic findings and physical exam, along with the emergency department medication administration record and reassessment notes following each bronchodilator treatment. The denial was overturned.",
+      "letterExcerpt": "We respectfully disagree that this admission could have been managed safely at an observation level of care. We direct the reviewer to the emergency department medication administration record, which documents each bronchodilator treatment administered, and to the paired reassessment notes recorded after every treatment, which show the trajectory of response rather than a single snapshot. We further submit documentation of the patient's comorbid cardiopulmonary status, including the echocardiographic report and the admitting physician's exam findings, which together establish a limited physiologic reserve. Taken as a whole, the record reflects a patient whose respiratory status required repeated intervention and serial reassessment across more than one care shift, with an anticipated need that could not be resolved within an observation window. We request that the inpatient determination be reinstated."
+    },
+    {
+      "id": "P18",
+      "payerId": "cascade",
+      "category": "level_of_care",
+      "condition": "pneumonia",
+      "outcome": "overturned",
+      "summary": "Inpatient admission for community-acquired pneumonia was denied on the basis that documentation available at admission did not meet inpatient criteria. The appeals team produced the severity score calculation with each contributing component as recorded at the time of admission, together with the triage room air saturation and the oxygen requirement documented over the first twenty-four hours. The determination was overturned.",
+      "letterExcerpt": "We submit that the information necessary to support inpatient status was present in the record at the time the admission decision was made. The severity score was calculated and documented contemporaneously, and we have reproduced each component so the reviewer can confirm that the risk stratification was not applied retrospectively. We also attach the triage room air saturation and the documented oxygen requirement across the first twenty-four hours, which demonstrate a supplemental oxygen need that persisted rather than resolved. The admitting clinician's decision was therefore consistent with the documented severity and with a reasonable expectation of a stay spanning multiple days. We ask that the denial be reversed and the claim adjudicated at the inpatient level of care."
+    },
+    {
+      "id": "P19",
+      "payerId": "cascade",
+      "category": "level_of_care",
+      "condition": "chf_exacerbation",
+      "outcome": "overturned",
+      "summary": "A CHF exacerbation admission was denied with the rationale that the services could have been furnished safely in observation. The appeal supplied the radiology report for chest imaging obtained on arrival and the medication administration record showing each intravenous loop diuretic dose with administration times and the corresponding urine output response. The denial was overturned.",
+      "letterExcerpt": "We ask the reviewer to consider the sequence of care rather than the discharge disposition alone. The chest imaging report obtained on arrival is attached and documents the radiographic findings that prompted admission. We also provide the medication administration record, which shows each intravenous loop diuretic dose, the time it was given, and the recorded urine output response following administration. That record demonstrates an iterative titration process carried out over successive nursing shifts, with dosing adjusted in response to measured output rather than a single dose followed by observation and release. This pattern of ongoing intravenous therapy, response assessment, and redosing reflects an inpatient course. We respectfully request that the level of care denial be overturned."
+    },
+    {
+      "id": "P20",
+      "payerId": "cascade",
+      "category": "level_of_care",
+      "condition": "sepsis",
+      "outcome": "upheld",
+      "summary": "An admission for sepsis was denied because the documentation available at admission was found not to meet inpatient criteria. On appeal, the hospital was unable to produce a medication administration record for any vasopressor showing a start time and peak dose, and no equivalent evidence of hemodynamic support was available in the record. The denial was upheld.",
+      "letterExcerpt": "We have conducted a complete review of the medication administration record and the nursing flowsheets for this encounter in an effort to document vasopressor support. We are unable to locate an administration entry for any vasopressor agent, and consequently cannot supply a start time or a peak dose as the reviewer requested. We acknowledge that without this documentation the record does not establish that the patient required hemodynamic support at the time of the admission decision. We have submitted the remaining clinical documentation for the reviewer's consideration and note our disagreement with the characterization of the initial assessment, but we recognize that the specific evidence identified as determinative is not present in the chart and cannot be reconstructed."
+    },
+    {
+      "id": "P21",
+      "payerId": "cascade",
+      "category": "level_of_care",
+      "condition": "copd_exacerbation",
+      "outcome": "upheld",
+      "summary": "A COPD exacerbation admission drew a denial asserting that the length of stay exceeded what the documented clinical condition supported. The appeal was unable to supply documentation of comorbid condition status, such as echocardiographic results and supporting exam findings, that would have justified the extended stay. The denial was upheld.",
+      "letterExcerpt": "In responding to the length of stay determination, we sought to document the comorbid cardiopulmonary conditions that we believe prolonged this patient's recovery. We are unable to locate an echocardiographic report within this encounter or in the records available to us, and the exam documentation in the progress notes does not address the comorbid status in a manner that would support the additional days billed. We have submitted the respiratory therapy notes and daily progress documentation for completeness. We recognize, however, that absent objective documentation of the comorbid burden, the record as written does not substantiate the continued stay beyond the period the reviewer identified, and we are unable to close that evidentiary gap."
+    },
+    {
+      "id": "P22",
+      "payerId": "cascade",
+      "category": "level_of_care",
+      "condition": "pneumonia",
+      "outcome": "upheld",
+      "summary": "An admission for community-acquired pneumonia was denied on the ground that the length of stay exceeded what the documented clinical condition supported. The appeal could not supply a radiology report describing the lobes involved or the presence of any effusion, leaving the extent of disease unsupported in the record. The denial was upheld.",
+      "letterExcerpt": "We have reviewed the imaging documentation for this encounter in support of the extended stay. While imaging was ordered and referenced in the clinical notes, we are unable to produce a radiology report that describes the specific lobes involved or characterizes the presence or absence of an effusion. Without that report, the record does not establish the anatomic extent of disease that we believe accounted for the slower clinical response and the additional inpatient days. We have submitted the available nursing documentation and daily assessments for the reviewer's consideration. We acknowledge that the evidence identified as determinative in this review is not present in the chart, and we are not in a position to supply it on appeal."
+    }
+  ]
+}

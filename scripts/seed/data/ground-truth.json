@@ -1,0 +1,858 @@
+{
+  "cases": [
+    {
+      "denialId": "DEMO-01",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "metClauseIds": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "DEMO-02",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C46",
+        "C47",
+        "C48",
+        "C49",
+        "C50",
+        "C51"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "DEMO-03",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C66",
+        "C67",
+        "C68",
+        "C69",
+        "C70",
+        "C71",
+        "C73"
+      ],
+      "unmetRequiredClauseIds": [
+        "C65"
+      ],
+      "expectedRoute": "needs_docs",
+      "winnable": false,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "DEMO-04",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "metClauseIds": [
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C29",
+        "C30"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "DNA-01",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C7"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "do_not_appeal",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "DNA-02",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "metClauseIds": [
+        "C74",
+        "C75",
+        "C76",
+        "C78",
+        "C79",
+        "C81"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "do_not_appeal",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "DNA-03",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C82",
+        "C83",
+        "C84",
+        "C86",
+        "C87",
+        "C88"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "do_not_appeal",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-001",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C35",
+        "C36"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-002",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C53",
+        "C54",
+        "C55",
+        "C56",
+        "C57",
+        "C58"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-003",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C46",
+        "C47",
+        "C48",
+        "C49",
+        "C50",
+        "C51",
+        "C52"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-004",
+      "category": "level_of_care",
+      "rootCause": "los_exceeds_expected",
+      "metClauseIds": [
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C35",
+        "C36"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-005",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C26",
+        "C27",
+        "C29",
+        "C30"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-006",
+      "category": "level_of_care",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C36",
+        "C37"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-007",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C74",
+        "C75",
+        "C78",
+        "C79",
+        "C81"
+      ],
+      "unmetRequiredClauseIds": [
+        "C76"
+      ],
+      "expectedRoute": "needs_docs",
+      "winnable": false,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-008",
+      "category": "level_of_care",
+      "rootCause": "los_exceeds_expected",
+      "metClauseIds": [
+        "C82",
+        "C83",
+        "C85",
+        "C86",
+        "C87",
+        "C88"
+      ],
+      "unmetRequiredClauseIds": [
+        "C84"
+      ],
+      "expectedRoute": "do_not_appeal",
+      "winnable": false,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-009",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "metClauseIds": [
+        "C16",
+        "C17",
+        "C18",
+        "C19",
+        "C20",
+        "C21"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-010",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "metClauseIds": [
+        "C82",
+        "C83",
+        "C86",
+        "C87",
+        "C88"
+      ],
+      "unmetRequiredClauseIds": [
+        "C84"
+      ],
+      "expectedRoute": "needs_docs",
+      "winnable": false,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-011",
+      "category": "level_of_care",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C9",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "do_not_appeal",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-012",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C9",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-013",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C59",
+        "C60",
+        "C62",
+        "C64"
+      ],
+      "unmetRequiredClauseIds": [
+        "C61"
+      ],
+      "expectedRoute": "needs_docs",
+      "winnable": false,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-014",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C65",
+        "C66",
+        "C67",
+        "C68",
+        "C69",
+        "C70",
+        "C71",
+        "C72",
+        "C73"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-015",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "metClauseIds": [
+        "C65",
+        "C66",
+        "C67",
+        "C68",
+        "C69",
+        "C70",
+        "C71",
+        "C72",
+        "C73"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-016",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C74",
+        "C75",
+        "C76",
+        "C78",
+        "C79",
+        "C80"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-017",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C16",
+        "C17",
+        "C19",
+        "C20",
+        "C21"
+      ],
+      "unmetRequiredClauseIds": [
+        "C18"
+      ],
+      "expectedRoute": "needs_docs",
+      "winnable": false,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-018",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-019",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C9",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "do_not_appeal",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-020",
+      "category": "level_of_care",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-021",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "metClauseIds": [
+        "C59",
+        "C60",
+        "C61",
+        "C62",
+        "C63"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-022",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C38",
+        "C39",
+        "C40",
+        "C41",
+        "C42",
+        "C44",
+        "C45"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-023",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C59",
+        "C60",
+        "C61",
+        "C62",
+        "C63"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-024",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C53",
+        "C54",
+        "C56",
+        "C57",
+        "C58"
+      ],
+      "unmetRequiredClauseIds": [
+        "C55"
+      ],
+      "expectedRoute": "do_not_appeal",
+      "winnable": false,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-025",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C7"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-026",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C26",
+        "C28",
+        "C29",
+        "C30"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-027",
+      "category": "level_of_care",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C46",
+        "C47",
+        "C48",
+        "C49",
+        "C50",
+        "C51",
+        "C52"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-028",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "metClauseIds": [
+        "C38",
+        "C39",
+        "C40",
+        "C41",
+        "C42",
+        "C43",
+        "C44",
+        "C45"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-029",
+      "category": "medical_necessity",
+      "rootCause": "severity_not_documented",
+      "metClauseIds": [
+        "C65",
+        "C66",
+        "C67",
+        "C68",
+        "C69",
+        "C70",
+        "C71",
+        "C73"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-030",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C53",
+        "C54",
+        "C56",
+        "C57",
+        "C58"
+      ],
+      "unmetRequiredClauseIds": [
+        "C55"
+      ],
+      "expectedRoute": "needs_docs",
+      "winnable": false,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-031",
+      "category": "level_of_care",
+      "rootCause": "los_exceeds_expected",
+      "metClauseIds": [
+        "C46",
+        "C47",
+        "C49",
+        "C50"
+      ],
+      "unmetRequiredClauseIds": [
+        "C48"
+      ],
+      "expectedRoute": "needs_docs",
+      "winnable": false,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-032",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C16",
+        "C17",
+        "C18",
+        "C19",
+        "C20"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "needs_review",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-033",
+      "category": "level_of_care",
+      "rootCause": "los_exceeds_expected",
+      "metClauseIds": [
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C26",
+        "C27",
+        "C29",
+        "C30"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-034",
+      "category": "medical_necessity",
+      "rootCause": "criteria_not_met_at_admission",
+      "metClauseIds": [
+        "C74",
+        "C75",
+        "C76",
+        "C77",
+        "C78",
+        "C79",
+        "C81"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "do_not_appeal",
+      "winnable": true,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-035",
+      "category": "medical_necessity",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C82",
+        "C83",
+        "C85",
+        "C86",
+        "C87",
+        "C88"
+      ],
+      "unmetRequiredClauseIds": [
+        "C84"
+      ],
+      "expectedRoute": "needs_docs",
+      "winnable": false,
+      "approveAsIs": false,
+      "spotChecked": false,
+      "spotCheckNote": null
+    },
+    {
+      "denialId": "CASE-036",
+      "category": "level_of_care",
+      "rootCause": "treatment_appropriate_at_lower_level",
+      "metClauseIds": [
+        "C38",
+        "C39",
+        "C40",
+        "C41",
+        "C42",
+        "C44",
+        "C45"
+      ],
+      "unmetRequiredClauseIds": [],
+      "expectedRoute": "ready",
+      "winnable": true,
+      "approveAsIs": true,
+      "spotChecked": false,
+      "spotCheckNote": null
+    }
+  ]
+}

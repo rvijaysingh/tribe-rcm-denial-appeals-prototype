@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-001",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "a46c6cbdf4ee61b11ca142d0b36d1c0aee32f0ef911ac943cd8d7c32ff872942",
+  "generatedAt": "2026-09-16T12:58:18.916Z",
+  "attempts": 2,
+  "tokensIn": 2256,
+  "tokensOut": 1990,
+  "costUsd": 0.06103,
+  "memberId": "MBR475806166",
+  "claimNumber": "CLM71491150588",
+  "citedCodes": [
+    "CHF-01",
+    "CHF-02"
+  ],
+  "letterTemplate": "Cascade Mutual\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR475806166\nClaim Number: CLM71491150588\nService Reviewed: Inpatient admission for CHF exacerbation, DRG 293, dates of service [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nCriteria Set Applied: MCG-style inpatient and surgical care guidelines, edition in effect on the date of admission\n\nNOTICE OF ADVERSE DETERMINATION - LEVEL OF CARE, INPATIENT VERSUS OBSERVATION\n\nThis letter serves as notice of an adverse determination regarding the level of care billed for the above admission. Following review of the submitted medical record against the applicable guideline, Cascade Mutual has determined that the services rendered could have been delivered safely at a lower level of care, such as observation. The inpatient level of care is therefore not certified for the period [[ADMIT_DATE]] through [[DISCHARGE_DATE]].\n\nCriteria reviewed and findings:\n\nCHF-01: Not met. Oxygen saturation at presentation did not show hypoxemia requiring inpatient oxygen therapy.\n\nCHF-02: Not met. Diuresis was achieved with a single intravenous dose and could have been managed with oral medication.\n\nNo other guideline codes were applied to this determination.\n\nClaim adjustment codes applied to this determination:\nCARC CO-50\nRARC N130\n\nThis is a determination of level of care only. It is not a statement regarding the medical appropriateness of the treatment furnished by the attending practitioner, and it does not direct the care of the member.\n\nAPPEAL RIGHTS\n\nThe member, or a provider acting as the member's authorized representative, may submit a written appeal addressed to Utilization Management at the address shown on the reverse of this notice. To support reconsideration of this level of care determination, the appeal should reference the guideline code and the specific finding contested for each argument raised, addressing CHF-01 and CHF-02 separately. Supporting documentation from the medical record should be attached and indexed to the finding it addresses.\n\nThe appeal must include a physician attestation line, signed by the attending or reviewing physician, affirming that the submitted clinical information is accurate and complete.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that time may be closed without clinical review.\n\nPlease reference Claim Number CLM71491150588 and Member ID MBR475806166 on all correspondence.\n\nIssued by:\nMedical Director, Utilization Management\nCascade Mutual"
+}

@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-024",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "4c0044b8310b5e230072462c8b131f58402a1d273f11badd300b785a955fc4f3",
+  "generatedAt": "2026-09-16T12:59:55.445Z",
+  "attempts": 2,
+  "tokensIn": 2166,
+  "tokensOut": 1956,
+  "costUsd": 0.05973,
+  "memberId": "MBR635423341",
+  "claimNumber": "CLM11663351890",
+  "citedCodes": [
+    "PNA-02",
+    "PNA-03"
+  ],
+  "letterTemplate": "Cascade Mutual\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR635423341\nClaim Number: CLM11663351890\nService Reviewed: Inpatient admission, Community-acquired pneumonia, DRG 193\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\n\nDETERMINATION: ADVERSE DETERMINATION - MEDICAL NECESSITY\n\nThis letter is notice that Cascade Mutual has issued an adverse determination on the basis of medical necessity for the inpatient admission identified above. The requested inpatient level of care is not certified. This medical necessity denial was made following review of the submitted clinical documentation against the MCG-style criteria set edition applicable to this claim.\n\nBASIS FOR DETERMINATION\n\nThe clinical information submitted supports that the services rendered could have been delivered safely at a lower level of care, such as observation. Inpatient level of care was therefore not established as medically necessary.\n\nCriteria reviewed and found not met:\n\n- PNA-02: Respiratory rate was not in the severe range.\n- PNA-03: Mental status was at baseline.\n\nNo other guideline codes were applied in this review.\n\nCLAIM ADJUSTMENT CODING\n\nThe following codes apply to this determination:\nCARC CO-50\nRARC N115\n\nThis determination addresses medical necessity for the level of care billed. It is not a statement regarding the quality of care delivered by the treating facility or practitioner.\n\nAPPEAL RIGHTS\n\nThe member, or a provider acting as the member's authorized representative, may submit a written appeal addressed to Utilization Management at the address shown on this notice. Appeals must be received by [[APPEAL_DEADLINE]].\n\nTo support efficient review, the written appeal should reference each guideline code listed above and respond to the specific finding stated for that code. Submit any additional records, consultation notes, or clinical documentation that address the findings for PNA-02 and PNA-03.\n\nThe appeal must include the following physician attestation line, completed and signed by the treating or reviewing physician:\n\n\"I attest that the clinical information submitted in support of this appeal is accurate and complete to the best of my knowledge.\" Physician signature: ______________________\n\nA peer-to-peer discussion with a Cascade Mutual physician reviewer may be requested by contacting Utilization Management at the number listed on the member identification card.\n\nSincerely,\n\nMedical Director, Utilization Management\nCascade Mutual"
+}

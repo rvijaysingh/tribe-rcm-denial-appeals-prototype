@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-035",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "7b71f3cda46a7da0ccdc11943223651fb525edb478b8d2822c915cac5419f3e7",
+  "generatedAt": "2026-09-16T13:00:34.994Z",
+  "attempts": 2,
+  "tokensIn": 2214,
+  "tokensOut": 1980,
+  "costUsd": 0.06057,
+  "memberId": "MBR535378523",
+  "claimNumber": "CLM34756804060",
+  "citedCodes": [
+    "PNA-02",
+    "PNA-03"
+  ],
+  "letterTemplate": "Northgate Advantage\nUtilization Management Department\n\nNotice of Adverse Determination - Medical Necessity\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR535378523\nClaim Number: CLM34756804060\nService Reviewed: Inpatient admission for community-acquired pneumonia, DRG 195\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nCriteria Set Applied: MCG-style criteria, current published version in effect on the date of admission\n\nDETERMINATION\n\nNorthgate Advantage has completed medical necessity review of the inpatient admission identified above. Based on the clinical information submitted by the facility and the criteria set applied, this is an adverse determination, medical necessity. The requested inpatient level of care is not certified for the dates of service listed.\n\nBASIS FOR DETERMINATION\n\nThe following criteria were reviewed and found not met:\n\nPNA-02 - Not met. Finding: The patient did not have hypoxemia requiring inpatient oxygen.\n\nPNA-03 - Not met. Finding: Blood pressure was stable without need for resuscitation.\n\nOverall rationale: The services provided could have been delivered safely at a lower level of care, such as observation.\n\nNo other criteria codes were applied in reaching this determination.\n\nCLAIM ADJUSTMENT INFORMATION\n\nThe following codes apply to the associated claim:\n\nCARC CO-50\nRARC N115\n\nAPPEAL RIGHTS AND INSTRUCTIONS\n\nA reconsideration request may be submitted within the applicable filing window. Any clinical rationale submitted with the reconsideration request must map each finding to a numbered criterion as cited in this notice. Submissions that do not address the numbered criteria individually may be returned without substantive review.\n\nPlease note that level of care denials are not eligible for provider appeal.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Requests received after that date will be closed as untimely.\n\nSupporting documentation may include the complete medical record for the admission, physician progress notes, and any documentation relevant to the criteria cited above.\n\nThis determination addresses medical necessity only and does not alter member eligibility, benefit limitations, or other provisions of the member's plan documents. Payment remains subject to all applicable plan terms.\n\nA copy of the criteria set applied is available upon request at no charge.\n\nSincerely,\n\nMedical Director, Utilization Management\nNorthgate Advantage"
+}

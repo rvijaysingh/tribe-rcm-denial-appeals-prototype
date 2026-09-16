@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-022",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "ab2c4596d23b79c7f82c5f679224300a25cfc3d83e3105df5d668f036e43eef7",
+  "generatedAt": "2026-09-16T12:59:37.135Z",
+  "attempts": 1,
+  "tokensIn": 1062,
+  "tokensOut": 970,
+  "costUsd": 0.02956,
+  "memberId": "MBR364460894",
+  "claimNumber": "CLM63292366193",
+  "citedCodes": [
+    "SEP-01",
+    "SEP-03"
+  ],
+  "letterTemplate": "Cascade Mutual\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR364460894\nClaim Number: CLM63292366193\nService Reviewed: Inpatient admission for Sepsis, DRG 872, from [[ADMIT_DATE]] to [[DISCHARGE_DATE]]\nCriteria Set Applied: MCG-style, version 2026.1\n\nDETERMINATION: ADVERSE DETERMINATION - MEDICAL NECESSITY\n\nThis letter is notice of an adverse determination based on medical necessity for the inpatient admission identified above. Cascade Mutual has completed its review of the submitted records for the admission spanning [[ADMIT_DATE]] through [[DISCHARGE_DATE]]. The documentation available at the time of admission did not meet inpatient criteria.\n\nCRITERIA REVIEWED AND FINDINGS\n\nSEP-01: Not met. Blood pressure responded to initial fluids without persistent hypotension.\n\nSEP-03: Not met. There was no evidence of new organ dysfunction.\n\nNo other guideline codes were applied to this review.\n\nCLAIM ADJUSTMENT CODING\n\nThe following codes apply to this determination:\nCARC CO-50\nRARC N115\n\nThis adverse determination is a medical necessity determination for the inpatient level of care requested. The member is not financially liable beyond any applicable plan provisions described in the member's certificate of coverage. The facility may submit a corrected claim at an alternate level of care if supported by the record.\n\nAPPEAL RIGHTS AND INSTRUCTIONS\n\nA written appeal may be submitted and must be addressed to Utilization Management at the address shown on this notice. Each argument in the appeal should reference the applicable guideline code and the specific finding set out above for that code. Submissions that do not identify the guideline code and finding under dispute may delay reconsideration.\n\nThe appeal packet should include a physician attestation line signed by the treating or reviewing physician, in the following form:\n\n\"I attest that the clinical information submitted in support of this appeal is accurate and complete to the best of my knowledge.\" ____________________\n\nSupporting documentation may include the complete admission record, physician progress notes, and any records not previously available to the reviewer.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Appeals received after that date may not be eligible for reconsideration under the plan's utilization management procedures.\n\nA clinical peer reviewer is available to discuss this determination with the attending physician upon request through the Utilization Management Department.\n\nSincerely,\n\nMedical Director, Utilization Management\nCascade Mutual"
+}

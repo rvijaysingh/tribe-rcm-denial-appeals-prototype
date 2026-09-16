@@ -19,12 +19,22 @@ import {
   chartLines,
   criteriaClauses,
   criteriaSets,
+  denials,
+  groundTruth,
+  precedentAppeals,
   payerNotes,
   payers,
 } from "../../src/lib/db/schema";
 import type { CriteriaArtifact } from "./pass-a-criteria";
 import type { CaseSeed } from "./pass-b-cases";
 import type { ChartArtifact } from "./pass-c-charts";
+import {
+  fillLetter,
+  letterDeadline,
+  type LetterArtifact,
+  type PrecedentRecord,
+} from "./pass-d-letters";
+import type { GroundTruthRecord } from "./pass-e-truth";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -224,4 +234,87 @@ export async function loadCharts(
     chart_docs: { upserted: docRows.length, removed: removedDocs },
     chart_lines: { upserted: lineRows.length, removed: removedLines },
   };
+}
+
+/**
+ * Pass D: denials and precedent appeals.
+ *
+ * Letter text is stored with its date tokens filled relative to the anchor, so
+ * the letter a nurse reads always agrees with the account's dates.
+ */
+export async function loadDenialsAndPrecedents(
+  tx: Tx,
+  cases: CaseSeed[],
+  criteria: CriteriaArtifact,
+  letters: Map<string, LetterArtifact>,
+  precedents: PrecedentRecord[],
+  vectors: Map<string, number[]>,
+  anchor: Date,
+): Promise<LoadCounts> {
+  const denialRows: (typeof denials.$inferInsert)[] = cases.map((seed) => {
+    const letter = letters.get(seed.denialId);
+    if (!letter) throw new Error(`No letter for ${seed.denialId}`);
+    const dates = caseDates(seed, anchor);
+    return {
+      id: seed.denialId,
+      accountId: seed.accountId,
+      payerId: seed.payerId,
+      category: seed.category,
+      amount: seed.amount.toFixed(2),
+      receivedDate: dates.received,
+      carc: seed.carc,
+      rarc: seed.rarc,
+      letterText: fillLetter(letter.letterTemplate, dates, letterDeadline(seed, criteria)),
+      eligible: seed.eligible,
+      split: seed.split,
+    };
+  });
+
+  const precedentRows: (typeof precedentAppeals.$inferInsert)[] = precedents.map((p) => {
+    const embedding = vectors.get(p.summary);
+    if (!embedding) throw new Error(`No embedding for precedent ${p.id}`);
+    return {
+      id: p.id,
+      payerId: p.payerId,
+      category: p.category,
+      condition: p.condition,
+      summary: p.summary,
+      outcome: p.outcome,
+      letterExcerpt: p.letterExcerpt,
+      embedding,
+    };
+  });
+
+  await upsertRows(tx, denials, denials.id, denialRows);
+  await upsertRows(tx, precedentAppeals, precedentAppeals.id, precedentRows);
+  const removedDenials = await deleteOrphans(tx, denials, denials.id, denialRows.map((r) => r.id));
+  const removedPrecedents = await deleteOrphans(
+    tx,
+    precedentAppeals,
+    precedentAppeals.id,
+    precedentRows.map((r) => r.id),
+  );
+  return {
+    denials: { upserted: denialRows.length, removed: removedDenials },
+    precedent_appeals: { upserted: precedentRows.length, removed: removedPrecedents },
+  };
+}
+
+/** Pass E: ground truth labels. */
+export async function loadGroundTruth(tx: Tx, records: GroundTruthRecord[]): Promise<LoadCounts> {
+  const rows: (typeof groundTruth.$inferInsert)[] = records.map((r) => ({
+    denialId: r.denialId,
+    category: r.category,
+    rootCause: r.rootCause,
+    metClauseIds: r.metClauseIds,
+    unmetRequiredClauseIds: r.unmetRequiredClauseIds,
+    expectedRoute: r.expectedRoute,
+    winnable: r.winnable,
+    approveAsIs: r.approveAsIs,
+    spotChecked: r.spotChecked,
+    spotCheckNote: r.spotCheckNote,
+  }));
+  await upsertRows(tx, groundTruth, groundTruth.denialId, rows);
+  const removed = await deleteOrphans(tx, groundTruth, groundTruth.denialId, rows.map((r) => r.denialId));
+  return { ground_truth: { upserted: rows.length, removed } };
 }

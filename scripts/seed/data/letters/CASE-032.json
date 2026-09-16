@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-032",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "e8c852f2e26179b7eac3977653280bcde33016e50ce7410244d1f2882db033fa",
+  "generatedAt": "2026-09-16T13:00:20.125Z",
+  "attempts": 2,
+  "tokensIn": 2198,
+  "tokensOut": 1935,
+  "costUsd": 0.059365,
+  "memberId": "MBR033718369",
+  "claimNumber": "CLM37353336382",
+  "citedCodes": [
+    "COPD-01",
+    "COPD-03"
+  ],
+  "letterTemplate": "Meridian Health Plan\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nRE: Adverse Determination - Medical Necessity\nMember ID: MBR033718369\nClaim Number: CLM37353336382\nService Reviewed: Inpatient admission for COPD exacerbation, DRG 191\nDates of Service: [[ADMIT_DATE]] to [[DISCHARGE_DATE]]\n\nDETERMINATION\n\nMeridian Health Plan has completed review of the above inpatient admission. This letter constitutes an adverse determination based on medical necessity. Benefits for the inpatient level of care billed for the period [[ADMIT_DATE]] to [[DISCHARGE_DATE]] are denied.\n\nBASIS FOR DETERMINATION\n\nThe review was conducted against the InterQual-style criteria set applied by this plan, current version in effect on the date of admission. The documentation available at the time of admission did not meet inpatient criteria.\n\nThe following criteria were reviewed and found not met:\n\nCOPD-01: Not met. Oxygenation was near baseline and did not require inpatient care.\n\nCOPD-03: Not met. Noninvasive ventilation was not required on a sustained basis.\n\nNo other criteria codes were applied in reaching this adverse determination.\n\nCLAIM ADJUSTMENT CODES\n\nCARC CO-50\nRARC N115\n\nAPPEAL RIGHTS\n\nThe member, or the provider acting as the member's authorized representative, may submit a Level 1 appeal of this adverse determination by letter or by portal upload. Appeal submissions should cite the criteria codes COPD-01 and COPD-03 inline and address the specific findings stated above. Please attach the History and Physical and the progress notes covering the period [[ADMIT_DATE]] through [[DISCHARGE_DATE]]. Submissions are subject to a five page limit, exclusive of the attached medical records. Appeals must be received by [[APPEAL_DEADLINE]]. Appeals received after [[APPEAL_DEADLINE]] may be closed without clinical review.\n\nThis determination addresses medical necessity for the inpatient level of care only. A physician reviewer is available to discuss this adverse determination with the attending provider upon request through the Utilization Management Department.\n\nSincerely,\n\nMedical Director, Utilization Management\nMeridian Health Plan"
+}

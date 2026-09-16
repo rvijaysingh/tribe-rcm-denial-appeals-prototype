@@ -1,0 +1,18 @@
+{
+  "denialId": "CASE-021",
+  "promptVersion": "letter.v1",
+  "model": "claude-opus-5",
+  "inputHash": "f935305c5f2c6d1ae13cb01428c85076dd750aafc0d7d8d4f987533d986660c6",
+  "generatedAt": "2026-09-16T12:59:35.916Z",
+  "attempts": 1,
+  "tokensIn": 1078,
+  "tokensOut": 927,
+  "costUsd": 0.028565,
+  "memberId": "MBR683610978",
+  "claimNumber": "CLM15890893396",
+  "citedCodes": [
+    "CHF-02",
+    "CHF-03"
+  ],
+  "letterTemplate": "NORTHGATE ADVANTAGE\nUtilization Management Department\n\nDate of Notice: [[LETTER_DATE]]\n\nMember ID: MBR683610978\nClaim Number: CLM15890893396\nService Reviewed: Inpatient admission for CHF exacerbation, DRG 293\nDates of Service: [[ADMIT_DATE]] through [[DISCHARGE_DATE]]\nCriteria Set Applied: MCG-style, version 2026.1\n\nDETERMINATION: ADVERSE DETERMINATION, MEDICAL NECESSITY\n\nNorthgate Advantage has completed review of the above inpatient admission. This is an adverse determination based on medical necessity. Payment for the billed inpatient admission is denied.\n\nBASIS FOR DETERMINATION\n\nThe medical record submitted for the admission spanning [[ADMIT_DATE]] to [[DISCHARGE_DATE]] does not document clinical severity sufficient to require inpatient admission.\n\nThe following criteria were reviewed and found not met:\n\nCHF-02: There was no documented trial of intensified outpatient therapy before admission.\n\nCHF-03: Imaging did not demonstrate acute pulmonary edema.\n\nNo additional criteria were applied to this determination.\n\nCLAIM ADJUSTMENT CODING\n\nThe claim has been adjudicated with the following codes:\n\nCARC CO-50\nRARC N115\n\nRECONSIDERATION AND APPEAL RIGHTS\n\nA reconsideration request may be submitted within the applicable filing window. Any clinical rationale submitted in support of reconsideration must map each finding above to the corresponding numbered criterion, specifically CHF-02 and CHF-03. Submissions that do not address the findings by numbered criterion may be returned without clinical review.\n\nLevel of care denials are not eligible for provider appeal.\n\nAppeals must be received by [[APPEAL_DEADLINE]]. Requests received after that date will be closed as untimely.\n\nSupporting documentation should be submitted with the reconsideration request and must reference the member ID and claim number listed above. The member or the member's authorized representative may request a copy of the specific criteria used in this determination at no charge by contacting the Utilization Management Department at the number printed on the member identification card.\n\nThis determination applies to medical necessity for the services and dates identified in this notice. It is not a statement regarding the treating provider's clinical judgment, and it does not direct the care the member receives.\n\nSincerely,\n\nMedical Director, Utilization Management\nNorthgate Advantage"
+}

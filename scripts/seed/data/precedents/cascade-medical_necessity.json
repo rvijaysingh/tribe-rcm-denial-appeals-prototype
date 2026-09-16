@@ -1,0 +1,59 @@
+{
+  "payerId": "cascade",
+  "category": "medical_necessity",
+  "promptVersion": "precedent.v1",
+  "model": "claude-opus-5",
+  "inputHash": "aecd538a6505ff9a91d18aded2f09bbd06abc0af182928be37b5f63d6079014d",
+  "generatedAt": "2026-09-16T13:00:50.965Z",
+  "attempts": 1,
+  "tokensIn": 1336,
+  "tokensOut": 1938,
+  "costUsd": 0.05513,
+  "precedents": [
+    {
+      "id": "P12",
+      "payerId": "cascade",
+      "category": "medical_necessity",
+      "condition": "sepsis",
+      "outcome": "upheld",
+      "summary": "A patient treated for sepsis was denied inpatient status on the grounds that care could have been delivered safely in observation. The appeal argued that the patient met sepsis criteria on arrival and required resuscitation that could not be compressed into an observation stay, but the record did not contain fluid volumes with administration times or blood pressures recorded after the bolus. The denial was upheld.",
+      "letterExcerpt": "We ask Cascade Mutual to reconsider the level of care determination for this admission. The treating team identified sepsis at presentation and initiated intravenous fluid resuscitation and antimicrobial therapy with ongoing hemodynamic monitoring, a trajectory that in our clinical judgment exceeded what an observation stay could support. We acknowledge that the record as submitted does not include the administered fluid volumes with corresponding administration times, nor does it include blood pressures recorded after the fluid bolus. We have reviewed the nursing flowsheets and medication administration record available to us and are unable to supply that documentation. We therefore rest our argument on the treating physician's contemporaneous assessment of instability and the documented decision to admit rather than observe, and we request that this clinical reasoning be weighed in its own right."
+    },
+    {
+      "id": "P13",
+      "payerId": "cascade",
+      "category": "medical_necessity",
+      "condition": "copd_exacerbation",
+      "outcome": "overturned",
+      "summary": "Inpatient admission for a COPD exacerbation was denied as appropriate for observation level of care. The appeal supplied the emergency department medication administration record with reassessment notes following each bronchodilator treatment, along with the triage saturation, the oxygen level in place at that time, and the blood gas result. The payer concluded that the documented failure to respond supported inpatient care and the denial was overturned.",
+      "letterExcerpt": "We respectfully request reversal of the level of care denial for this COPD exacerbation. The emergency department medication administration record documents each bronchodilator treatment given, and the paired nursing and physician reassessment notes after every treatment show the degree of ongoing respiratory distress and the extent to which the patient did or did not improve with escalating therapy. We have also supplied the triage oxygen saturation together with the oxygen delivery in place at the moment of that reading, and the blood gas obtained during the initial evaluation. Taken together, this record describes a patient who continued to require frequent respiratory therapy and monitored oxygen titration well beyond the interval an observation stay contemplates. The decision to admit was consistent with that documented clinical course, and we ask that inpatient status be approved."
+    },
+    {
+      "id": "P14",
+      "payerId": "cascade",
+      "category": "medical_necessity",
+      "condition": "pneumonia",
+      "outcome": "upheld",
+      "summary": "A community-acquired pneumonia admission was denied on the basis that observation would have been sufficient. The appeal asserted that the patient's hypoxia and supplemental oxygen needs justified inpatient care, but the submitted record lacked the room air saturation at triage and any account of the oxygen requirement across the first 24 hours. The denial was upheld.",
+      "letterExcerpt": "We write to contest the level of care determination for this admission for community-acquired pneumonia. The treating clinicians documented an oxygen requirement and a clinical picture consistent with a pneumonia that would not resolve within an observation window, and antimicrobial therapy was begun promptly with continued inpatient monitoring. We recognize that the materials before you do not include a room air saturation recorded at triage, and that the record does not trace the oxygen requirement across the first twenty-four hours of the stay. We have searched the triage documentation and the respiratory flowsheets and cannot produce those specific entries. We ask instead that weight be given to the admitting physician's documented assessment of respiratory compromise and to the overall course of the hospitalization as reflected in the progress notes."
+    },
+    {
+      "id": "P15",
+      "payerId": "cascade",
+      "category": "medical_necessity",
+      "condition": "chf_exacerbation",
+      "outcome": "overturned",
+      "summary": "Cascade Mutual denied inpatient status for a CHF exacerbation, stating observation would have been safe. The appeal produced the medication administration record showing each intravenous loop diuretic dose with its time and the corresponding urine output response, plus serial respiratory rate and work of breathing documentation from the emergency department and the first hospital day. The denial was overturned.",
+      "letterExcerpt": "We request reversal of the denial of inpatient status for this heart failure exacerbation. The medication administration record we have attached shows each intravenous loop diuretic dose, the time it was given, and the urine output recorded in response, establishing that the patient required repeated parenteral diuresis with monitored response rather than a single intervention and discharge. Alongside this we have provided serial respiratory rate entries and nursing descriptions of work of breathing from the emergency department through the first hospital day, which together document the persistence of respiratory distress and the gradual nature of the response to therapy. This is the documented course of a patient requiring inpatient management, and we ask that the level of care be approved as billed."
+    },
+    {
+      "id": "P16",
+      "payerId": "cascade",
+      "category": "medical_necessity",
+      "condition": "sepsis",
+      "outcome": "overturned",
+      "summary": "An inpatient sepsis admission was denied as manageable at observation level. On appeal the hospital submitted the documented baseline mental status alongside the arrival neurologic examination with GCS, together with the serum lactate result and a complete repeat set of vital signs recorded after fluid resuscitation. The payer accepted that the record demonstrated organ dysfunction and incomplete response, and the denial was overturned.",
+      "letterExcerpt": "We ask that the level of care denial for this sepsis admission be reversed. The record we have assembled documents the patient's baseline mental status as established by history, and sets beside it the neurologic examination performed on arrival including the Glasgow Coma Scale score, demonstrating an acute change from baseline consistent with sepsis-associated organ dysfunction. We have further provided the serum lactate result obtained during the initial evaluation and a complete repeat set of vital signs documented after fluid resuscitation, which together show that the patient had not returned to a stable physiologic state at the close of the resuscitation period. A patient with acute encephalopathy and persisting abnormal vital signs after fluids requires inpatient monitoring and treatment, and observation status would not have met that need."
+    }
+  ]
+}
