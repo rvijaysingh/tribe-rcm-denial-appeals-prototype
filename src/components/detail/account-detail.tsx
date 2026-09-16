@@ -78,8 +78,7 @@ export function AccountDetail(props: AccountDetailProps) {
   const [running, setRunning] = useState(false);
   const [tab, setTab] = useState<"pipeline" | "review">("pipeline");
   const [banner, setBanner] = useState<{ tone: "info" | "error"; text: string } | null>(null);
-  // The citation chips that set this arrive with the review-panel screen.
-  const [highlight] = useState<string | null>(null);
+  const [highlight, setHighlight] = useState<string | null>(null);
   const [draftChars, setDraftChars] = useState(0);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -307,7 +306,13 @@ export function AccountDetail(props: AccountDetailProps) {
               thresholdCents={props.triage.threshold_cents}
             />
           ) : (
-            <ReviewPanel run={run} denialId={props.denialId} />
+            <ReviewPanel
+              run={run}
+              denialId={props.denialId}
+              onCiteLine={setHighlight}
+              highlight={highlight}
+              onFeedbackSaved={() => router.refresh()}
+            />
           )}
 
           {run && tab === "pipeline" ? (
