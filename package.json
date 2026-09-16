@@ -12,7 +12,9 @@
     "db:generate": "drizzle-kit generate",
     "db:push": "tsx scripts/db/push.ts",
     "db:seed": "tsx scripts/seed/index.ts",
-    "eval": "node scripts/not-implemented.mjs eval"
+    "pipeline": "node scripts/not-implemented.mjs pipeline",
+    "eval": "node scripts/not-implemented.mjs eval",
+    "demo:reset": "tsx scripts/demo-reset.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.126.0",
