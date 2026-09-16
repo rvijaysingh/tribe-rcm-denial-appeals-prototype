@@ -72,3 +72,13 @@ docs/                     PRD, demo script
 - Commit small with descriptive messages. Push to `main` only when build, typecheck, lint, and test are green.
 - The host is Windows 11 with PowerShell 7. Do not use bash-only syntax in scripts or `package.json`. Prefer Node scripts over shell scripts.
 - When a milestone in `docs/PRD.md` is complete, summarize what was built, what was skipped, and any deviations from the PRD before starting the next one.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

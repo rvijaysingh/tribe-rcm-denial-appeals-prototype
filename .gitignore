@@ -147,3 +147,8 @@ vite.config.ts.timestamp-*
 
 # Vercel
 .vercel
+
+# Design canvas exports. They carry the prototype mock data, which includes
+# a real client name and real payer names, so they stay out of the repo.
+docs/ui-designs.zip
+docs/design/

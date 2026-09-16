@@ -197,3 +197,76 @@ export async function payerOverturnRate(payerId: PayerId, category: DenialCatego
   const row = rows[0];
   return row && row.total > 0 ? row.overturned / row.total : null;
 }
+
+// ------------------------------------------------------------------ workqueue
+
+export type WorkqueueRow = {
+  denialId: string;
+  accountId: string;
+  payerId: PayerId;
+  payerName: string;
+  deadlineDays: number;
+  condition: Condition;
+  category: DenialCategory;
+  /** Postgres numeric string. */
+  amount: string;
+  receivedDate: Date;
+  eligible: boolean;
+  split: Split;
+  /** Latest completed run, when there is one. */
+  runId: string | null;
+  route: string | null;
+  totalCost: string | null;
+  totalMs: number | null;
+  completedAt: Date | null;
+  /** Any run at all, including failed and in-flight, for the status column. */
+  runStatus: string | null;
+};
+
+/**
+ * Every denied account for the workqueue, with its latest completed run.
+ *
+ * Triage is not stored on the row: it is recomputed from the denial by stage A
+ * at render time, so a case that has never been run still shows its decision,
+ * expected value and days left (PRD 6.1).
+ */
+export async function loadWorkqueue(): Promise<WorkqueueRow[]> {
+  return getDb().execute<WorkqueueRow>(sql`
+    SELECT
+      d.id                AS "denialId",
+      d.account_id        AS "accountId",
+      d.payer_id          AS "payerId",
+      p.name              AS "payerName",
+      p.deadline_days     AS "deadlineDays",
+      a.condition         AS "condition",
+      d.category          AS "category",
+      d.amount            AS "amount",
+      d.received_date     AS "receivedDate",
+      d.eligible          AS "eligible",
+      d.split             AS "split",
+      done.id             AS "runId",
+      done.route          AS "route",
+      done.total_cost     AS "totalCost",
+      done.total_ms       AS "totalMs",
+      done.completed_at   AS "completedAt",
+      latest.status       AS "runStatus"
+    FROM denials d
+    JOIN accounts a ON a.id = d.account_id
+    JOIN payers p ON p.id = d.payer_id
+    LEFT JOIN LATERAL (
+      SELECT r.id, r.route, r.total_cost, r.total_ms, r.completed_at
+      FROM pipeline_runs r
+      WHERE r.denial_id = d.id AND r.status = 'completed'
+      ORDER BY r.completed_at DESC NULLS LAST
+      LIMIT 1
+    ) done ON true
+    LEFT JOIN LATERAL (
+      SELECT r.status
+      FROM pipeline_runs r
+      WHERE r.denial_id = d.id
+      ORDER BY r.started_at DESC
+      LIMIT 1
+    ) latest ON true
+    ORDER BY d.id
+  `);
+}
