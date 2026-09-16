@@ -349,3 +349,127 @@ export async function loadFeedback(runId: string) {
     .where(eq(reviewerFeedback.runId, runId))
     .orderBy(desc(reviewerFeedback.createdAt));
 }
+
+// ---------------------------------------------------------------- dashboards
+
+export type MeasuredMetrics = {
+  casesProcessed: number;
+  totalDenials: number;
+  routeCounts: Record<string, number>;
+  medianMs: number | null;
+  p90Ms: number | null;
+  medianCostUsd: number | null;
+  totalCostUsd: number;
+  meanValidity: number | null;
+  runsWithPerfectValidity: number;
+  runsWithValidity: number;
+  meanCoverage: number | null;
+  reviewedRuns: number;
+  approvedAsIs: number;
+  meanReviewerMinutes: number | null;
+};
+
+/**
+ * Everything the metrics dashboard measures, straight from persisted runs.
+ *
+ * Percentiles and medians are computed in Postgres rather than in JavaScript,
+ * so the numbers come from the same place the run log does.
+ */
+export async function loadMeasuredMetrics(): Promise<MeasuredMetrics> {
+  const db = getDb();
+
+  const [totals] = await db.execute<{
+    casesProcessed: number;
+    medianMs: number | null;
+    p90Ms: number | null;
+    medianCost: string | null;
+    totalCost: string | null;
+  }>(sql`
+    SELECT
+      count(DISTINCT denial_id)::int                                        AS "casesProcessed",
+      percentile_cont(0.5) WITHIN GROUP (ORDER BY total_ms)                 AS "medianMs",
+      percentile_cont(0.9) WITHIN GROUP (ORDER BY total_ms)                 AS "p90Ms",
+      percentile_cont(0.5) WITHIN GROUP (ORDER BY total_cost)               AS "medianCost",
+      coalesce(sum(total_cost), 0)                                          AS "totalCost"
+    FROM pipeline_runs WHERE status = 'completed'
+  `);
+
+  const [denialCount] = await db.execute<{ n: number }>(sql`SELECT count(*)::int AS n FROM denials`);
+
+  const routes = await db.execute<{ route: string; n: number }>(sql`
+    SELECT route, count(*)::int AS n FROM pipeline_runs
+    WHERE status = 'completed' AND route IS NOT NULL GROUP BY route
+  `);
+
+  // Citation validity and coverage live inside stage E's stored output.
+  const [quality] = await db.execute<{
+    meanValidity: number | null;
+    perfect: number;
+    withValidity: number;
+    meanCoverage: number | null;
+  }>(sql`
+    SELECT
+      avg((output_json -> 'citation' ->> 'validityRate')::float)                                  AS "meanValidity",
+      count(*) FILTER (WHERE (output_json -> 'citation' ->> 'validityRate')::float = 1)::int      AS "perfect",
+      count(*) FILTER (WHERE output_json -> 'citation' ->> 'validityRate' IS NOT NULL)::int       AS "withValidity",
+      avg((output_json -> 'coverage' ->> 'coverage')::float)                                      AS "meanCoverage"
+    FROM stage_outputs so
+    JOIN pipeline_runs r ON r.id = so.run_id
+    WHERE so.stage = 'e_verify' AND so.skipped = false AND r.status = 'completed'
+  `);
+
+  const [feedback] = await db.execute<{
+    reviewed: number;
+    approved: number;
+    meanMinutes: number | null;
+  }>(sql`
+    SELECT
+      count(DISTINCT run_id)::int                                   AS "reviewed",
+      count(*) FILTER (WHERE action = 'approve')::int               AS "approved",
+      avg(reviewer_minutes)::float                                  AS "meanMinutes"
+    FROM reviewer_feedback
+  `);
+
+  const routeCounts: Record<string, number> = {};
+  for (const row of routes) routeCounts[row.route] = Number(row.n);
+
+  return {
+    casesProcessed: Number(totals?.casesProcessed ?? 0),
+    totalDenials: Number(denialCount?.n ?? 0),
+    routeCounts,
+    medianMs: totals?.medianMs === null || totals?.medianMs === undefined ? null : Number(totals.medianMs),
+    p90Ms: totals?.p90Ms === null || totals?.p90Ms === undefined ? null : Number(totals.p90Ms),
+    medianCostUsd: totals?.medianCost === null || totals?.medianCost === undefined ? null : Number(totals.medianCost),
+    totalCostUsd: Number(totals?.totalCost ?? 0),
+    meanValidity: quality?.meanValidity === null || quality?.meanValidity === undefined ? null : Number(quality.meanValidity),
+    runsWithPerfectValidity: Number(quality?.perfect ?? 0),
+    runsWithValidity: Number(quality?.withValidity ?? 0),
+    meanCoverage: quality?.meanCoverage === null || quality?.meanCoverage === undefined ? null : Number(quality.meanCoverage),
+    reviewedRuns: Number(feedback?.reviewed ?? 0),
+    approvedAsIs: Number(feedback?.approved ?? 0),
+    meanReviewerMinutes:
+      feedback?.meanMinutes === null || feedback?.meanMinutes === undefined ? null : Number(feedback.meanMinutes),
+  };
+}
+
+export type EvalRunRow = {
+  id: string;
+  createdAt: Date;
+  split: string;
+  caseCount: number;
+  promptVersion: string;
+  modelSet: string;
+  reference: boolean;
+  metricsJson: unknown;
+  perCaseJson: unknown;
+};
+
+/** Eval runs, newest first. Empty until the M4 harness writes one. */
+export async function loadEvalRuns(limit = 20): Promise<EvalRunRow[]> {
+  return getDb().execute<EvalRunRow>(sql`
+    SELECT id, created_at AS "createdAt", split, case_count AS "caseCount",
+           prompt_version AS "promptVersion", model_set AS "modelSet",
+           reference, metrics_json AS "metricsJson", per_case_json AS "perCaseJson"
+    FROM eval_runs ORDER BY created_at DESC LIMIT ${limit}
+  `);
+}
