@@ -37,11 +37,17 @@ Full spec: `docs/PRD.md`. Read the relevant section before building any feature.
 src/app/(workqueue)/      workqueue list, account detail, RN review panel
 src/app/dashboard/        metrics dashboard and eval dashboard
 src/app/api/              route handlers: run pipeline (SSE streaming), feedback, reset
+src/components/           screen components; ui/ holds the shadcn primitives
 src/lib/pipeline/         a-triage.ts, b-classify.ts, c-retrieve.ts, d-draft.ts, e-verify.ts, orchestrator.ts
 src/lib/prompts/          prompt templates, one file per prompt, version in filename
 src/lib/db/               drizzle schema, client, typed queries
+src/lib/eval/metrics.ts   eval metric contract, shared by the harness and the eval dashboard
 src/lib/models.ts         model IDs, embedding config, price table (single source of truth)
 src/lib/economics.ts      triage constants: cost per appeal, thresholds, win-rate table
+src/lib/money.ts          integer-cent parsing, comparison and display
+src/lib/citations.ts      the only mapping between citation labels and database keys
+src/lib/targets.ts        proposal targets for the metrics dashboard. The pipeline never reads it
+src/lib/ui/format.ts      display formatting and enum labels
 src/lib/render/           deterministic letter renderer from structured draft JSON
 scripts/seed/             synthetic data generation, passes A to E
 scripts/eval/             harness and metric functions
@@ -61,6 +67,7 @@ docs/                     PRD, demo script
 - Criteria sets are synthetic and labeled "InterQual-style" and "MCG-style." Do not reproduce any real proprietary criteria text.
 - Secrets live only in `.env.local` and Railway variables. Never read, print, or commit env files.
 - UI copy is plain and specific. No marketing tone. No em dashes. Anything mocked is labeled mock on screen.
+- Claude 5 models do not support the `temperature` parameter. `LLM_TEMPERATURE` exists but is inert on the default models. It applies only when pinning a 4.6-family model.
 - Model IDs, prices, and embedding config only in `src/lib/models.ts`. Triage constants only in `src/lib/economics.ts`.
 
 ## Working rules
@@ -72,6 +79,7 @@ docs/                     PRD, demo script
 - Commit small with descriptive messages. Push to `main` only when build, typecheck, lint, and test are green.
 - The host is Windows 11 with PowerShell 7. Do not use bash-only syntax in scripts or `package.json`. Prefer Node scripts over shell scripts.
 - When a milestone in `docs/PRD.md` is complete, summarize what was built, what was skipped, and any deviations from the PRD before starting the next one.
+- Milestones live in `docs/PRD.md` §13. M1 to M3 are done. M3 also built the metrics and eval dashboard screens that §13 first assigned to M4, so M4 is now the eval harness, EvalRun persistence, `npm run eval`, and marking the reference run.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

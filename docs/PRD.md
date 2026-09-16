@@ -170,6 +170,8 @@ Inputs: full chart with line IDs, retrieved clauses with IDs, precedent summarie
 
 Prompt: produce a structured draft. Every assertion must cite at least one chart line ID and at least one clause ID. Do not assert anything not supported by a cited line. If a required clause cannot be supported, emit it in `unsupported_required` with what evidence would be needed. Stream the output.
 
+Weak versus absent, the bright line: unsupported means the chart contains no evidence at all for that clause. A count, dose, duration or frequency that the chart records but that falls short is thin support: argue it and lower `draft_confidence`. Concede only when the chart never records that kind of evidence at all.
+
 Output schema:
 
 ```
@@ -196,12 +198,12 @@ Deterministic gates, in order:
 2. Coverage: share of required clauses that have at least one assertion citing them. Store.
 3. If `unsupported_required` is non-empty → route **needs docs**, list the evidence needed, skip the judge.
 
-LLM judge (only if gates pass): given the rendered letter, the chart, and the clauses, score 0 to 1 on: faithfulness (do cited lines actually support the assertions), completeness (are the required criteria argued), tone and template compliance. Return per-dimension scores, an overall score, and up to 3 flagged assertions with reasons.
+LLM judge (only if gates pass): given the rendered letter, the chart, the clauses and the precedent summaries, score 0 to 1 on: faithfulness (do cited lines actually support the assertions), completeness (are the required criteria argued), tone and template compliance. Return per-dimension scores, an overall score, and up to 3 flagged assertions with reasons.
 
 Routing:
 - Composite = min(classify.confidence, draft_confidence, judge.overall).
 - **ready** if composite ≥ 0.85 and validity = 100% and no flagged assertions.
-- **needs review** if 0.60 ≤ composite < 0.85, or any flagged assertion, or validity < 100%.
+- **needs review** if 0.60 ≤ composite < 0.85, or any flagged assertion, or validity < 100%. A composite below 0.60 also routes needs review, with the reason saying the confidence is under the review threshold. There is no lower band that routes anywhere else: nothing but stage A writes a case off.
 - **needs docs** from the gate above.
 - **do not appeal** from stage A only.
 
@@ -350,6 +352,7 @@ Production deltas, stated in the README and the interview: runs in the client's 
 | Synthetic charts leak criteria language | Pass structure in 8.2; spot-check 8 cases |
 | Panelist compares $0.50 cost to the $2 to 5 on the slide | On-screen note explaining chart size |
 | Credits drained via public URL | 20 live runs per hour cap; keep balance modest |
+| Claude 5 models do not support `temperature` | Route stability relies on prompt precision and deterministic gates, not on a sampling setting. `LLM_TEMPERATURE` is wired but inert unless a 4.6-family model is pinned |
 
 ## 13. Build milestones (in order)
 
@@ -357,9 +360,9 @@ Production deltas, stated in the README and the interview: runs in the client's 
 
 **M2: Pipeline.** Stages A to E, orchestrator, persistence, `npm run pipeline -- --case`. Unit tests for A, renderer, E gates and routing. Exit: all four demo cases produce the expected route from the CLI.
 
-**M3: UI.** Workqueue, account detail with SSE streaming, review panel with citation chips and evidence matrix, feedback actions, demo controls, logo from env. Exit: full demo script runs on localhost and on Railway.
+**M3: UI.** Workqueue, account detail with SSE streaming, review panel with citation chips and evidence matrix, feedback actions, demo controls, logo from env, plus the metrics dashboard with the two-panel split and the eval dashboard. Both dashboard screens moved here from M4 and read from the DB; the eval screen shows an empty state until the harness writes its first run. Exit: full demo script runs on localhost and on Railway.
 
-**M4: Evals and dashboards.** Harness, EvalRun persistence, eval dashboard, metrics dashboard with the two-panel split. Exit: `npm run eval` produces every metric in 9.2; dashboards render from DB.
+**M4: Evals.** Harness, metric functions, EvalRun persistence, `npm run eval`, and marking the reference run. The dashboards that render the output were built in M3. Exit: `npm run eval` produces every metric in 9.2; dashboards render from DB.
 
 **M5: Demo hardening.** Rate cap, on-screen notes, README with production deltas and mock disclosure, screen recording, three full rehearsals with reset between each. Exit: presenter can run the script cold in under 7 minutes.
 
