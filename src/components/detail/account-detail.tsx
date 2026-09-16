@@ -100,6 +100,11 @@ export function AccountDetail(props: AccountDetailProps) {
         method: "POST",
         signal: controller.signal,
       });
+      if (response.status === 429) {
+        // The rate cap sends a message written for the person reading it.
+        const body = (await response.json().catch(() => null)) as { message?: string } | null;
+        throw new Error(body?.message ?? "Live runs are rate limited. Try again shortly, or use Show cached.");
+      }
       if (!response.ok || !response.body) throw new Error(`Pipeline request failed: HTTP ${response.status}`);
 
       const reader = response.body.getReader();
