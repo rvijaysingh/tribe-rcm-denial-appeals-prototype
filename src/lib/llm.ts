@@ -47,6 +47,14 @@ export interface GenerateOptions<S extends z.ZodType> {
    */
   normalize?: (data: z.infer<S>) => z.infer<S>;
   /**
+   * Cache the system prompt (PRD 7, orchestrator). The system block is stable
+   * across cases while the user prompt carries the case, so caching the prefix
+   * pays off from the second call of a stage onward.
+   */
+  cacheSystem?: boolean;
+  /** Called with each chunk of streamed text, for the draft stream in the UI. */
+  onText?: (chunk: string) => void;
+  /**
    * Deterministic check on the parsed output. Return null when it passes or a
    * message describing the problem, which is fed back to the model on retry.
    */
@@ -59,6 +67,8 @@ export interface GenerateResult<T> {
   servedModel: string;
   tokensIn: number;
   tokensOut: number;
+  /** Input tokens served from the prompt cache, for verifying caching works. */
+  cacheReadTokens: number;
   costUsd: number;
   ms: number;
   attempts: number;
@@ -98,14 +108,16 @@ export function extractJson(raw: string): unknown {
 async function callOnce<S extends z.ZodType>(
   opts: GenerateOptions<S>,
   prompt: string,
-): Promise<{ text: string; servedModel: string; tokensIn: number; tokensOut: number }> {
+): Promise<{ text: string; servedModel: string; tokensIn: number; tokensOut: number; cacheReadTokens: number }> {
   const useFallback = SERVER_FALLBACK_MODELS.has(opts.model);
   debug(opts.label, "prompt", prompt);
 
   const stream = getClient().beta.messages.stream({
     model: opts.model,
     max_tokens: opts.maxTokens,
-    system: opts.system,
+    system: opts.cacheSystem
+      ? [{ type: "text", text: opts.system, cache_control: { type: "ephemeral" } }]
+      : opts.system,
     messages: [{ role: "user", content: prompt }],
     output_config: {
       format: betaZodOutputFormat(opts.schema),
@@ -113,6 +125,7 @@ async function callOnce<S extends z.ZodType>(
     },
     ...(useFallback ? { betas: [SERVER_FALLBACK_BETA], fallbacks: "default" as const } : {}),
   });
+  if (opts.onText) stream.on("text", opts.onText);
   const message = await stream.finalMessage();
 
   const text = message.content
@@ -147,6 +160,7 @@ async function callOnce<S extends z.ZodType>(
       (usage.cache_creation_input_tokens ?? 0) +
       (usage.cache_read_input_tokens ?? 0),
     tokensOut: usage.output_tokens,
+    cacheReadTokens: usage.cache_read_input_tokens ?? 0,
   };
 }
 
@@ -183,6 +197,7 @@ export async function generateStructured<S extends z.ZodType>(
   const started = Date.now();
   let tokensIn = 0;
   let tokensOut = 0;
+  let cacheReadTokens = 0;
   let costUsd = 0;
   let prompt = opts.prompt;
 
@@ -204,6 +219,7 @@ export async function generateStructured<S extends z.ZodType>(
     }
     tokensIn += result.tokensIn;
     tokensOut += result.tokensOut;
+    cacheReadTokens += result.cacheReadTokens;
     costUsd += costOf(result.servedModel, result.tokensIn, result.tokensOut);
 
     const outcome = validate(opts, result.text);
@@ -213,6 +229,7 @@ export async function generateStructured<S extends z.ZodType>(
         servedModel: result.servedModel,
         tokensIn,
         tokensOut,
+        cacheReadTokens,
         costUsd,
         ms: Date.now() - started,
         attempts: attempt,
