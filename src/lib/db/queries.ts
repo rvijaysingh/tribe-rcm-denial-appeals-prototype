@@ -6,11 +6,23 @@
  * that could read them would score itself.
  */
 
-import { and, asc, eq, sql } from "drizzle-orm";
+import { and, asc, desc, eq, sql } from "drizzle-orm";
 import { lineLabel } from "../citations";
-import type { Condition, DenialCategory, DocType, PayerId, Split } from "../domain";
+import type { Condition, DenialCategory, DocType, PayerId, RunStatus, Split, Stage } from "../domain";
 import { getDb } from "./client";
-import { accounts, chartDocs, chartLines, criteriaClauses, criteriaSets, denials, payerNotes, payers } from "./schema";
+import {
+  accounts,
+  chartDocs,
+  chartLines,
+  criteriaClauses,
+  criteriaSets,
+  denials,
+  payerNotes,
+  payers,
+  pipelineRuns,
+  reviewerFeedback,
+  stageOutputs,
+} from "./schema";
 
 export interface ChartLineRow {
   /** Database key, e.g. "ACC-DEMO-03-L47". */
@@ -269,4 +281,71 @@ export async function loadWorkqueue(): Promise<WorkqueueRow[]> {
     ) latest ON true
     ORDER BY d.id
   `);
+}
+
+// --------------------------------------------------------------- run detail
+
+export interface RunStageRow {
+  stage: Stage;
+  ms: number;
+  tokensIn: number;
+  tokensOut: number;
+  cost: string;
+  skipped: boolean;
+  inputJson: unknown;
+  outputJson: unknown;
+}
+
+export interface RunDetail {
+  id: string;
+  denialId: string;
+  status: RunStatus;
+  route: string | null;
+  routeReason: string | null;
+  totalMs: number | null;
+  totalCost: string | null;
+  startedAt: Date;
+  completedAt: Date | null;
+  promptVersion: string;
+  modelSet: string;
+  errorMessage: string | null;
+  stages: RunStageRow[];
+}
+
+/** The newest completed run for a denial, with every stage. Null when never run. */
+export async function loadLatestRun(denialId: string): Promise<RunDetail | null> {
+  const [run] = await getDb()
+    .select()
+    .from(pipelineRuns)
+    .where(and(eq(pipelineRuns.denialId, denialId), eq(pipelineRuns.status, "completed")))
+    .orderBy(desc(pipelineRuns.completedAt))
+    .limit(1);
+  if (!run) return null;
+  return { ...run, stages: await loadRunStages(run.id) };
+}
+
+export async function loadRunStages(runId: string): Promise<RunStageRow[]> {
+  return getDb()
+    .select({
+      stage: stageOutputs.stage,
+      ms: stageOutputs.ms,
+      tokensIn: stageOutputs.tokensIn,
+      tokensOut: stageOutputs.tokensOut,
+      cost: stageOutputs.cost,
+      skipped: stageOutputs.skipped,
+      inputJson: stageOutputs.inputJson,
+      outputJson: stageOutputs.outputJson,
+    })
+    .from(stageOutputs)
+    .where(eq(stageOutputs.runId, runId))
+    .orderBy(asc(stageOutputs.stage));
+}
+
+/** Reviewer feedback already recorded against a run. */
+export async function loadFeedback(runId: string) {
+  return getDb()
+    .select()
+    .from(reviewerFeedback)
+    .where(eq(reviewerFeedback.runId, runId))
+    .orderBy(desc(reviewerFeedback.createdAt));
 }
