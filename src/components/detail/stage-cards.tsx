@@ -2,6 +2,7 @@
 
 import { RouteBadge } from "@/components/route-badge";
 import type { Stage } from "@/lib/domain";
+import type { VerifyPhase } from "@/lib/pipeline/e-verify";
 import { formatCost, formatDollars, formatPercent, formatSeconds } from "@/lib/ui/format";
 import { cn } from "@/lib/utils";
 import {
@@ -75,7 +76,7 @@ function stageSummary(stage: Stage, run: RunView | null): string | null {
   }
 }
 
-function ConfidenceBar({ value }: { value: number }) {
+function ConfidenceBar({ value, showPercent }: { value: number; showPercent?: boolean }) {
   return (
     <span className="inline-flex items-center gap-[7px]">
       <span className="relative h-[6px] w-[110px] overflow-hidden rounded-full bg-zinc-200">
@@ -87,7 +88,9 @@ function ConfidenceBar({ value }: { value: number }) {
           style={{ width: `${Math.max(0, Math.min(1, value)) * 100}%` }}
         />
       </span>
-      <span className="font-mono text-[11.5px] tabular-nums">{value.toFixed(2)}</span>
+      <span className="font-mono text-[11.5px] tabular-nums">
+        {showPercent ? `${Math.round(value * 100)}%` : value.toFixed(2)}
+      </span>
     </span>
   );
 }
@@ -182,18 +185,37 @@ export function StageCards({
   statuses,
   liveElapsed,
   thresholdCents,
+  daysLeft,
+  wouldHaveBeenWorkedOld,
+  oldCutoffDollars,
   expanded,
   onToggle,
   draftPreview,
+  liveDraftCounts,
+  verifyGates,
+  verifyJudging,
+  payerName,
+  conditionLabel,
 }: {
   run: RunView | null;
   statuses: Record<Stage, StageStatus>;
   liveElapsed: Partial<Record<Stage, number>>;
   thresholdCents: number;
+  daysLeft: number;
+  wouldHaveBeenWorkedOld: boolean;
+  oldCutoffDollars: number;
   expanded: Record<Stage, boolean>;
   onToggle: (stage: Stage) => void;
   /** Tail of the draft text as it streams. Empty outside a live run. */
   draftPreview: string;
+  /** Counted from the streaming draft so D has numbers before it finishes. */
+  liveDraftCounts: { assertions: number; citations: number };
+  /** What stage E's deterministic gates found, kept once the judge starts. */
+  verifyGates: Extract<VerifyPhase, { phase: "gates" }> | null;
+  /** True once stage E has handed the letter to the judge. */
+  verifyJudging: boolean;
+  payerName: string;
+  conditionLabel: string;
 }) {
   const triage = triageOutput(run);
   const classify = classifyOutput(run);
@@ -248,6 +270,17 @@ export function StageCards({
                   </span>
                 </div>
                 <div className="text-[11.5px] text-zinc-700">{triage.reason}</div>
+                <div className="mt-[6px] flex flex-wrap items-center gap-x-[14px] gap-y-[3px] text-[11.5px] text-zinc-700">
+                  <span>
+                    <span className="font-mono font-semibold tabular-nums">{daysLeft}</span> days remaining in the
+                    appeal window
+                  </span>
+                  <span className={wouldHaveBeenWorkedOld ? "text-zinc-600" : "text-amber-800"}>
+                    Old system: this case{" "}
+                    <span className="font-semibold">{wouldHaveBeenWorkedOld ? "WOULD" : "would NOT"}</span> have been
+                    worked ({wouldHaveBeenWorkedOld ? "above" : "below"} the {formatDollars(oldCutoffDollars)} cutoff)
+                  </span>
+                </div>
                 {!triage.would_have_been_worked_old && triage.decision === "appeal" ? (
                   <div className="mt-[8px] flex items-start gap-[7px] rounded-[5px] border border-amber-200 bg-amber-50 px-[8px] py-[6px]">
                     <span className="text-[12px] text-amber-700">&#9873;</span>
@@ -263,7 +296,7 @@ export function StageCards({
                 <Row label="Category">{classify.category.replace(/_/g, " ")}</Row>
                 <Row label="Root cause">{classify.root_cause.replace(/_/g, " ")}</Row>
                 <Row label="Confidence">
-                  <ConfidenceBar value={classify.confidence} />
+                  <ConfidenceBar value={classify.confidence} showPercent />
                 </Row>
                 <div className="mt-[6px] mb-[3px] font-mono text-[9.5px] tracking-wide text-zinc-500 uppercase">
                   Key facts the payer relies on
@@ -279,6 +312,46 @@ export function StageCards({
               </div>
             ) : stage === "c_retrieve" && retrieve ? (
               <div>
+                <div className="mb-[7px] space-y-[3px] text-[11.5px] text-zinc-700">
+                  <div>
+                    Queried <span className="font-medium">{payerName}</span> / {conditionLabel} criteria
+                  </div>
+                  <div>
+                    Retrieved <span className="font-semibold">{retrieve.clauses.length} clauses</span> (
+                    {retrieve.clauses.filter((c) => c.required).length} required)
+                    {retrieve.clauses.length > 0 ? (
+                      <span className="text-zinc-500">
+                        {" "}
+                        , similarity {Math.min(...retrieve.clauses.map((c) => c.score)).toFixed(2)}
+                        {"–"}
+                        {Math.max(...retrieve.clauses.map((c) => c.score)).toFixed(2)}
+                      </span>
+                    ) : null}
+                  </div>
+                  <div>
+                    Retrieved <span className="font-semibold">{retrieve.precedents.length} precedent appeals</span>
+                    {retrieve.precedents.length > 0 &&
+                    retrieve.precedents.every((p) => p.outcome === "overturned") ? (
+                      <span className="text-zinc-500"> (all overturned)</span>
+                    ) : null}
+                  </div>
+                  {retrieve.requiredClauseIds.length > 0 ? (
+                    <div className="flex flex-wrap items-center gap-[4px] pt-[2px]">
+                      <span className="text-zinc-500">Required clauses:</span>
+                      {retrieve.requiredClauseIds.map((id) => {
+                        const clause = retrieve.clauses.find((c) => c.id === id);
+                        return (
+                          <span
+                            key={id}
+                            className="inline-flex h-[17px] items-center rounded-[3px] border border-zinc-300 bg-white px-[5px] font-mono text-[10px] font-semibold text-zinc-700"
+                          >
+                            {clause?.code ?? id}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                </div>
                 <Row label="Query">
                   <span className="font-mono text-[11px] text-zinc-600">{retrieve.query}</span>
                 </Row>
@@ -373,7 +446,13 @@ export function StageCards({
                   ) : null}
                 </Row>
                 <Row label="Criteria coverage">
-                  {formatPercent(verify.coverage.coverage)}
+                  {formatPercent(verify.coverage.coverage)}{" "}
+                  <span className="text-zinc-500">
+                    ({verify.coverage.coveredRequiredClauseIds.length}/
+                    {verify.coverage.coveredRequiredClauseIds.length +
+                      verify.coverage.uncoveredRequiredClauseIds.length}{" "}
+                    required clauses argued)
+                  </span>
                   {verify.coverage.uncoveredRequiredClauseIds.length > 0 ? (
                     <span className="ml-1 text-zinc-500">
                       (not argued: {verify.coverage.uncoveredRequiredClauseIds.join(", ")})
@@ -382,10 +461,24 @@ export function StageCards({
                 </Row>
                 {verify.judge ? (
                   <>
-                    <Row label="Judge">
-                      faithfulness {verify.judge.faithfulness.toFixed(2)}, completeness{" "}
-                      {verify.judge.completeness.toFixed(2)}, tone {verify.judge.tone.toFixed(2)}, overall{" "}
-                      <span className="font-semibold">{verify.judge.overall.toFixed(2)}</span>
+                    <Row label="Judge score">
+                      <span className="font-mono font-semibold">{verify.judge.overall.toFixed(2)}</span>
+                      <span className="text-zinc-400"> | </span>
+                      Faithfulness <span className="font-mono">{verify.judge.faithfulness.toFixed(2)}</span>
+                      <span className="text-zinc-400"> | </span>
+                      Completeness <span className="font-mono">{verify.judge.completeness.toFixed(2)}</span>
+                      <span className="text-zinc-400"> | </span>
+                      Tone <span className="font-mono">{verify.judge.tone.toFixed(2)}</span>
+                    </Row>
+                    <Row label="Flagged assertions">
+                      <span
+                        className={cn(
+                          "font-mono font-semibold",
+                          verify.judge.flagged_assertions.length > 0 ? "text-amber-700" : "text-green-700",
+                        )}
+                      >
+                        {verify.judge.flagged_assertions.length}
+                      </span>
                     </Row>
                     {verify.judge.flagged_assertions.length > 0 ? (
                       <div className="mt-[8px] space-y-[6px]">
@@ -407,18 +500,25 @@ export function StageCards({
                     </span>
                   </Row>
                 )}
-                <div className="mt-[9px] flex items-center gap-[8px] border-t border-zinc-100 pt-[8px]">
-                  <span className="text-[11px] text-zinc-500">Route</span>
-                  <RouteBadge route={verify.decision.route} />
+                <div className="mt-[10px] flex items-center gap-[10px] rounded-[6px] border border-zinc-200 bg-zinc-50 px-[10px] py-[9px]">
+                  <span className="font-mono text-[10px] tracking-wide text-zinc-500 uppercase">Route</span>
+                  <RouteBadge route={verify.decision.route} className="h-[26px] px-[10px] text-[13px]" />
                   <span className="text-[11.5px] text-zinc-700">{verify.decision.route_reason}</span>
                 </div>
               </div>
             ) : running && stage === "d_draft" ? (
               // The only stage with something to show before it finishes.
               <div>
-                <div className="mb-[6px] flex items-center gap-[7px] text-[11.5px] text-zinc-500">
+                <div className="mb-[6px] flex items-center gap-[9px]">
                   <span className="h-[6px] w-[6px] animate-pulse rounded-full bg-blue-500" />
-                  drafting, {draftPreview.length > 0 ? "streaming" : "waiting for the first token"}
+                  <span className="font-mono text-[12px] font-semibold text-zinc-800 tabular-nums">
+                    {liveDraftCounts.assertions} assertions
+                    <span className="mx-[6px] text-zinc-300">|</span>
+                    {liveDraftCounts.citations} citations
+                  </span>
+                  <span className="text-[11.5px] text-zinc-500">
+                    {draftPreview.length > 0 ? "streaming" : "waiting for the first token"}
+                  </span>
                 </div>
                 {draftPreview ? (
                   <div className="max-h-[132px] overflow-hidden rounded-[5px] border border-zinc-200 bg-zinc-50 px-[8px] py-[6px] font-mono text-[10.5px] leading-[1.55] text-zinc-600">
@@ -427,6 +527,22 @@ export function StageCards({
                   </div>
                 ) : null}
               </div>
+            ) : running && stage === "e_verify" ? (
+              <div className="space-y-[5px]">
+                {verifyGates === null ? (
+                  <Working label="Checking citations..." />
+                ) : (
+                  <div className="flex items-center gap-[7px] text-[11.5px] text-zinc-700">
+                    <span className="text-green-600">&#10003;</span>
+                    Checking citations...{" "}
+                    <span className="font-mono font-semibold">
+                      {Math.round(verifyGates.citation.validityRate * verifyGates.citation.totalCitations)}/
+                      {verifyGates.citation.totalCitations} valid
+                    </span>
+                  </div>
+                )}
+                {verifyJudging ? <Working label="Judge reviewing draft..." /> : null}
+              </div>
             ) : running ? (
               <Working
                 label={
@@ -434,9 +550,7 @@ export function StageCards({
                     ? "reading the denial letter"
                     : stage === "c_retrieve"
                       ? "embedding the query and searching criteria"
-                      : stage === "e_verify"
-                        ? "checking citations, then the judge"
-                        : "working"
+                      : "working"
                 }
               />
             ) : status === "skipped" ? (

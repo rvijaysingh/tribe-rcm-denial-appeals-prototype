@@ -74,6 +74,11 @@ export function ReviewPanel({
   // Set when the panel mounts for a run, not during render: reading the clock
   // while rendering is impure and React may render more than once.
   const openedAt = useRef<number | null>(null);
+  // One node per rendered assertion, keyed by its trimmed text, so a flag can
+  // scroll to the sentence it is about.
+  const assertionNodes = useRef(new Map<string, HTMLParagraphElement | null>());
+  const editRef = useRef<HTMLTextAreaElement | null>(null);
+  const [jumpTarget, setJumpTarget] = useState<string | null>(null);
 
   const draft = draftOutput(run);
   const retrieval = retrieveOutput(run);
@@ -84,15 +89,56 @@ export function ReviewPanel({
     openedAt.current = Date.now();
   }, [run?.id]);
 
+  useEffect(() => {
+    if (!jumpTarget) return;
+    const timer = setTimeout(() => setJumpTarget(null), 2000);
+    return () => clearTimeout(timer);
+  }, [jumpTarget]);
+
   const matrix = useMemo(
     () => (draft ? buildMatrix(draft.draft, retrieval, verify) : []),
     [draft, retrieval, verify],
   );
 
-  const flaggedText = useMemo(
-    () => new Set((verify?.judge?.flagged_assertions ?? []).map((f) => f.assertion_text.trim())),
-    [verify],
-  );
+  const flags = useMemo(() => verify?.judge?.flagged_assertions ?? [], [verify]);
+  const flaggedText = useMemo(() => new Set(flags.map((f) => f.assertion_text.trim())), [flags]);
+
+  /** Scroll a flagged sentence into view in the Draft tab and flash it. */
+  const jumpToAssertion = (text: string) => {
+    const key = text.trim();
+    setTab("draft");
+    setEditing(false);
+    setJumpTarget(key);
+    // The Draft tab may have just been mounted by setTab, so wait a frame.
+    requestAnimationFrame(() => {
+      assertionNodes.current.get(key)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  };
+
+  /**
+   * Open the editor on the first flagged sentence: select it in the textarea so
+   * the reviewer lands on the problem instead of hunting for it.
+   */
+  const openEditor = () => {
+    // Defined above the null guard below, so it checks for itself.
+    if (!draft) return;
+    setEditText(draft.letterText);
+    setEditing(true);
+    setTab("draft");
+    const first = flags[0]?.assertion_text.trim();
+    if (!first) return;
+    requestAnimationFrame(() => {
+      const node = editRef.current;
+      if (!node) return;
+      const at = node.value.indexOf(first);
+      node.focus();
+      if (at < 0) return;
+      node.setSelectionRange(at, at + first.length);
+      // Selecting alone does not scroll, so put the caret line near the middle.
+      const ratio = at / Math.max(1, node.value.length);
+      node.scrollTop = Math.max(0, ratio * node.scrollHeight - node.clientHeight / 2);
+    });
+  };
 
   if (!run || !draft) {
     return (
@@ -153,6 +199,36 @@ export function ReviewPanel({
         ) : null}
       </div>
 
+      {flags.length > 0 ? (
+        <div className="mb-[10px] overflow-hidden rounded-[6px] border border-amber-300 bg-amber-50">
+          <div className="flex items-center gap-[8px] border-b border-amber-200 bg-amber-100/70 px-[10px] py-[6px]">
+            <span className="text-[12px] text-amber-800">&#9888;</span>
+            <span className="text-[11.5px] font-semibold text-amber-900">
+              The reviewer model flagged {flags.length} assertion{flags.length === 1 ? "" : "s"}
+            </span>
+            <span className="flex-1" />
+            <span className="text-[11px] text-amber-800">Read these before approving.</span>
+          </div>
+          <div className="divide-y divide-amber-200">
+            {flags.map((flag, i) => (
+              <div key={i} className="px-[10px] py-[8px]">
+                <div className="border-l-2 border-amber-400 pl-[8px] text-[11.5px] leading-[1.6] font-medium text-amber-950">
+                  &ldquo;{flag.assertion_text}&rdquo;
+                </div>
+                <div className="mt-[4px] pl-[10px] text-[11.5px] leading-[1.55] text-amber-900">{flag.reason}</div>
+                <button
+                  type="button"
+                  onClick={() => jumpToAssertion(flag.assertion_text)}
+                  className="mt-[5px] ml-[10px] rounded-[4px] border border-amber-300 bg-white px-[7px] py-[2px] text-[11px] font-medium text-amber-900 hover:bg-amber-100"
+                >
+                  Jump to assertion
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       {payerOverturnRate !== null && payerOverturnRate < PAYER_HISTORY_WARN_THRESHOLD ? (
         <div className="mb-[10px] flex items-start gap-[8px] rounded-[6px] border border-amber-200 bg-amber-50 px-[10px] py-[7px]">
           <span className="text-[12px] leading-[1.3] text-amber-700">&#9888;</span>
@@ -199,6 +275,7 @@ export function ReviewPanel({
         editing ? (
           <div className="rounded-[7px] border border-zinc-200 bg-white p-[10px]">
             <textarea
+              ref={editRef}
               value={editText}
               onChange={(e) => setEditText(e.target.value)}
               className="h-[460px] w-full resize-none rounded-[5px] border border-zinc-300 p-[9px] font-mono text-[11.5px] leading-[1.7] text-zinc-800 outline-none focus:border-zinc-500"
@@ -236,15 +313,29 @@ export function ReviewPanel({
                     {SECTION_HEADING[name]}
                   </div>
                   {assertions.map((assertion, i) => {
-                    const isFlagged = flaggedText.has(assertion.text.trim());
+                    const key = assertion.text.trim();
+                    const isFlagged = flaggedText.has(key);
+                    const isJumpTarget = jumpTarget === key;
                     return (
                       <p
                         key={i}
+                        ref={(node) => {
+                          assertionNodes.current.set(key, node);
+                        }}
                         className={cn(
-                          "mb-[8px] text-[12px] leading-[1.7] text-zinc-800",
-                          isFlagged && "rounded-[4px] border-l-2 border-amber-400 bg-amber-50/60 py-[4px] pl-[8px]",
+                          "mb-[8px] scroll-mt-[60px] text-[12px] leading-[1.7] text-zinc-800 transition-shadow duration-500",
+                          isFlagged && "rounded-[4px] border-l-2 border-amber-400 bg-amber-50 py-[5px] pr-[6px] pl-[8px]",
+                          isJumpTarget && "shadow-[0_0_0_3px_rgba(245,158,11,0.45)]",
                         )}
                       >
+                        {isFlagged ? (
+                          <span
+                            title="The reviewer model flagged this assertion"
+                            className="mr-[5px] align-baseline text-[11px] text-amber-700"
+                          >
+                            &#9888;
+                          </span>
+                        ) : null}
                         {assertion.text}{" "}
                         {[...assertion.chart_line_ids, ...assertion.clause_ids].map((id) => (
                           <button
@@ -336,11 +427,7 @@ export function ReviewPanel({
           <button
             type="button"
             disabled={busy}
-            onClick={() => {
-              setEditText(draft.letterText);
-              setEditing(true);
-              setTab("draft");
-            }}
+            onClick={openEditor}
             className="h-[30px] rounded-[6px] border border-zinc-300 bg-white px-[12px] text-[12px] font-medium text-zinc-700"
           >
             Edit

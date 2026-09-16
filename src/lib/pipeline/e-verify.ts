@@ -246,9 +246,23 @@ export interface VerifyInput extends JudgeInput {
 }
 
 /** Run the gates, then the judge when the gates allow it, then route. */
-export async function verify(input: VerifyInput, onText?: (chunk: string) => void): Promise<VerifyResult> {
+/**
+ * Stage E does two visibly different things: cheap deterministic gates, then a
+ * slow LLM judge. A caller that streams progress needs to tell them apart,
+ * otherwise the stage looks like one long pause.
+ */
+export type VerifyPhase =
+  | { phase: "gates"; citation: CitationCheck; coverage: CoverageCheck }
+  | { phase: "judge" };
+
+export async function verify(
+  input: VerifyInput,
+  onText?: (chunk: string) => void,
+  onPhase?: (phase: VerifyPhase) => void,
+): Promise<VerifyResult> {
   const citation = checkCitations(input.draft, input.validLineNumbers, input.retrievedClauseIds);
   const coverage = checkCoverage(input.draft, input.requiredClauseIds);
+  onPhase?.({ phase: "gates", citation, coverage });
   const hasUnsupportedRequired = input.draft.unsupported_required.length > 0;
 
   // The needs_docs gate ends the stage: no letter is going out, so there is
@@ -270,6 +284,7 @@ export async function verify(input: VerifyInput, onText?: (chunk: string) => voi
     };
   }
 
+  onPhase?.({ phase: "judge" });
   const result = await judge(
     {
       letterText: input.letterText,

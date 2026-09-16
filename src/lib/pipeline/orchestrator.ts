@@ -24,13 +24,20 @@ import { classify, CLASSIFY_PROMPT_VERSION, type ClassifyOutput } from "./b-clas
 import { formatChartForPrompt, retrieve, type RetrieveOutput } from "./c-retrieve";
 import { draft, DRAFT_PROMPT_VERSION } from "./d-draft";
 import type { Draft } from "./draft-schema";
-import { verify, VERIFY_PROMPT_VERSION, type VerifyResult } from "./e-verify";
+import { verify, VERIFY_PROMPT_VERSION, type VerifyPhase, type VerifyResult } from "./e-verify";
 
 export const PROMPT_VERSION = `${CLASSIFY_PROMPT_VERSION}+${DRAFT_PROMPT_VERSION}+${VERIFY_PROMPT_VERSION}`;
 
 export type StageEvent =
   | { type: "stage_started"; stage: Stage }
-  | { type: "stage_completed"; stage: Stage; ms: number; skipped: boolean; summary: string }
+  /**
+   * `output` is the same payload persisted to stage_outputs. The UI needs it to
+   * render a stage as it lands: without it a live run has nothing to show until
+   * the page refetches, so every stage looks empty while it runs.
+   */
+  | { type: "stage_completed"; stage: Stage; ms: number; skipped: boolean; summary: string; output?: unknown }
+  /** Something worth showing partway through a stage, such as stage E's gates. */
+  | { type: "stage_progress"; stage: Stage; phase: VerifyPhase }
   | { type: "draft_token"; text: string }
   | { type: "run_completed"; runId: string; route: Route; totalMs: number; totalCostUsd: number }
   | { type: "run_failed"; runId: string; stage: Stage | null; error: string };
@@ -171,6 +178,7 @@ export async function runPipeline(denialId: string, options: RunOptions = {}): P
       ms: aMs,
       skipped: false,
       summary: `${triageOutput.decision}: ${triageOutput.reason}`,
+      output: triageOutput,
     });
 
     if (triageOutput.decision === "do_not_appeal") {
@@ -186,7 +194,14 @@ export async function runPipeline(denialId: string, options: RunOptions = {}): P
           input: null,
           output: null,
         });
-        emit({ type: "stage_completed", stage, ms: 0, skipped: true, summary: "skipped: triage stopped the run" });
+        emit({
+          type: "stage_completed",
+          stage,
+          ms: 0,
+          skipped: true,
+          summary: "skipped: triage stopped the run",
+          output: null,
+        });
       }
       return finish("do_not_appeal", triageOutput.reason, {
         triage: triageOutput,
@@ -225,6 +240,7 @@ export async function runPipeline(denialId: string, options: RunOptions = {}): P
       ms: b.ms,
       skipped: false,
       summary: `${b.data.category} / ${b.data.root_cause}, confidence ${b.data.confidence.toFixed(2)}`,
+      output: b.data,
     });
 
     // ---- Stage C: retrieve
@@ -258,6 +274,7 @@ export async function runPipeline(denialId: string, options: RunOptions = {}): P
       summary:
         `${c.clauses.length} clauses (${c.clauses.filter((x) => x.forced).length} forced in as required), ` +
         `${c.precedents.length} precedents`,
+      output: c,
     });
 
     // ---- Stage D: draft
@@ -302,6 +319,7 @@ export async function runPipeline(denialId: string, options: RunOptions = {}): P
         (d.data.unsupported_required.length > 0
           ? `, ${d.data.unsupported_required.length} unsupported required clause(s)`
           : ""),
+      output: { draft: d.data, letterText },
     });
 
     // ---- Stage E: verify and route
@@ -318,7 +336,7 @@ export async function runPipeline(denialId: string, options: RunOptions = {}): P
       chartText,
       clauses: c.clauses,
       precedents: c.precedents,
-    });
+    }, undefined, (phase) => emit({ type: "stage_progress", stage: "e_verify", phase }));
     const eMs = Date.now() - eStarted;
     await persist({
       stage: "e_verify",
@@ -339,6 +357,7 @@ export async function runPipeline(denialId: string, options: RunOptions = {}): P
         `validity ${(e.citation.validityRate * 100).toFixed(0)}%, coverage ${(e.coverage.coverage * 100).toFixed(0)}%` +
         (e.judge ? `, judge ${e.judge.overall.toFixed(2)}, ${e.judge.flagged_assertions.length} flagged` : ", judge skipped") +
         ` -> ${e.decision.route}`,
+      output: e,
     });
 
     return finish(e.decision.route, e.decision.route_reason, {

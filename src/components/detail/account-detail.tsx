@@ -2,17 +2,19 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MockBadge, RouteBadge } from "@/components/route-badge";
 import type { Stage } from "@/lib/domain";
 import type { TriageOutput } from "@/lib/pipeline/a-triage";
 import type { StageEvent } from "@/lib/pipeline/orchestrator";
+import type { VerifyPhase } from "@/lib/pipeline/e-verify";
+import { OLD_CAPACITY_CUTOFF } from "@/lib/economics";
 import { CATEGORY_LABEL, formatCost, formatDollars, formatSeconds } from "@/lib/ui/format";
 import { cn } from "@/lib/utils";
 import { CaseInputs } from "./case-inputs";
 import { ReviewPanel } from "./review-panel";
 import { StageCards, type StageStatus } from "./stage-cards";
-import { STAGE_ORDER, type ChartLineView, type RunView } from "./types";
+import { STAGE_ORDER, type ChartLineView, type RunView, type StageView } from "./types";
 
 /**
  * Account detail (PRD 6.2): inputs on the left, pipeline progress on the right.
@@ -47,11 +49,6 @@ const ALL_COLLAPSED: Record<Stage, boolean> = {
   e_verify: false,
 };
 
-/** Only the named stage open, which is how the live run walks down the list. */
-function onlyExpanded(stage: Stage): Record<Stage, boolean> {
-  return { ...ALL_COLLAPSED, [stage]: true };
-}
-
 /** How long the page must sit untouched before a finished demo case resets. */
 const AUTO_RESET_IDLE_MS = 10 * 60 * 1000;
 /** How often idleness is checked. Coarse on purpose: the deadline is minutes. */
@@ -62,6 +59,25 @@ const ACTIVITY_EVENTS = ["mousemove", "mousedown", "keydown", "wheel", "scroll",
 const AUTO_REVIEW_DELAY_MS = 1500;
 /** How much of the streaming draft to keep on screen. */
 const DRAFT_PREVIEW_CHARS = 900;
+/**
+ * How long a finished stage keeps the screen before the run moves on. Triage
+ * lands in milliseconds and classify in a couple of seconds, so without a floor
+ * they flash past and the pipeline looks like it skipped them.
+ */
+const STAGE_HOLD_MS = 3000;
+
+/**
+ * Assertions and citations counted from the raw JSON as it streams, so stage D
+ * shows numbers climbing rather than a character count. Approximate by
+ * construction: the text is a partial document, and the exact figures replace
+ * these the moment the stage completes.
+ */
+function countStreamingDraft(text: string): { assertions: number; citations: number } {
+  return {
+    assertions: (text.match(/"chart_line_ids"/g) ?? []).length,
+    citations: (text.match(/"(?:L\d+|C\d+)"/g) ?? []).length,
+  };
+}
 
 function statusesFromRun(run: RunView | null): Record<Stage, StageStatus> {
   if (!run) return IDLE;
@@ -107,7 +123,15 @@ export function AccountDetail(props: AccountDetailProps) {
   const [highlight, setHighlight] = useState<string | null>(null);
   const [draftChars, setDraftChars] = useState(0);
   const [draftPreview, setDraftPreview] = useState("");
-  const [expanded, setExpanded] = useState<Record<Stage, boolean>>(ALL_COLLAPSED);
+  const [liveDraftCounts, setLiveDraftCounts] = useState({ assertions: 0, citations: 0 });
+  const [liveStages, setLiveStages] = useState<StageView[]>([]);
+  const [verifyGates, setVerifyGates] = useState<Extract<VerifyPhase, { phase: "gates" }> | null>(null);
+  const [verifyJudging, setVerifyJudging] = useState(false);
+  // Which stage currently owns the screen during a live run, as an index into
+  // STAGE_ORDER. Manual clicks override it per stage.
+  const [spotlightIndex, setSpotlightIndex] = useState(0);
+  const [manualExpanded, setManualExpanded] = useState<Partial<Record<Stage, boolean>>>({});
+  const draftTextRef = useRef("");
   // True only for a run this page started, which is what gates every automatic
   // behaviour below. A cached run never moves the page on its own.
   const [liveRun, setLiveRun] = useState(false);
@@ -131,9 +155,22 @@ export function AccountDetail(props: AccountDetailProps) {
     setStatuses(statusesFromRun(props.initialRun));
   }
 
-  const toggleStage = useCallback((stage: Stage) => {
-    setExpanded((prev) => ({ ...prev, [stage]: !prev[stage] }));
-  }, []);
+  const spotlightStage = liveRun ? (STAGE_ORDER[spotlightIndex] ?? null) : null;
+
+  const expanded = useMemo(() => {
+    const next = { ...ALL_COLLAPSED };
+    for (const stage of STAGE_ORDER) {
+      next[stage] = manualExpanded[stage] ?? stage === spotlightStage;
+    }
+    return next;
+  }, [manualExpanded, spotlightStage]);
+
+  const toggleStage = useCallback(
+    (stage: Stage) => {
+      setManualExpanded((prev) => ({ ...prev, [stage]: !(prev[stage] ?? stage === spotlightStage) }));
+    },
+    [spotlightStage],
+  );
 
   const runLive = useCallback(async () => {
     abortRef.current?.abort();
@@ -146,9 +183,15 @@ export function AccountDetail(props: AccountDetailProps) {
     setRun(null);
     setDraftChars(0);
     setDraftPreview("");
+    setLiveDraftCounts({ assertions: 0, citations: 0 });
+    setLiveStages([]);
+    setVerifyGates(null);
+    setVerifyJudging(false);
+    setSpotlightIndex(0);
+    setManualExpanded({});
+    draftTextRef.current = "";
     setLiveElapsed({});
     setStatuses(IDLE);
-    setExpanded(ALL_COLLAPSED);
     tabRef.current = "pipeline";
     setTab("pipeline");
     setAutoJumpArmed(false);
@@ -185,15 +228,31 @@ export function AccountDetail(props: AccountDetailProps) {
 
           if (event.type === "stage_started") {
             setStatuses((prev) => ({ ...prev, [event.stage]: "running" }));
-            // Opening this stage closes the previous one. The presenter follows
-            // the pipeline without clicking; any card reopens on click.
-            setExpanded(onlyExpanded(event.stage));
           } else if (event.type === "stage_completed") {
             setStatuses((prev) => ({ ...prev, [event.stage]: event.skipped ? "skipped" : "done" }));
             setLiveElapsed((prev) => ({ ...prev, [event.stage]: event.ms }));
+            // The stage output arrives with the event, so the card can render
+            // the real thing straight away rather than waiting for a refetch.
+            setLiveStages((prev) => [
+              ...prev.filter((r) => r.stage !== event.stage),
+              {
+                stage: event.stage,
+                ms: event.ms,
+                tokensIn: 0,
+                tokensOut: 0,
+                cost: "0",
+                skipped: event.skipped,
+                output: event.output ?? null,
+              },
+            ]);
+          } else if (event.type === "stage_progress") {
+            if (event.phase.phase === "gates") setVerifyGates(event.phase);
+            else setVerifyJudging(true);
           } else if (event.type === "draft_token") {
+            draftTextRef.current += event.text;
             setDraftChars((n) => n + event.text.length);
             setDraftPreview((prev) => (prev + event.text).slice(-DRAFT_PREVIEW_CHARS));
+            setLiveDraftCounts(countStreamingDraft(draftTextRef.current));
           } else if (event.type === "run_completed") {
             setAutoJumpArmed(true);
             lastActivityRef.current = Date.now();
@@ -222,7 +281,7 @@ export function AccountDetail(props: AccountDetailProps) {
     setStatuses(statusesFromRun(props.initialRun));
     setLiveElapsed({});
     // A cached run opens collapsed with its summaries showing.
-    setExpanded(ALL_COLLAPSED);
+    setManualExpanded({});
     if (!props.initialRun) setBanner({ tone: "info", text: "No completed run for this case yet. Run it live." });
   }, [props.initialRun]);
 
@@ -236,7 +295,7 @@ export function AccountDetail(props: AccountDetailProps) {
     setRun(null);
     setStatuses(IDLE);
     setLiveElapsed({});
-    setExpanded(ALL_COLLAPSED);
+    setManualExpanded({});
     tabRef.current = "pipeline";
     setTab("pipeline");
     setLiveRun(false);
@@ -244,6 +303,51 @@ export function AccountDetail(props: AccountDetailProps) {
     setBanner({ tone: "info", text: `Reset: ${body.runsDeleted} run(s) deleted.` });
     router.refresh();
   }, [props.denialId, router]);
+
+  /**
+   * Walks the spotlight down the stages. A stage holds the screen until it has
+   * finished AND has been visible for STAGE_HOLD_MS, so a stage that completes
+   * in milliseconds still gets read. Skipped stages move on immediately: after
+   * triage stops a run there are four of them and nobody wants twelve seconds
+   * of nothing.
+   */
+  const spotlightStatus = spotlightStage ? statuses[spotlightStage] : null;
+
+  useEffect(() => {
+    if (!liveRun || !spotlightStage) return;
+    if (spotlightStatus !== "done" && spotlightStatus !== "skipped") return;
+    // The hold starts when the stage takes the screen, not when it finished.
+    // Measuring from completion would cut short exactly the stages this is for:
+    // triage and classify are usually done long before their turn comes round.
+    const timer = setTimeout(
+      () => setSpotlightIndex((i) => i + 1),
+      spotlightStatus === "skipped" ? 0 : STAGE_HOLD_MS,
+    );
+    return () => clearTimeout(timer);
+    // Deps are primitives on purpose: depending on the whole statuses object
+    // would restart this timer every time any other stage changed, and the
+    // hold would never elapse.
+  }, [liveRun, spotlightStage, spotlightStatus]);
+
+  /**
+   * What the stage cards read. During a live run the persisted run does not
+   * exist yet, so the events are assembled into the same shape.
+   */
+  const displayRun: RunView | null = useMemo(() => {
+    if (run) return run;
+    if (!liveRun || liveStages.length === 0) return null;
+    return {
+      id: "live",
+      route: null,
+      routeReason: null,
+      totalMs: null,
+      totalCost: null,
+      completedAt: null,
+      promptVersion: "",
+      modelSet: "",
+      stages: liveStages,
+    };
+  }, [run, liveRun, liveStages]);
 
   const reviewReady = run !== null && run.route !== null && run.route !== "do_not_appeal";
 
@@ -256,7 +360,7 @@ export function AccountDetail(props: AccountDetailProps) {
       setRun(null);
       setStatuses(IDLE);
       setLiveElapsed({});
-      setExpanded(ALL_COLLAPSED);
+      setManualExpanded({});
       tabRef.current = "pipeline";
       setTab("pipeline");
       setLiveRun(false);
@@ -458,13 +562,21 @@ export function AccountDetail(props: AccountDetailProps) {
 
           {tab === "pipeline" ? (
             <StageCards
-                run={run}
+              run={displayRun}
               statuses={statuses}
               liveElapsed={liveElapsed}
               thresholdCents={props.triage.threshold_cents}
+              daysLeft={props.triage.days_left}
+              wouldHaveBeenWorkedOld={props.triage.would_have_been_worked_old}
+              oldCutoffDollars={OLD_CAPACITY_CUTOFF}
               expanded={expanded}
               onToggle={toggleStage}
               draftPreview={draftPreview}
+              liveDraftCounts={liveDraftCounts}
+              verifyGates={verifyGates}
+              verifyJudging={verifyJudging}
+              payerName={props.payerName}
+              conditionLabel={props.conditionLabel}
             />
           ) : (
             <div

@@ -43,6 +43,8 @@ export interface ClauseRow {
   status: ClauseStatus;
   lines: string[];
   note: string | null;
+  /** An assertion citing this clause was flagged by the reviewer model. */
+  flagged: boolean;
 }
 
 export function buildMatrix(
@@ -75,7 +77,7 @@ export function buildMatrix(
     } else {
       status = "supported";
     }
-    return { id: clause.id, code: clause.code, text: clause.text, status, lines, note };
+    return { id: clause.id, code: clause.code, text: clause.text, status, lines, note, flagged: isFlagged };
   });
 }
 
@@ -109,8 +111,19 @@ export function EvidenceMatrix({
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.id} className="border-t border-zinc-100 align-top">
+            <tr
+              key={row.id}
+              className={cn("border-t border-zinc-100 align-top", row.flagged && "bg-amber-50/60")}
+            >
               <td className="px-[9px] py-[7px] whitespace-nowrap">
+                {row.flagged ? (
+                  <span
+                    title="An assertion citing this clause was flagged by the reviewer model"
+                    className="mr-[3px] text-[11px] text-amber-700"
+                  >
+                    &#9888;
+                  </span>
+                ) : null}
                 <span className="font-mono text-[10.5px] text-zinc-400">{row.id}</span>{" "}
                 <span className="font-mono text-[10.5px] text-zinc-700">{row.code}</span>
               </td>
