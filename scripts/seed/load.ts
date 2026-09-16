@@ -13,7 +13,7 @@
 import { getTableColumns, notInArray, sql, type SQL } from "drizzle-orm";
 import type { AnyPgColumn, PgTable } from "drizzle-orm/pg-core";
 import { lineKey } from "../../src/lib/citations";
-import type { db } from "../../src/lib/db/client";
+import type { Db } from "../../src/lib/db/client";
 import {
   accounts,
   chartDocs,
@@ -60,7 +60,7 @@ export function caseDates(seed: CaseSeed, anchor: Date): { received: Date; disch
   return { received, discharge, admit };
 }
 
-export type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
+export type Tx = Parameters<Parameters<Db["transaction"]>[0]>[0];
 
 const CHUNK = 500;
 

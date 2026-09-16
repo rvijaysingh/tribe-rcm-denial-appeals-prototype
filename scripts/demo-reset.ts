@@ -13,7 +13,7 @@
 
 import "./seed/load-env";
 import { eq, inArray } from "drizzle-orm";
-import { closeDb, db } from "../src/lib/db/client";
+import { closeDb, getDb } from "../src/lib/db/client";
 import { denials, pipelineRuns, reviewerFeedback } from "../src/lib/db/schema";
 
 export interface ResetArgs {
@@ -40,6 +40,7 @@ export interface ResetResult {
 
 async function main(): Promise<void> {
   const { target } = parseResetArgs(process.argv.slice(2));
+  const db = getDb();
   const started = Date.now();
 
   const demoCases = await db

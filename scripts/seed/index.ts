@@ -17,7 +17,7 @@
  */
 
 import "./load-env";
-import { closeDb, db } from "../../src/lib/db/client";
+import { closeDb, getDb } from "../../src/lib/db/client";
 import { parseSeedArgs } from "./args";
 import { writeArtifact } from "./artifacts";
 import { embedDocumentsCached } from "./embed-cache";
@@ -131,7 +131,7 @@ async function main(): Promise<void> {
   );
 
   // ---- Load
-  const counts: LoadCounts = await db.transaction(async (tx) => {
+  const counts: LoadCounts = await getDb().transaction(async (tx) => {
     const anchor = seedAnchor();
     return {
       ...(await loadCriteria(tx, criteria, vectors)),

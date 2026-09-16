@@ -9,7 +9,7 @@
 import { and, asc, eq, sql } from "drizzle-orm";
 import { lineLabel } from "../citations";
 import type { Condition, DenialCategory, DocType, PayerId, Split } from "../domain";
-import { db } from "./client";
+import { getDb } from "./client";
 import { accounts, chartDocs, chartLines, criteriaClauses, criteriaSets, denials, payerNotes, payers } from "./schema";
 
 export interface ChartLineRow {
@@ -61,7 +61,7 @@ export interface PipelineCase {
 
 /** Load everything the pipeline may see for one denial. Throws when it does not exist. */
 export async function loadPipelineCase(denialId: string): Promise<PipelineCase> {
-  const [row] = await db
+  const [row] = await getDb()
     .select({ denial: denials, account: accounts, payer: payers })
     .from(denials)
     .innerJoin(accounts, eq(accounts.id, denials.accountId))
@@ -70,7 +70,7 @@ export async function loadPipelineCase(denialId: string): Promise<PipelineCase> 
 
   if (!row) throw new Error(`No denial ${denialId}. Has the database been seeded?`);
 
-  const lines = await db
+  const lines = await getDb()
     .select({
       key: chartLines.id,
       lineNo: chartLines.lineNo,
@@ -119,7 +119,7 @@ export async function searchClauses(
   limit: number,
 ): Promise<ClauseCandidate[]> {
   const vector = sql`${JSON.stringify(queryVector)}::vector`;
-  return db
+  return getDb()
     .select({
       id: criteriaClauses.id,
       code: criteriaClauses.code,
@@ -136,7 +136,7 @@ export async function searchClauses(
 
 /** Every clause in the payer's set for a condition, unranked. Used to force required clauses in. */
 export async function allClauses(payerId: PayerId, condition: Condition): Promise<Omit<ClauseCandidate, "score">[]> {
-  return db
+  return getDb()
     .select({
       id: criteriaClauses.id,
       code: criteriaClauses.code,
@@ -168,7 +168,7 @@ export async function searchPrecedents(
   limit: number,
 ): Promise<PrecedentCandidate[]> {
   const vector = sql`${JSON.stringify(queryVector)}::vector`;
-  const rows = await db.execute<PrecedentCandidate>(sql`
+  const rows = await getDb().execute<PrecedentCandidate>(sql`
     SELECT id, summary, letter_excerpt AS "letterExcerpt", outcome, condition,
            1 - (embedding <=> ${vector}) AS score
     FROM precedent_appeals
@@ -181,7 +181,7 @@ export async function searchPrecedents(
 
 /** Unpublished payer rules for a payer and condition, shown in the UI. */
 export async function getPayerNotes(payerId: PayerId, condition: Condition): Promise<{ id: string; text: string }[]> {
-  return db
+  return getDb()
     .select({ id: payerNotes.id, text: payerNotes.text })
     .from(payerNotes)
     .where(and(eq(payerNotes.payerId, payerId), eq(payerNotes.condition, condition)))
@@ -190,7 +190,7 @@ export async function getPayerNotes(payerId: PayerId, condition: Condition): Pro
 
 /** Share of this payer and category's precedents that were overturned, for the payer-history flag. */
 export async function payerOverturnRate(payerId: PayerId, category: DenialCategory): Promise<number | null> {
-  const rows = await db.execute<{ overturned: number; total: number }>(sql`
+  const rows = await getDb().execute<{ overturned: number; total: number }>(sql`
     SELECT count(*) FILTER (WHERE outcome = 'overturned')::int AS overturned, count(*)::int AS total
     FROM precedent_appeals WHERE payer_id = ${payerId} AND category = ${category}
   `);
