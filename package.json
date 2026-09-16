@@ -9,8 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests",
-    "db:generate": "node scripts/not-implemented.mjs db:generate",
-    "db:push": "node scripts/not-implemented.mjs db:push",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "tsx scripts/db/push.ts",
     "db:seed": "node scripts/not-implemented.mjs db:seed",
     "eval": "node scripts/not-implemented.mjs eval"
   },
