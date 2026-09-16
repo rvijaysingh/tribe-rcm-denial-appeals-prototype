@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { AccountDetail } from "@/components/detail/account-detail";
-import { getPayerNotes, loadLatestRun, loadPipelineCase } from "@/lib/db/queries";
+import { getPayerNotes, loadLatestRun, loadPipelineCase, payerOverturnRate } from "@/lib/db/queries";
 import { CONDITION_LABEL } from "@/lib/domain";
 import { triage } from "@/lib/pipeline/a-triage";
 
@@ -13,9 +13,12 @@ export default async function AccountDetailPage({ params }: PageProps<"/accounts
   const pipelineCase = await loadPipelineCase(denialId).catch(() => null);
   if (!pipelineCase) notFound();
 
-  const [notes, latestRun] = await Promise.all([
+  const [notes, latestRun, overturnRate] = await Promise.all([
     getPayerNotes(pipelineCase.denial.payerId, pipelineCase.account.condition),
     loadLatestRun(denialId),
+    // PRD 6.3: the review panel warns when this payer rarely overturns this
+    // category, so a nurse knows the odds before spending time on the letter.
+    payerOverturnRate(pipelineCase.denial.payerId, pipelineCase.denial.category),
   ]);
 
   const decision = triage({
@@ -49,6 +52,7 @@ export default async function AccountDetailPage({ params }: PageProps<"/accounts
           text: line.text,
         }))}
         payerNotes={notes}
+        payerOverturnRate={overturnRate}
         patient={{
           mrn: pipelineCase.account.mrn,
           age: pipelineCase.account.patientAge,

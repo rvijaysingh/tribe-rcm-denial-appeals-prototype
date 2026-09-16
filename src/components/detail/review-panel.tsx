@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { RouteBadge } from "@/components/route-badge";
 import { SECTION_NAMES, type SectionName } from "@/lib/domain";
-import { formatCost, formatSeconds } from "@/lib/ui/format";
+import { PAYER_HISTORY_WARN_THRESHOLD } from "@/lib/economics";
+import { CATEGORY_LABEL, formatCost, formatPercent, formatSeconds } from "@/lib/ui/format";
 import { cn } from "@/lib/utils";
 import { EvidenceMatrix, buildMatrix } from "./evidence-matrix";
 import {
@@ -49,12 +50,18 @@ export function ReviewPanel({
   onCiteLine,
   highlight,
   onFeedbackSaved,
+  payerName,
+  category,
+  payerOverturnRate,
 }: {
   run: RunView | null;
   denialId: string;
   onCiteLine: (label: string | null) => void;
   highlight: string | null;
   onFeedbackSaved: () => void;
+  payerName: string;
+  category: string;
+  payerOverturnRate: number | null;
 }) {
   const [tab, setTab] = useState<"draft" | "evidence" | "log">("draft");
   const [editing, setEditing] = useState(false);
@@ -145,6 +152,19 @@ export function ReviewPanel({
           </span>
         ) : null}
       </div>
+
+      {payerOverturnRate !== null && payerOverturnRate < PAYER_HISTORY_WARN_THRESHOLD ? (
+        <div className="mb-[10px] flex items-start gap-[8px] rounded-[6px] border border-amber-200 bg-amber-50 px-[10px] py-[7px]">
+          <span className="text-[12px] leading-[1.3] text-amber-700">&#9888;</span>
+          <div className="text-[11.5px] leading-[1.5] text-amber-900">
+            <span className="font-semibold">Payer history.</span> {payerName} has overturned{" "}
+            <span className="font-mono">{formatPercent(payerOverturnRate)}</span> of{" "}
+            {CATEGORY_LABEL[category]?.toLowerCase() ?? category} appeals in the precedent store, below the{" "}
+            <span className="font-mono">{formatPercent(PAYER_HISTORY_WARN_THRESHOLD)}</span> mark. A strong letter here
+            still loses more often than it wins, so weigh the reviewer time against the odds.
+          </div>
+        </div>
+      ) : null}
 
       <div className="mb-[10px] flex items-center gap-[2px]">
         {(["draft", "evidence", "log"] as const).map((key) => (

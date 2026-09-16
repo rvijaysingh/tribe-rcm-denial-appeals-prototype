@@ -64,6 +64,8 @@ export interface AccountDetailProps {
   letterText: string;
   chart: ChartLineView[];
   payerNotes: { id: string; text: string }[];
+  /** Share of this payer's precedents for this category that were overturned. */
+  payerOverturnRate: number | null;
   patient: { mrn: string; age: number; drg: string; admitDate: string; dischargeDate: string };
   triage: TriageOutput;
   initialRun: RunView | null;
@@ -317,6 +319,9 @@ export function AccountDetail(props: AccountDetailProps) {
               onCiteLine={setHighlight}
               highlight={highlight}
               onFeedbackSaved={() => router.refresh()}
+              payerName={props.payerName}
+              category={props.category}
+              payerOverturnRate={props.payerOverturnRate}
             />
           )}
 
