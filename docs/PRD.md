@@ -265,7 +265,7 @@ Embeddings are computed at seed time with Voyage and stored.
 | DEMO-03 | Northgate | Sepsis | $22,000 | Chart lacks the lactate value and repeat vitals the payer's required clause needs | needs docs | Exact missing element named; RN can request records instead of arguing |
 | DEMO-04 | Meridian | Pneumonia | $9,800 | Supported but one assertion rests on a weak inference; judge flags it | needs review | RN edits the flagged sentence, diff is stored, agreement metric updates |
 
-Plus three pre-triaged do-not-appeal rows in the queue, additional to the 40 and tagged `split = 'demo'`: expired window (day 184 of 180), EV below threshold ($900 at P=0.25), ineligible category for that payer. Each gets a short chart so the account detail page renders.
+Plus three pre-triaged do-not-appeal rows in the queue, additional to the 40 and tagged `split = 'demo'`: expired window (day 184 of 180), EV below threshold ($700 at P(overturn) at or below the payer floor; at Northgate medical_necessity, P=0.38, EV = $266, under the $275 `COST_PER_APPEAL_AI`), ineligible category for that payer. Each gets a short chart so the account detail page renders.
 
 ## 9. Evaluation
 

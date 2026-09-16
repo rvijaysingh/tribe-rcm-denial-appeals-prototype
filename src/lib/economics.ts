@@ -58,15 +58,12 @@ export const APPEALABLE_CATEGORIES: Record<PayerId, readonly DenialCategory[]> =
 };
 
 /**
- * Largest denial amount that still falls below the appeal threshold at the
- * lowest win rate in the table. Used by the seed to build the
- * "below economic threshold" row.
- *
- * PRD 8.3 illustrates that row as "$900 at P=0.25", but 0.25 is outside the
- * [0.35, 0.75] range stage A specifies, and at the real floor of 0.38 a $900
- * denial yields EV $342, which clears the $275 threshold and would route to
- * appeal. The seed therefore uses an amount derived from this bound instead of
- * the literal $900. Open question, flagged to the owner.
+ * Lowest win rate in the table (the payer floor). The seed's "below economic
+ * threshold" do-not-appeal row is a $700 Northgate medical_necessity denial at
+ * this floor: EV = $700 x 0.38 = $266, under COST_PER_APPEAL_AI. A low-dollar
+ * denial that is not economic to work even at the AI-lowered cost (PRD 8.3).
+ * The seed asserts that inequality so a WIN_RATE change cannot silently flip
+ * that row to "appeal".
  */
 export const MIN_WIN_RATE = Math.min(
   ...Object.values(WIN_RATE).flatMap((byCategory) => Object.values(byCategory)),
