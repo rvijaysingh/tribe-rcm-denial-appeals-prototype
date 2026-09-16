@@ -574,11 +574,8 @@ export function assertCaseInvariants(artifact: CasesArtifact, criteria: Criteria
   if (new Set(cases.map((c) => c.patient.mrn)).size !== cases.length) problems.push("duplicate MRNs");
 
   // PRD 8.3 demo table. The route here is the one the clause support derives,
-  // which is what this pass controls. DEMO-02's clause support is clean, so it
-  // derives ready, but its ground truth label is needs_review: a human review
-  // corrected it in spot-checks.json because the drafter misattributes the
-  // precedent's basis and the judge is right to flag that. Pass E applies the
-  // correction; see PRD 8.3.
+  // which is what this pass controls. A human review can still correct a label
+  // in spot-checks.json, which pass E applies afterwards.
   const demoTable: [string, PayerId, Condition, number, Route][] = [
     ["DEMO-01", "pinnacle", "chf_exacerbation", 18500, "ready"],
     ["DEMO-02", "cascade", "copd_exacerbation", 2400, "ready"],
