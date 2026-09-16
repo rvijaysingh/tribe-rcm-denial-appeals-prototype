@@ -1,0 +1,1173 @@
+{
+  "payers": [
+    {
+      "id": "meridian",
+      "name": "Meridian Health Plan",
+      "criteriaStyle": "interqual_style",
+      "deadlineDays": 180,
+      "appealFormatNotes": "Level 1 appeal by letter or portal upload. Cite criteria codes inline. Attach the H&P and progress notes. Five page limit."
+    },
+    {
+      "id": "cascade",
+      "name": "Cascade Mutual",
+      "criteriaStyle": "mcg_style",
+      "deadlineDays": 120,
+      "appealFormatNotes": "Written appeal addressed to Utilization Management. Reference the guideline code and the specific finding for each argument. Include a physician attestation line."
+    },
+    {
+      "id": "northgate",
+      "name": "Northgate Advantage",
+      "criteriaStyle": "mcg_style",
+      "deadlineDays": 90,
+      "appealFormatNotes": "Reconsideration request within the filing window. The clinical rationale must map each finding to a numbered criterion. Level of care denials are not eligible for provider appeal."
+    }
+  ],
+  "criteriaSets": [
+    {
+      "id": "CS-meridian-chf_exacerbation",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-meridian-sepsis",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-meridian-copd_exacerbation",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-meridian-pneumonia",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-cascade-chf_exacerbation",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-cascade-sepsis",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-cascade-copd_exacerbation",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-cascade-pneumonia",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-northgate-chf_exacerbation",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-northgate-sepsis",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-northgate-copd_exacerbation",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "version": "2026.1"
+    },
+    {
+      "id": "CS-northgate-pneumonia",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "version": "2026.1"
+    }
+  ],
+  "clauses": [
+    {
+      "id": "C1",
+      "setId": "CS-meridian-chf_exacerbation",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "code": "CHF-01",
+      "text": "Admission finding: resting oxygen saturation below 90 percent on room air, OR oxygen at 4 L/min or higher required to hold saturation at 90 percent or above.",
+      "required": true,
+      "key": "hypoxia",
+      "omittable": false
+    },
+    {
+      "id": "C2",
+      "setId": "CS-meridian-chf_exacerbation",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "code": "CHF-02",
+      "text": "Treatment requirement: intravenous loop diuretic given 2 or more times in 24 hours, or as a continuous infusion, after inadequate response to oral dosing.",
+      "required": true,
+      "key": "iv_diuretic",
+      "omittable": false
+    },
+    {
+      "id": "C3",
+      "setId": "CS-meridian-chf_exacerbation",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "code": "CHF-03",
+      "text": "History finding: symptoms persisted despite 3 or more days of escalated oral diuretic therapy before presentation.",
+      "required": true,
+      "key": "failed_outpatient",
+      "omittable": false
+    },
+    {
+      "id": "C4",
+      "setId": "CS-meridian-chf_exacerbation",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "code": "CHF-04",
+      "text": "Laboratory finding: serum creatinine increased by 0.3 mg/dL or more above known baseline during the episode.",
+      "required": true,
+      "key": "renal",
+      "omittable": true
+    },
+    {
+      "id": "C5",
+      "setId": "CS-meridian-chf_exacerbation",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "code": "CHF-05",
+      "text": "Laboratory finding: natriuretic peptide above 500 pg/mL (BNP) or above 2,000 pg/mL (NT-proBNP) at presentation.",
+      "required": false,
+      "key": "bnp",
+      "omittable": true
+    },
+    {
+      "id": "C6",
+      "setId": "CS-meridian-chf_exacerbation",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "code": "CHF-06",
+      "text": "Imaging finding: chest radiograph or CT showing pulmonary vascular congestion, interstitial edema, or new pleural effusions.",
+      "required": false,
+      "key": "pulm_edema_imaging",
+      "omittable": true
+    },
+    {
+      "id": "C7",
+      "setId": "CS-meridian-chf_exacerbation",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "code": "CHF-07",
+      "text": "Clinical finding: breathing faster than 24 per minute, OR accessory muscle use, OR dyspnea at rest.",
+      "required": false,
+      "key": "resp_distress",
+      "omittable": false
+    },
+    {
+      "id": "C8",
+      "setId": "CS-meridian-chf_exacerbation",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "code": "CHF-08",
+      "text": "Monitoring need: new or uncontrolled arrhythmia requiring continuous cardiac monitoring, such as atrial fibrillation with ventricular rate above 110.",
+      "required": false,
+      "key": "telemetry_arrhythmia",
+      "omittable": true
+    },
+    {
+      "id": "C9",
+      "setId": "CS-meridian-sepsis",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "code": "SEP-01",
+      "text": "Severity finding: serum lactate of 2 mmol/L or higher, AND a repeat full set of vital signs within 3 hours of fluid resuscitation showing persistent instability.",
+      "required": true,
+      "key": "lactate_repeat_vitals",
+      "omittable": true
+    },
+    {
+      "id": "C10",
+      "setId": "CS-meridian-sepsis",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "code": "SEP-02",
+      "text": "Hemodynamic finding: mean arterial pressure below 65 mmHg, or systolic pressure below 90 mmHg, after a 30 mL/kg crystalloid bolus.",
+      "required": true,
+      "key": "hypotension_map",
+      "omittable": false
+    },
+    {
+      "id": "C11",
+      "setId": "CS-meridian-sepsis",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "code": "SEP-03",
+      "text": "Diagnostic finding: suspected or confirmed infection source documented, with blood cultures obtained before antibiotics.",
+      "required": true,
+      "key": "source_infection",
+      "omittable": false
+    },
+    {
+      "id": "C12",
+      "setId": "CS-meridian-sepsis",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "code": "SEP-04",
+      "text": "Organ dysfunction finding: creatinine 2.0 mg/dL or higher, OR platelets below 100,000, OR total bilirubin 2.0 mg/dL or higher, new for this episode.",
+      "required": false,
+      "key": "organ_dysfunction",
+      "omittable": true
+    },
+    {
+      "id": "C13",
+      "setId": "CS-meridian-sepsis",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "code": "SEP-05",
+      "text": "Treatment requirement: broad-spectrum intravenous antimicrobials started within 1 hour of recognition and not appropriate for oral substitution within 24 hours.",
+      "required": false,
+      "key": "iv_antibiotics",
+      "omittable": false
+    },
+    {
+      "id": "C14",
+      "setId": "CS-meridian-sepsis",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "code": "SEP-06",
+      "text": "Systemic response finding: temperature above 38.3 C or below 36.0 C, AND white blood cell count above 12,000 or below 4,000.",
+      "required": false,
+      "key": "sirs_fever_wbc",
+      "omittable": false
+    },
+    {
+      "id": "C15",
+      "setId": "CS-meridian-sepsis",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "code": "SEP-07",
+      "text": "Treatment requirement: vasopressor infusion needed to maintain mean arterial pressure at 65 mmHg or above.",
+      "required": false,
+      "key": "vasopressor",
+      "omittable": true
+    },
+    {
+      "id": "C16",
+      "setId": "CS-meridian-copd_exacerbation",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "code": "COPD-01",
+      "text": "Gas exchange finding: oxygen saturation below 88 percent on room air or usual home oxygen, OR arterial pH below 7.35 with PaCO2 above 45 mmHg.",
+      "required": true,
+      "key": "hypoxia_hypercapnia",
+      "omittable": false
+    },
+    {
+      "id": "C17",
+      "setId": "CS-meridian-copd_exacerbation",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "code": "COPD-02",
+      "text": "Response finding: inadequate improvement after 3 or more inhaled bronchodilator treatments and a dose of systemic corticosteroid in the emergency department.",
+      "required": true,
+      "key": "failed_ed_treatment",
+      "omittable": false
+    },
+    {
+      "id": "C18",
+      "setId": "CS-meridian-copd_exacerbation",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "code": "COPD-03",
+      "text": "Treatment requirement: noninvasive positive pressure ventilation initiated for hypercapnia or increased work of breathing.",
+      "required": true,
+      "key": "niv",
+      "omittable": true
+    },
+    {
+      "id": "C19",
+      "setId": "CS-meridian-copd_exacerbation",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "code": "COPD-04",
+      "text": "Clinical finding: recruitment of neck and chest wall muscles to breathe, breathing faster than 28 per minute, or inability to speak in full sentences.",
+      "required": false,
+      "key": "accessory_muscles",
+      "omittable": false
+    },
+    {
+      "id": "C20",
+      "setId": "CS-meridian-copd_exacerbation",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "code": "COPD-05",
+      "text": "Treatment requirement: systemic corticosteroid therapy requiring intravenous administration or inpatient monitoring.",
+      "required": false,
+      "key": "steroid_iv",
+      "omittable": false
+    },
+    {
+      "id": "C21",
+      "setId": "CS-meridian-copd_exacerbation",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "code": "COPD-06",
+      "text": "Laboratory finding: arterial gas analysis showing respiratory acidosis with pH below 7.35 and carbon dioxide above 50 mmHg.",
+      "required": false,
+      "key": "abg_acidosis",
+      "omittable": true
+    },
+    {
+      "id": "C22",
+      "setId": "CS-meridian-pneumonia",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "code": "PNA-01",
+      "text": "Severity finding: CURB-65 score of 2 or higher, or Pneumonia Severity Index class IV or V, documented at admission.",
+      "required": true,
+      "key": "curb65",
+      "omittable": false
+    },
+    {
+      "id": "C23",
+      "setId": "CS-meridian-pneumonia",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "code": "PNA-02",
+      "text": "Oxygenation finding: oxygen saturation below 92 percent on room air, or new supplemental oxygen requirement.",
+      "required": true,
+      "key": "hypoxia",
+      "omittable": false
+    },
+    {
+      "id": "C24",
+      "setId": "CS-meridian-pneumonia",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "code": "PNA-03",
+      "text": "Imaging finding: infiltrate involving more than one lobe, or associated parapneumonic effusion.",
+      "required": true,
+      "key": "imaging_multilobar",
+      "omittable": false
+    },
+    {
+      "id": "C25",
+      "setId": "CS-meridian-pneumonia",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "code": "PNA-04",
+      "text": "Laboratory finding: urea nitrogen above 20 mg/dL, OR serum sodium below 130 mEq/L, OR serum glucose above 250 mg/dL.",
+      "required": true,
+      "key": "labs_bun",
+      "omittable": true
+    },
+    {
+      "id": "C26",
+      "setId": "CS-meridian-pneumonia",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "code": "PNA-05",
+      "text": "Neurologic finding: new impairment of orientation from baseline.",
+      "required": false,
+      "key": "confusion",
+      "omittable": true
+    },
+    {
+      "id": "C27",
+      "setId": "CS-meridian-pneumonia",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "code": "PNA-06",
+      "text": "Hemodynamic finding: systolic pressure below 90 mmHg or diastolic 60 mmHg or below, requiring intravenous fluid resuscitation.",
+      "required": false,
+      "key": "hemodynamic",
+      "omittable": true
+    },
+    {
+      "id": "C28",
+      "setId": "CS-meridian-pneumonia",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "code": "PNA-07",
+      "text": "History finding: worsening or no improvement after 48 hours or more of oral antimicrobial therapy before presentation.",
+      "required": false,
+      "key": "failed_oral_antibiotics",
+      "omittable": true
+    },
+    {
+      "id": "C29",
+      "setId": "CS-meridian-pneumonia",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "code": "PNA-08",
+      "text": "Respiratory finding: breathing at 30 or more per minute.",
+      "required": false,
+      "key": "resp_rate",
+      "omittable": false
+    },
+    {
+      "id": "C30",
+      "setId": "CS-meridian-pneumonia",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "code": "PNA-09",
+      "text": "Treatment requirement: intravenous antimicrobials without a clinically appropriate oral alternative in the first 24 hours.",
+      "required": false,
+      "key": "iv_antibiotic_need",
+      "omittable": false
+    },
+    {
+      "id": "C31",
+      "setId": "CS-cascade-chf_exacerbation",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "code": "CHF-01",
+      "text": "Inpatient care is supported for hypoxemia at rest, meaning saturation under 90 percent without oxygen or a need for at least 4 liters per minute to maintain 90 percent.",
+      "required": true,
+      "key": "hypoxia",
+      "omittable": false
+    },
+    {
+      "id": "C32",
+      "setId": "CS-cascade-chf_exacerbation",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "code": "CHF-02",
+      "text": "Inpatient admission is supported when repeated or continuous intravenous loop diuretic therapy is needed because oral therapy has not produced adequate diuresis.",
+      "required": true,
+      "key": "iv_diuretic",
+      "omittable": false
+    },
+    {
+      "id": "C33",
+      "setId": "CS-cascade-chf_exacerbation",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "code": "CHF-03",
+      "text": "Natriuretic peptide elevation supports admission when the arrival level exceeds 500 pg/mL for BNP or 2,000 pg/mL for the N-terminal form.",
+      "required": true,
+      "key": "bnp",
+      "omittable": true
+    },
+    {
+      "id": "C34",
+      "setId": "CS-cascade-chf_exacerbation",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "code": "CHF-04",
+      "text": "Respiratory distress supports inpatient care when the patient is breathless at rest, uses accessory muscles, or breathes faster than 24 times per minute.",
+      "required": false,
+      "key": "resp_distress",
+      "omittable": false
+    },
+    {
+      "id": "C35",
+      "setId": "CS-cascade-chf_exacerbation",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "code": "CHF-05",
+      "text": "Admission is supported when chest imaging demonstrates pulmonary edema or new bilateral pleural effusions.",
+      "required": false,
+      "key": "pulm_edema_imaging",
+      "omittable": true
+    },
+    {
+      "id": "C36",
+      "setId": "CS-cascade-chf_exacerbation",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "code": "CHF-06",
+      "text": "Inpatient care is supported after documented failure of intensified outpatient diuretic treatment lasting at least 3 days.",
+      "required": false,
+      "key": "failed_outpatient",
+      "omittable": false
+    },
+    {
+      "id": "C37",
+      "setId": "CS-cascade-chf_exacerbation",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "code": "CHF-07",
+      "text": "Admission is supported for a low output state: systolic blood pressure under 90 mmHg with poor perfusion, or any inotrope requirement.",
+      "required": false,
+      "key": "hypotension_perfusion",
+      "omittable": true
+    },
+    {
+      "id": "C38",
+      "setId": "CS-cascade-sepsis",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "code": "SEP-01",
+      "text": "Inpatient care is supported for hypotension that persists after a 30 mL per kg fluid challenge, with MAP under 65 or systolic under 90 mmHg.",
+      "required": true,
+      "key": "hypotension_map",
+      "omittable": false
+    },
+    {
+      "id": "C39",
+      "setId": "CS-cascade-sepsis",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "code": "SEP-02",
+      "text": "Admission is supported when the patient needs IV broad-spectrum antimicrobials started promptly, with no oral option in the first day.",
+      "required": true,
+      "key": "iv_antibiotics",
+      "omittable": false
+    },
+    {
+      "id": "C40",
+      "setId": "CS-cascade-sepsis",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "code": "SEP-03",
+      "text": "New organ dysfunction supports admission: creatinine at least 2.0 mg/dL, a count of platelets under 100,000, or bilirubin of 2.0 mg/dL or more.",
+      "required": true,
+      "key": "organ_dysfunction",
+      "omittable": true
+    },
+    {
+      "id": "C41",
+      "setId": "CS-cascade-sepsis",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "code": "SEP-04",
+      "text": "An identified or suspected source of infection, supported by cultures drawn prior to antibiotic therapy, supports inpatient evaluation.",
+      "required": false,
+      "key": "source_infection",
+      "omittable": false
+    },
+    {
+      "id": "C42",
+      "setId": "CS-cascade-sepsis",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "code": "SEP-05",
+      "text": "A systemic inflammatory response supports sepsis admission when abnormal temperature occurs together with a leukocyte count over 12,000 or under 4,000.",
+      "required": false,
+      "key": "sirs_fever_wbc",
+      "omittable": false
+    },
+    {
+      "id": "C43",
+      "setId": "CS-cascade-sepsis",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "code": "SEP-06",
+      "text": "Sepsis severity is supported by lactate at or above 2 mmol/L together with a second complete vital sign set after initial fluids that shows ongoing instability.",
+      "required": false,
+      "key": "lactate_repeat_vitals",
+      "omittable": true
+    },
+    {
+      "id": "C44",
+      "setId": "CS-cascade-sepsis",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "code": "SEP-07",
+      "text": "An acute decline in mentation compared with the patient's usual state supports inpatient care.",
+      "required": false,
+      "key": "mental_status",
+      "omittable": true
+    },
+    {
+      "id": "C45",
+      "setId": "CS-cascade-sepsis",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "code": "SEP-08",
+      "text": "Respiratory compromise supports inpatient care when breathing is 22 or more per minute and oxygen at 4 liters per minute or higher is needed, or P/F ratio is under 300.",
+      "required": false,
+      "key": "resp_failure",
+      "omittable": false
+    },
+    {
+      "id": "C46",
+      "setId": "CS-cascade-copd_exacerbation",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "code": "COPD-01",
+      "text": "Inpatient care is supported for impaired gas exchange: saturation under 88 percent at the patient's usual oxygen level, or acidemia below pH 7.35 with carbon dioxide retention above 45.",
+      "required": true,
+      "key": "hypoxia_hypercapnia",
+      "omittable": false
+    },
+    {
+      "id": "C47",
+      "setId": "CS-cascade-copd_exacerbation",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "code": "COPD-02",
+      "text": "Increased work of breathing supports inpatient care, including use of neck and chest wall muscles, breathing faster than 28 per minute, or speech limited by breathlessness.",
+      "required": true,
+      "key": "accessory_muscles",
+      "omittable": false
+    },
+    {
+      "id": "C48",
+      "setId": "CS-cascade-copd_exacerbation",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "code": "COPD-03",
+      "text": "Arterial evidence of acute respiratory acidosis, pH under 7.35 with carbon dioxide tension over 50 mmHg, supports admission.",
+      "required": true,
+      "key": "abg_acidosis",
+      "omittable": true
+    },
+    {
+      "id": "C49",
+      "setId": "CS-cascade-copd_exacerbation",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "code": "COPD-04",
+      "text": "Admission is supported when wheeze and breathlessness persist after at least 3 nebulized bronchodilator doses plus a systemic steroid given in the ED.",
+      "required": true,
+      "key": "failed_ed_treatment",
+      "omittable": false
+    },
+    {
+      "id": "C50",
+      "setId": "CS-cascade-copd_exacerbation",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "code": "COPD-05",
+      "text": "Admission is supported when corticosteroids must be given intravenously or require monitoring, for example for significant hyperglycemia.",
+      "required": false,
+      "key": "steroid_iv",
+      "omittable": false
+    },
+    {
+      "id": "C51",
+      "setId": "CS-cascade-copd_exacerbation",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "code": "COPD-06",
+      "text": "Admission is supported when bilevel or continuous positive airway pressure support is started for ventilatory failure.",
+      "required": false,
+      "key": "niv",
+      "omittable": true
+    },
+    {
+      "id": "C52",
+      "setId": "CS-cascade-copd_exacerbation",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "code": "COPD-07",
+      "text": "For patients on chronic supplemental oxygen, admission is supported when needs rise 2 liters per minute or more above the prescribed amount.",
+      "required": false,
+      "key": "home_oxygen_escalation",
+      "omittable": true
+    },
+    {
+      "id": "C53",
+      "setId": "CS-cascade-pneumonia",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "code": "PNA-01",
+      "text": "Admission is supported when saturation without oxygen falls under 92 percent or the patient newly requires oxygen.",
+      "required": true,
+      "key": "hypoxia",
+      "omittable": false
+    },
+    {
+      "id": "C54",
+      "setId": "CS-cascade-pneumonia",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "code": "PNA-02",
+      "text": "A breathing frequency at or above 30 per minute supports inpatient care for pneumonia.",
+      "required": true,
+      "key": "resp_rate",
+      "omittable": false
+    },
+    {
+      "id": "C55",
+      "setId": "CS-cascade-pneumonia",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "code": "PNA-03",
+      "text": "Newly impaired orientation compared with baseline supports inpatient care.",
+      "required": true,
+      "key": "confusion",
+      "omittable": true
+    },
+    {
+      "id": "C56",
+      "setId": "CS-cascade-pneumonia",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "code": "PNA-04",
+      "text": "Inpatient care is supported for moderate or severe pneumonia by a CURB-65 of at least 2 or a PSI risk class of IV or V.",
+      "required": false,
+      "key": "curb65",
+      "omittable": false
+    },
+    {
+      "id": "C57",
+      "setId": "CS-cascade-pneumonia",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "code": "PNA-05",
+      "text": "Multilobar consolidation or pneumonia with an accompanying pleural effusion supports inpatient management.",
+      "required": false,
+      "key": "imaging_multilobar",
+      "omittable": false
+    },
+    {
+      "id": "C58",
+      "setId": "CS-cascade-pneumonia",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "code": "PNA-06",
+      "text": "Admission is supported when IV antimicrobial therapy is needed and oral step-down is not yet appropriate.",
+      "required": false,
+      "key": "iv_antibiotic_need",
+      "omittable": false
+    },
+    {
+      "id": "C59",
+      "setId": "CS-northgate-chf_exacerbation",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "code": "CHF-01",
+      "text": "Inpatient admission is supported when repeated or continuous intravenous loop diuretic therapy is needed because oral therapy has not produced adequate diuresis.",
+      "required": true,
+      "key": "iv_diuretic",
+      "omittable": false
+    },
+    {
+      "id": "C60",
+      "setId": "CS-northgate-chf_exacerbation",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "code": "CHF-02",
+      "text": "Inpatient care is supported after documented failure of intensified outpatient diuretic treatment lasting at least 3 days.",
+      "required": true,
+      "key": "failed_outpatient",
+      "omittable": false
+    },
+    {
+      "id": "C61",
+      "setId": "CS-northgate-chf_exacerbation",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "code": "CHF-03",
+      "text": "Admission is supported when chest imaging demonstrates pulmonary edema or new bilateral pleural effusions.",
+      "required": true,
+      "key": "pulm_edema_imaging",
+      "omittable": true
+    },
+    {
+      "id": "C62",
+      "setId": "CS-northgate-chf_exacerbation",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "code": "CHF-04",
+      "text": "Inpatient care is supported for hypoxemia at rest, meaning saturation under 90 percent without oxygen or a need for at least 4 liters per minute to maintain 90 percent.",
+      "required": false,
+      "key": "hypoxia",
+      "omittable": false
+    },
+    {
+      "id": "C63",
+      "setId": "CS-northgate-chf_exacerbation",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "code": "CHF-05",
+      "text": "Natriuretic peptide elevation supports admission when the arrival level exceeds 500 pg/mL for BNP or 2,000 pg/mL for the N-terminal form.",
+      "required": false,
+      "key": "bnp",
+      "omittable": true
+    },
+    {
+      "id": "C64",
+      "setId": "CS-northgate-chf_exacerbation",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "code": "CHF-06",
+      "text": "Worsening kidney function, defined as a creatinine rise of at least 0.3 mg/dL over baseline, supports inpatient management.",
+      "required": false,
+      "key": "renal",
+      "omittable": true
+    },
+    {
+      "id": "C65",
+      "setId": "CS-northgate-sepsis",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "code": "SEP-01",
+      "text": "Sepsis severity is supported by lactate at or above 2 mmol/L together with a second complete vital sign set after initial fluids that shows ongoing instability.",
+      "required": true,
+      "key": "lactate_repeat_vitals",
+      "omittable": true
+    },
+    {
+      "id": "C66",
+      "setId": "CS-northgate-sepsis",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "code": "SEP-02",
+      "text": "An identified or suspected source of infection, supported by cultures drawn prior to antibiotic therapy, supports inpatient evaluation.",
+      "required": true,
+      "key": "source_infection",
+      "omittable": false
+    },
+    {
+      "id": "C67",
+      "setId": "CS-northgate-sepsis",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "code": "SEP-03",
+      "text": "New organ dysfunction supports admission: creatinine at least 2.0 mg/dL, a count of platelets under 100,000, or bilirubin of 2.0 mg/dL or more.",
+      "required": true,
+      "key": "organ_dysfunction",
+      "omittable": true
+    },
+    {
+      "id": "C68",
+      "setId": "CS-northgate-sepsis",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "code": "SEP-04",
+      "text": "Admission is supported when a vasopressor drip is required to keep MAP at or above 65 mmHg.",
+      "required": true,
+      "key": "vasopressor",
+      "omittable": true
+    },
+    {
+      "id": "C69",
+      "setId": "CS-northgate-sepsis",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "code": "SEP-05",
+      "text": "Inpatient care is supported for hypotension that persists after a 30 mL per kg fluid challenge, with MAP under 65 or systolic under 90 mmHg.",
+      "required": false,
+      "key": "hypotension_map",
+      "omittable": false
+    },
+    {
+      "id": "C70",
+      "setId": "CS-northgate-sepsis",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "code": "SEP-06",
+      "text": "Admission is supported when the patient needs IV broad-spectrum antimicrobials started promptly, with no oral option in the first day.",
+      "required": false,
+      "key": "iv_antibiotics",
+      "omittable": false
+    },
+    {
+      "id": "C71",
+      "setId": "CS-northgate-sepsis",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "code": "SEP-07",
+      "text": "A systemic inflammatory response supports sepsis admission when abnormal temperature occurs together with a leukocyte count over 12,000 or under 4,000.",
+      "required": false,
+      "key": "sirs_fever_wbc",
+      "omittable": false
+    },
+    {
+      "id": "C72",
+      "setId": "CS-northgate-sepsis",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "code": "SEP-08",
+      "text": "An acute decline in mentation compared with the patient's usual state supports inpatient care.",
+      "required": false,
+      "key": "mental_status",
+      "omittable": true
+    },
+    {
+      "id": "C73",
+      "setId": "CS-northgate-sepsis",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "code": "SEP-09",
+      "text": "Respiratory compromise supports inpatient care when breathing is 22 or more per minute and oxygen at 4 liters per minute or higher is needed, or P/F ratio is under 300.",
+      "required": false,
+      "key": "resp_failure",
+      "omittable": false
+    },
+    {
+      "id": "C74",
+      "setId": "CS-northgate-copd_exacerbation",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "code": "COPD-01",
+      "text": "Inpatient care is supported for impaired gas exchange: saturation under 88 percent at the patient's usual oxygen level, or acidemia below pH 7.35 with carbon dioxide retention above 45.",
+      "required": true,
+      "key": "hypoxia_hypercapnia",
+      "omittable": false
+    },
+    {
+      "id": "C75",
+      "setId": "CS-northgate-copd_exacerbation",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "code": "COPD-02",
+      "text": "Admission is supported when wheeze and breathlessness persist after at least 3 nebulized bronchodilator doses plus a systemic steroid given in the ED.",
+      "required": true,
+      "key": "failed_ed_treatment",
+      "omittable": false
+    },
+    {
+      "id": "C76",
+      "setId": "CS-northgate-copd_exacerbation",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "code": "COPD-03",
+      "text": "Admission is supported when the patient becomes newly hard to keep alert or confused in the setting of CO2 retention.",
+      "required": true,
+      "key": "mental_status_hypercapnic",
+      "omittable": true
+    },
+    {
+      "id": "C77",
+      "setId": "CS-northgate-copd_exacerbation",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "code": "COPD-04",
+      "text": "Admission is supported when bilevel or continuous positive airway pressure support is started for ventilatory failure.",
+      "required": false,
+      "key": "niv",
+      "omittable": true
+    },
+    {
+      "id": "C78",
+      "setId": "CS-northgate-copd_exacerbation",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "code": "COPD-05",
+      "text": "Increased work of breathing supports inpatient care, including use of neck and chest wall muscles, breathing faster than 28 per minute, or speech limited by breathlessness.",
+      "required": false,
+      "key": "accessory_muscles",
+      "omittable": false
+    },
+    {
+      "id": "C79",
+      "setId": "CS-northgate-copd_exacerbation",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "code": "COPD-06",
+      "text": "Admission is supported when corticosteroids must be given intravenously or require monitoring, for example for significant hyperglycemia.",
+      "required": false,
+      "key": "steroid_iv",
+      "omittable": false
+    },
+    {
+      "id": "C80",
+      "setId": "CS-northgate-copd_exacerbation",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "code": "COPD-07",
+      "text": "Inpatient care is supported when a serious comorbid condition, for example reduced systolic cardiac function, is also unstable.",
+      "required": false,
+      "key": "comorbidity",
+      "omittable": true
+    },
+    {
+      "id": "C81",
+      "setId": "CS-northgate-copd_exacerbation",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "code": "COPD-08",
+      "text": "Arterial evidence of acute respiratory acidosis, pH under 7.35 with carbon dioxide tension over 50 mmHg, supports admission.",
+      "required": false,
+      "key": "abg_acidosis",
+      "omittable": true
+    },
+    {
+      "id": "C82",
+      "setId": "CS-northgate-pneumonia",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "code": "PNA-01",
+      "text": "Inpatient care is supported for moderate or severe pneumonia by a CURB-65 of at least 2 or a PSI risk class of IV or V.",
+      "required": true,
+      "key": "curb65",
+      "omittable": false
+    },
+    {
+      "id": "C83",
+      "setId": "CS-northgate-pneumonia",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "code": "PNA-02",
+      "text": "Admission is supported when saturation without oxygen falls under 92 percent or the patient newly requires oxygen.",
+      "required": true,
+      "key": "hypoxia",
+      "omittable": false
+    },
+    {
+      "id": "C84",
+      "setId": "CS-northgate-pneumonia",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "code": "PNA-03",
+      "text": "Low blood pressure, systolic under 90 or diastolic at or below 60 mmHg, that requires IV fluid resuscitation supports admission.",
+      "required": true,
+      "key": "hemodynamic",
+      "omittable": true
+    },
+    {
+      "id": "C85",
+      "setId": "CS-northgate-pneumonia",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "code": "PNA-04",
+      "text": "Inpatient care is supported when at least 48 hours of oral antimicrobials before presentation have failed.",
+      "required": false,
+      "key": "failed_oral_antibiotics",
+      "omittable": true
+    },
+    {
+      "id": "C86",
+      "setId": "CS-northgate-pneumonia",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "code": "PNA-05",
+      "text": "Multilobar consolidation or pneumonia with an accompanying pleural effusion supports inpatient management.",
+      "required": false,
+      "key": "imaging_multilobar",
+      "omittable": false
+    },
+    {
+      "id": "C87",
+      "setId": "CS-northgate-pneumonia",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "code": "PNA-06",
+      "text": "A breathing frequency at or above 30 per minute supports inpatient care for pneumonia.",
+      "required": false,
+      "key": "resp_rate",
+      "omittable": false
+    },
+    {
+      "id": "C88",
+      "setId": "CS-northgate-pneumonia",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "code": "PNA-07",
+      "text": "Admission is supported when IV antimicrobial therapy is needed and oral step-down is not yet appropriate.",
+      "required": false,
+      "key": "iv_antibiotic_need",
+      "omittable": false
+    }
+  ],
+  "payerNotes": [
+    {
+      "id": "N1",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "text": "Reviewers expect oral diuretic failure to be documented with doses and dates for the 72 hours before arrival. A history line saying the patient failed outpatient therapy is not accepted on its own."
+    },
+    {
+      "id": "N2",
+      "payerId": "meridian",
+      "condition": "chf_exacerbation",
+      "text": "Medical directors discount natriuretic peptide values drawn after the first IV diuretic dose."
+    },
+    {
+      "id": "N3",
+      "payerId": "meridian",
+      "condition": "sepsis",
+      "text": "Reviewers look for the lactate to be repeated within 6 hours. A single elevated value without a trend is frequently challenged."
+    },
+    {
+      "id": "N4",
+      "payerId": "meridian",
+      "condition": "copd_exacerbation",
+      "text": "Noninvasive ventilation counts toward inpatient severity only when documented as continuous or near continuous for at least 4 hours."
+    },
+    {
+      "id": "N5",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "text": "The severity score must be calculated in the admitting note itself, not reconstructed later in progress notes."
+    },
+    {
+      "id": "N6",
+      "payerId": "meridian",
+      "condition": "pneumonia",
+      "text": "Arguments citing new confusion are stronger when a baseline mental status from family or facility records is documented."
+    },
+    {
+      "id": "N7",
+      "payerId": "cascade",
+      "condition": "chf_exacerbation",
+      "text": "Telemetry orders without a documented rhythm concern are a common denial trigger. Include the rhythm finding that prompted monitoring."
+    },
+    {
+      "id": "N8",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "text": "Reviewers expect time stamps on antibiotic administration relative to arrival."
+    },
+    {
+      "id": "N9",
+      "payerId": "cascade",
+      "condition": "sepsis",
+      "text": "Organ dysfunction arguments should compare against a documented baseline creatinine or platelet count when one exists."
+    },
+    {
+      "id": "N10",
+      "payerId": "cascade",
+      "condition": "copd_exacerbation",
+      "text": "Blood gas results obtained more than 2 hours after BiPAP starts are treated as post-treatment values and not accepted as admission severity."
+    },
+    {
+      "id": "N11",
+      "payerId": "cascade",
+      "condition": "pneumonia",
+      "text": "Pulse oximetry is accepted only when the reading is documented on room air or the oxygen flow rate is stated."
+    },
+    {
+      "id": "N12",
+      "payerId": "northgate",
+      "condition": "chf_exacerbation",
+      "text": "Pulmonary edema must be supported by the radiology report language, not the clinician's reading in the H&P."
+    },
+    {
+      "id": "N13",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "text": "Sepsis severity is not considered met without a lactate value and a second full set of vital signs after fluid resuscitation."
+    },
+    {
+      "id": "N14",
+      "payerId": "northgate",
+      "condition": "sepsis",
+      "text": "Vasopressor arguments must include the start time and the peak dose."
+    },
+    {
+      "id": "N15",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "text": "Hypercapnic somnolence must be tied to a blood gas result from the same time window."
+    },
+    {
+      "id": "N16",
+      "payerId": "northgate",
+      "condition": "copd_exacerbation",
+      "text": "Any oxygen escalation argument must state the home oxygen baseline flow."
+    },
+    {
+      "id": "N17",
+      "payerId": "northgate",
+      "condition": "pneumonia",
+      "text": "Hypotension is reviewed against the post-bolus reading, not the triage reading."
+    }
+  ]
+}

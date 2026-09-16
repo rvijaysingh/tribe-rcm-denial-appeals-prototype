@@ -11,7 +11,7 @@
     "test": "vitest run --passWithNoTests",
     "db:generate": "drizzle-kit generate",
     "db:push": "tsx scripts/db/push.ts",
-    "db:seed": "node scripts/not-implemented.mjs db:seed",
+    "db:seed": "tsx scripts/seed/index.ts",
     "eval": "node scripts/not-implemented.mjs eval"
   },
   "dependencies": {

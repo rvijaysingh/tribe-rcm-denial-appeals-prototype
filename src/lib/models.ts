@@ -16,6 +16,20 @@ export const MODELS = {
 export type ModelRole = keyof typeof MODELS;
 
 /**
+ * Model for synthetic data generation (seed passes C and D). One-time cost,
+ * so it uses the most capable Opus-tier model for realistic charts and letters.
+ */
+export const SEED_MODEL = process.env.MODEL_SEED ?? "claude-opus-5";
+
+/**
+ * Models that accept the server-side `fallbacks: "default"` parameter. When a
+ * safety classifier declines a request on one of these, the API re-runs it on
+ * a fallback model inside the same call instead of returning a refusal.
+ */
+export const SERVER_FALLBACK_MODELS: ReadonlySet<string> = new Set(["claude-opus-5"]);
+export const SERVER_FALLBACK_BETA = "server-side-fallback-2026-07-01";
+
+/**
  * Identifies which models produced a run, for persistence on PipelineRun and
  * EvalRun. Two runs with different model sets are not comparable.
  */
@@ -41,6 +55,8 @@ export interface TokenPrice {
 
 export const PRICES: Record<string, TokenPrice> = {
   "claude-opus-5": { input: 5.0, output: 25.0 },
+  // Priced because the server-side fallback can serve an Opus 5 request from it.
+  "claude-opus-4-8": { input: 5.0, output: 25.0 },
   "claude-sonnet-5": { input: 2.0, output: 10.0 },
   "claude-haiku-4-5": { input: 1.0, output: 5.0 },
 };
