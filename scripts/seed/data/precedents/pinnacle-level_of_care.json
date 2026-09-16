@@ -1,9 +1,9 @@
 {
-  "payerId": "meridian",
+  "payerId": "pinnacle",
   "category": "level_of_care",
   "promptVersion": "precedent.v1",
   "model": "claude-opus-5",
-  "inputHash": "0b392dcfd8749a860f583e77dcba5b2792d7c3d98e65bbcdc445baffaf458924",
+  "inputHash": "8a1dccddb8123ecc9bcd67f9b3b53d060fe8c92bf3cdebdd4073ae72ad75c3f7",
   "generatedAt": "2026-09-16T13:00:47.812Z",
   "attempts": 1,
   "tokensIn": 1440,
@@ -12,7 +12,7 @@
   "precedents": [
     {
       "id": "P6",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "category": "level_of_care",
       "condition": "sepsis",
       "outcome": "upheld",
@@ -21,7 +21,7 @@
     },
     {
       "id": "P7",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "category": "level_of_care",
       "condition": "copd_exacerbation",
       "outcome": "overturned",
@@ -30,7 +30,7 @@
     },
     {
       "id": "P8",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "category": "level_of_care",
       "condition": "pneumonia",
       "outcome": "overturned",
@@ -39,7 +39,7 @@
     },
     {
       "id": "P9",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "category": "level_of_care",
       "condition": "chf_exacerbation",
       "outcome": "upheld",
@@ -48,7 +48,7 @@
     },
     {
       "id": "P10",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "category": "level_of_care",
       "condition": "sepsis",
       "outcome": "overturned",
@@ -57,7 +57,7 @@
     },
     {
       "id": "P11",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "category": "level_of_care",
       "condition": "copd_exacerbation",
       "outcome": "upheld",

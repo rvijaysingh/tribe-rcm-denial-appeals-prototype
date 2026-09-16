@@ -48,7 +48,7 @@ describe("renderChartPrompt (anti-leakage, PRD 8.2)", () => {
   });
 
   it("never contains clause codes, payer names, the denial category, or the route", () => {
-    const leaks = /\b(?:CHF|SEP|COPD|PNA)-\d{2}\b|meridian|cascade|northgate|medical_necessity|level_of_care|needs_docs|needs_review|do_not_appeal|denial/i;
+    const leaks = /\b(?:CHF|SEP|COPD|PNA)-\d{2}\b|pinnacle|cascade|northgate|medical_necessity|level_of_care|needs_docs|needs_review|do_not_appeal|denial/i;
     for (const seed of cases) {
       const { system, user } = renderChartPrompt(chartInputs(seed));
       expect(leaks.test(`${system}\n${user}`), seed.denialId).toBe(false);

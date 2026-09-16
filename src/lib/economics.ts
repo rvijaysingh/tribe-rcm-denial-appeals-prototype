@@ -41,7 +41,7 @@ export const PAYER_HISTORY_WARN_THRESHOLD = 0.4;
  * purpose so the payer-history flag has something to fire on during the demo.
  */
 export const WIN_RATE: Record<PayerId, Record<DenialCategory, number>> = {
-  meridian: { medical_necessity: 0.62, level_of_care: 0.55 },
+  pinnacle: { medical_necessity: 0.62, level_of_care: 0.55 },
   cascade: { medical_necessity: 0.58, level_of_care: 0.48 },
   northgate: { medical_necessity: 0.38, level_of_care: 0.42 },
 };
@@ -52,7 +52,7 @@ export const WIN_RATE: Record<PayerId, Record<DenialCategory, number>> = {
  * rather than uneconomic (PRD 8.3).
  */
 export const APPEALABLE_CATEGORIES: Record<PayerId, readonly DenialCategory[]> = {
-  meridian: ["medical_necessity", "level_of_care"],
+  pinnacle: ["medical_necessity", "level_of_care"],
   cascade: ["medical_necessity", "level_of_care"],
   northgate: ["medical_necessity"],
 };

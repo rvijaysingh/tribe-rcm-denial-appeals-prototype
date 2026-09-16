@@ -180,7 +180,7 @@ export function renderChartPrompt(inputs: ChartInputs): { system: string; user: 
 
 // Not bare "mcg": it is the standard dosing unit (norepinephrine mcg/kg/min).
 const PAYER_WORDS = [
-  "meridian",
+  "pinnacle",
   "cascade",
   "northgate",
   "interqual",

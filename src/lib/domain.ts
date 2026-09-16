@@ -16,7 +16,7 @@ export const CONDITIONS = ["chf_exacerbation", "sepsis", "copd_exacerbation", "p
 export type Condition = (typeof CONDITIONS)[number];
 
 /** Synthetic payers (PRD 8.1). No real payer names anywhere. */
-export const PAYER_IDS = ["meridian", "cascade", "northgate"] as const;
+export const PAYER_IDS = ["pinnacle", "cascade", "northgate"] as const;
 export type PayerId = (typeof PAYER_IDS)[number];
 
 /** Criteria style label. Synthetic content only, never real proprietary text. */

@@ -8,6 +8,13 @@
       "when": 1789539586535,
       "tag": "0000_previous_patriot",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789564519635,
+      "tag": "0001_flippant_clea",
+      "breakpoints": true
     }
   ]
 }

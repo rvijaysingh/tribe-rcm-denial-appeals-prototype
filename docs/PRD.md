@@ -223,7 +223,7 @@ Tests: routing table, validity checker, coverage math.
 
 | Entity | Key fields |
 |---|---|
-| Payer | id, name (synthetic: Meridian Health Plan, Cascade Mutual, Northgate Advantage), criteria_style (interqual_style / mcg_style), deadline_days, appeal_format_notes |
+| Payer | id, name (synthetic: Pinnacle Health Plan, Cascade Mutual, Northgate Advantage), criteria_style (interqual_style / mcg_style), deadline_days, appeal_format_notes |
 | CriteriaSet | id, payer_id, condition, version |
 | CriteriaClause | id, set_id, code (e.g. CHF-03), text, required (bool), embedding vector(1024) |
 | PayerNote | id, payer_id, condition, text (the "unpublished rule" the nurses know), embedding |
@@ -260,10 +260,10 @@ Embeddings are computed at seed time with Voyage and stored.
 
 | # | Payer | Condition | Amount | Setup | Expected route | What it demonstrates |
 |---|---|---|---|---|---|---|
-| DEMO-01 | Meridian (InterQual-style) | CHF exacerbation | $18,500 | All required clauses strongly supported, 41 days left | ready | Clean end-to-end run, live with streaming |
+| DEMO-01 | Pinnacle (InterQual-style) | CHF exacerbation | $18,500 | All required clauses strongly supported, 41 days left | ready | Clean end-to-end run, live with streaming |
 | DEMO-02 | Cascade (MCG-style) | COPD exacerbation | $2,400 | Supported, 60 days left. Under the old $5K capacity cutoff this was never worked | ready | Threshold story: `would_have_been_worked_old = false` shown on the card |
 | DEMO-03 | Northgate | Sepsis | $22,000 | Chart lacks the lactate value and repeat vitals the payer's required clause needs | needs docs | Exact missing element named; RN can request records instead of arguing |
-| DEMO-04 | Meridian | Pneumonia | $9,800 | Supported but one assertion rests on a weak inference; judge flags it | needs review | RN edits the flagged sentence, diff is stored, agreement metric updates |
+| DEMO-04 | Pinnacle | Pneumonia | $9,800 | Supported but one assertion rests on a weak inference; judge flags it | needs review | RN edits the flagged sentence, diff is stored, agreement metric updates |
 
 Plus three pre-triaged do-not-appeal rows in the queue, additional to the 40 and tagged `split = 'demo'`: expired window (day 184 of 180), EV below threshold ($700 at P(overturn) at or below the payer floor; at Northgate medical_necessity, P=0.38, EV = $266, under the $275 `COST_PER_APPEAL_AI`), ineligible category for that payer. Each gets a short chart so the account detail page renders.
 

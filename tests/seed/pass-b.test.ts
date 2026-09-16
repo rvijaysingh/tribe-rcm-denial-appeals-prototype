@@ -50,10 +50,10 @@ describe("buildCaseSeeds", () => {
 });
 
 describe("demo cases (PRD 8.3)", () => {
-  it("DEMO-01 is Meridian CHF, $18,500, 41 days left, ready", () => {
+  it("DEMO-01 is Pinnacle CHF, $18,500, 41 days left, ready", () => {
     const c = byId("DEMO-01");
     expect([c.payerId, c.condition, c.amount, daysLeft(c), c.intendedRoute]).toEqual([
-      "meridian",
+      "pinnacle",
       "chf_exacerbation",
       18500,
       41,
@@ -84,10 +84,10 @@ describe("demo cases (PRD 8.3)", () => {
     expect(unmet).toEqual(["lactate_repeat_vitals"]);
   });
 
-  it("DEMO-04 is Meridian pneumonia, $9,800, needs review, with exactly one weak required clause", () => {
+  it("DEMO-04 is Pinnacle pneumonia, $9,800, needs review, with exactly one weak required clause", () => {
     const c = byId("DEMO-04");
     expect([c.payerId, c.condition, c.amount, c.intendedRoute]).toEqual([
-      "meridian",
+      "pinnacle",
       "pneumonia",
       9800,
       "needs_review",
@@ -149,7 +149,7 @@ describe("routeFromSupport", () => {
 describe("triageFromInputs", () => {
   const base = {
     eligible: true,
-    payerId: "meridian" as const,
+    payerId: "pinnacle" as const,
     category: "medical_necessity" as const,
     daysSinceReceived: 30,
     amount: 10000,
@@ -178,7 +178,7 @@ describe("triageFromInputs", () => {
   });
 
   it("returns below_ev when EV equals the threshold exactly", () => {
-    // Meridian level_of_care is 0.55, and 500 x 0.55 is exactly 275 in floating
+    // Pinnacle level_of_care is 0.55, and 500 x 0.55 is exactly 275 in floating
     // point. The PRD rule is appeal only when EV is strictly greater.
     expect(
       triageFromInputs({ ...base, category: "level_of_care", amount: 500 }, criteria),

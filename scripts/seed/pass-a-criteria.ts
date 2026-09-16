@@ -65,8 +65,8 @@ export interface CriteriaArtifact {
 /** Synthetic payers (PRD 8.1). Deadlines span the 90 to 180 day range in PRD 2. */
 export const PAYERS: PayerRecord[] = [
   {
-    id: "meridian",
-    name: "Meridian Health Plan",
+    id: "pinnacle",
+    name: "Pinnacle Health Plan",
     criteriaStyle: "interqual_style",
     deadlineDays: 180,
     appealFormatNotes:
@@ -101,7 +101,7 @@ type SetSpec = { key: string; required?: true }[];
  * lactate_repeat_vitals because DEMO-03 depends on it.
  */
 export const SET_SPECS: Record<PayerId, Record<Condition, SetSpec>> = {
-  meridian: {
+  pinnacle: {
     chf_exacerbation: [
       { key: "hypoxia", required: true },
       { key: "iv_diuretic", required: true },
@@ -226,7 +226,7 @@ export const SET_SPECS: Record<PayerId, Record<Condition, SetSpec>> = {
  * written in the criteria set. 1 to 2 per payer and condition.
  */
 export const PAYER_NOTE_SPECS: Record<PayerId, Record<Condition, string[]>> = {
-  meridian: {
+  pinnacle: {
     chf_exacerbation: [
       "Reviewers expect oral diuretic failure to be documented with doses and dates for the 72 hours before arrival. A history line saying the patient failed outpatient therapy is not accepted on its own.",
       "Medical directors discount natriuretic peptide values drawn after the first IV diuretic dose.",

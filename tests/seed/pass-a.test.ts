@@ -56,10 +56,10 @@ describe("buildCriteria", () => {
   });
 
   it("uses each payer's criteria style for clause text", () => {
-    const meridianHypoxia = artifact.clauses.find(
-      (c) => c.payerId === "meridian" && c.condition === "chf_exacerbation" && c.key === "hypoxia",
+    const pinnacleHypoxia = artifact.clauses.find(
+      (c) => c.payerId === "pinnacle" && c.condition === "chf_exacerbation" && c.key === "hypoxia",
     );
-    expect(meridianHypoxia?.text).toBe(criterion("chf_exacerbation", "hypoxia").clause.interqual_style);
+    expect(pinnacleHypoxia?.text).toBe(criterion("chf_exacerbation", "hypoxia").clause.interqual_style);
   });
 });
 
@@ -71,9 +71,9 @@ describe("assertCriteriaInvariants", () => {
   it("throws when a set has too few required clauses", () => {
     const broken: CriteriaArtifact = structuredClone(buildCriteria());
     for (const clause of broken.clauses) {
-      if (clause.setId === "CS-meridian-sepsis") clause.required = false;
+      if (clause.setId === "CS-pinnacle-sepsis") clause.required = false;
     }
-    expect(() => assertCriteriaInvariants(broken)).toThrow(/CS-meridian-sepsis: 0 required/);
+    expect(() => assertCriteriaInvariants(broken)).toThrow(/CS-pinnacle-sepsis: 0 required/);
   });
 
   it("throws when a set has no omittable required clause", () => {

@@ -14,7 +14,7 @@
  *
  * Run standalone (calls the API):
  *   npx tsx scripts/seed/pass-d-letters.ts --case DEMO-03
- *   npx tsx scripts/seed/pass-d-letters.ts --precedents meridian:medical_necessity
+ *   npx tsx scripts/seed/pass-d-letters.ts --precedents pinnacle:medical_necessity
  */
 
 import { z } from "zod";

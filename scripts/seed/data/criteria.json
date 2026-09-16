@@ -1,8 +1,8 @@
 {
   "payers": [
     {
-      "id": "meridian",
-      "name": "Meridian Health Plan",
+      "id": "pinnacle",
+      "name": "Pinnacle Health Plan",
       "criteriaStyle": "interqual_style",
       "deadlineDays": 180,
       "appealFormatNotes": "Level 1 appeal by letter or portal upload. Cite criteria codes inline. Attach the H&P and progress notes. Five page limit."
@@ -24,26 +24,26 @@
   ],
   "criteriaSets": [
     {
-      "id": "CS-meridian-chf_exacerbation",
-      "payerId": "meridian",
+      "id": "CS-pinnacle-chf_exacerbation",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "version": "2026.1"
     },
     {
-      "id": "CS-meridian-sepsis",
-      "payerId": "meridian",
+      "id": "CS-pinnacle-sepsis",
+      "payerId": "pinnacle",
       "condition": "sepsis",
       "version": "2026.1"
     },
     {
-      "id": "CS-meridian-copd_exacerbation",
-      "payerId": "meridian",
+      "id": "CS-pinnacle-copd_exacerbation",
+      "payerId": "pinnacle",
       "condition": "copd_exacerbation",
       "version": "2026.1"
     },
     {
-      "id": "CS-meridian-pneumonia",
-      "payerId": "meridian",
+      "id": "CS-pinnacle-pneumonia",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "version": "2026.1"
     },
@@ -99,8 +99,8 @@
   "clauses": [
     {
       "id": "C1",
-      "setId": "CS-meridian-chf_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-chf_exacerbation",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "code": "CHF-01",
       "text": "Admission finding: resting oxygen saturation below 90 percent on room air, OR oxygen at 4 L/min or higher required to hold saturation at 90 percent or above.",
@@ -110,8 +110,8 @@
     },
     {
       "id": "C2",
-      "setId": "CS-meridian-chf_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-chf_exacerbation",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "code": "CHF-02",
       "text": "Treatment requirement: intravenous loop diuretic given 2 or more times in 24 hours, or as a continuous infusion, after inadequate response to oral dosing.",
@@ -121,8 +121,8 @@
     },
     {
       "id": "C3",
-      "setId": "CS-meridian-chf_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-chf_exacerbation",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "code": "CHF-03",
       "text": "History finding: symptoms persisted despite 3 or more days of escalated oral diuretic therapy before presentation.",
@@ -132,8 +132,8 @@
     },
     {
       "id": "C4",
-      "setId": "CS-meridian-chf_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-chf_exacerbation",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "code": "CHF-04",
       "text": "Laboratory finding: serum creatinine increased by 0.3 mg/dL or more above known baseline during the episode.",
@@ -143,8 +143,8 @@
     },
     {
       "id": "C5",
-      "setId": "CS-meridian-chf_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-chf_exacerbation",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "code": "CHF-05",
       "text": "Laboratory finding: natriuretic peptide above 500 pg/mL (BNP) or above 2,000 pg/mL (NT-proBNP) at presentation.",
@@ -154,8 +154,8 @@
     },
     {
       "id": "C6",
-      "setId": "CS-meridian-chf_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-chf_exacerbation",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "code": "CHF-06",
       "text": "Imaging finding: chest radiograph or CT showing pulmonary vascular congestion, interstitial edema, or new pleural effusions.",
@@ -165,8 +165,8 @@
     },
     {
       "id": "C7",
-      "setId": "CS-meridian-chf_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-chf_exacerbation",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "code": "CHF-07",
       "text": "Clinical finding: breathing faster than 24 per minute, OR accessory muscle use, OR dyspnea at rest.",
@@ -176,8 +176,8 @@
     },
     {
       "id": "C8",
-      "setId": "CS-meridian-chf_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-chf_exacerbation",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "code": "CHF-08",
       "text": "Monitoring need: new or uncontrolled arrhythmia requiring continuous cardiac monitoring, such as atrial fibrillation with ventricular rate above 110.",
@@ -187,8 +187,8 @@
     },
     {
       "id": "C9",
-      "setId": "CS-meridian-sepsis",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-sepsis",
+      "payerId": "pinnacle",
       "condition": "sepsis",
       "code": "SEP-01",
       "text": "Severity finding: serum lactate of 2 mmol/L or higher, AND a repeat full set of vital signs within 3 hours of fluid resuscitation showing persistent instability.",
@@ -198,8 +198,8 @@
     },
     {
       "id": "C10",
-      "setId": "CS-meridian-sepsis",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-sepsis",
+      "payerId": "pinnacle",
       "condition": "sepsis",
       "code": "SEP-02",
       "text": "Hemodynamic finding: mean arterial pressure below 65 mmHg, or systolic pressure below 90 mmHg, after a 30 mL/kg crystalloid bolus.",
@@ -209,8 +209,8 @@
     },
     {
       "id": "C11",
-      "setId": "CS-meridian-sepsis",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-sepsis",
+      "payerId": "pinnacle",
       "condition": "sepsis",
       "code": "SEP-03",
       "text": "Diagnostic finding: suspected or confirmed infection source documented, with blood cultures obtained before antibiotics.",
@@ -220,8 +220,8 @@
     },
     {
       "id": "C12",
-      "setId": "CS-meridian-sepsis",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-sepsis",
+      "payerId": "pinnacle",
       "condition": "sepsis",
       "code": "SEP-04",
       "text": "Organ dysfunction finding: creatinine 2.0 mg/dL or higher, OR platelets below 100,000, OR total bilirubin 2.0 mg/dL or higher, new for this episode.",
@@ -231,8 +231,8 @@
     },
     {
       "id": "C13",
-      "setId": "CS-meridian-sepsis",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-sepsis",
+      "payerId": "pinnacle",
       "condition": "sepsis",
       "code": "SEP-05",
       "text": "Treatment requirement: broad-spectrum intravenous antimicrobials started within 1 hour of recognition and not appropriate for oral substitution within 24 hours.",
@@ -242,8 +242,8 @@
     },
     {
       "id": "C14",
-      "setId": "CS-meridian-sepsis",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-sepsis",
+      "payerId": "pinnacle",
       "condition": "sepsis",
       "code": "SEP-06",
       "text": "Systemic response finding: temperature above 38.3 C or below 36.0 C, AND white blood cell count above 12,000 or below 4,000.",
@@ -253,8 +253,8 @@
     },
     {
       "id": "C15",
-      "setId": "CS-meridian-sepsis",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-sepsis",
+      "payerId": "pinnacle",
       "condition": "sepsis",
       "code": "SEP-07",
       "text": "Treatment requirement: vasopressor infusion needed to maintain mean arterial pressure at 65 mmHg or above.",
@@ -264,8 +264,8 @@
     },
     {
       "id": "C16",
-      "setId": "CS-meridian-copd_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-copd_exacerbation",
+      "payerId": "pinnacle",
       "condition": "copd_exacerbation",
       "code": "COPD-01",
       "text": "Gas exchange finding: oxygen saturation below 88 percent on room air or usual home oxygen, OR arterial pH below 7.35 with PaCO2 above 45 mmHg.",
@@ -275,8 +275,8 @@
     },
     {
       "id": "C17",
-      "setId": "CS-meridian-copd_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-copd_exacerbation",
+      "payerId": "pinnacle",
       "condition": "copd_exacerbation",
       "code": "COPD-02",
       "text": "Response finding: inadequate improvement after 3 or more inhaled bronchodilator treatments and a dose of systemic corticosteroid in the emergency department.",
@@ -286,8 +286,8 @@
     },
     {
       "id": "C18",
-      "setId": "CS-meridian-copd_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-copd_exacerbation",
+      "payerId": "pinnacle",
       "condition": "copd_exacerbation",
       "code": "COPD-03",
       "text": "Treatment requirement: noninvasive positive pressure ventilation initiated for hypercapnia or increased work of breathing.",
@@ -297,8 +297,8 @@
     },
     {
       "id": "C19",
-      "setId": "CS-meridian-copd_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-copd_exacerbation",
+      "payerId": "pinnacle",
       "condition": "copd_exacerbation",
       "code": "COPD-04",
       "text": "Clinical finding: recruitment of neck and chest wall muscles to breathe, breathing faster than 28 per minute, or inability to speak in full sentences.",
@@ -308,8 +308,8 @@
     },
     {
       "id": "C20",
-      "setId": "CS-meridian-copd_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-copd_exacerbation",
+      "payerId": "pinnacle",
       "condition": "copd_exacerbation",
       "code": "COPD-05",
       "text": "Treatment requirement: systemic corticosteroid therapy requiring intravenous administration or inpatient monitoring.",
@@ -319,8 +319,8 @@
     },
     {
       "id": "C21",
-      "setId": "CS-meridian-copd_exacerbation",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-copd_exacerbation",
+      "payerId": "pinnacle",
       "condition": "copd_exacerbation",
       "code": "COPD-06",
       "text": "Laboratory finding: arterial gas analysis showing respiratory acidosis with pH below 7.35 and carbon dioxide above 50 mmHg.",
@@ -330,8 +330,8 @@
     },
     {
       "id": "C22",
-      "setId": "CS-meridian-pneumonia",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-pneumonia",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "code": "PNA-01",
       "text": "Severity finding: CURB-65 score of 2 or higher, or Pneumonia Severity Index class IV or V, documented at admission.",
@@ -341,8 +341,8 @@
     },
     {
       "id": "C23",
-      "setId": "CS-meridian-pneumonia",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-pneumonia",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "code": "PNA-02",
       "text": "Oxygenation finding: oxygen saturation below 92 percent on room air, or new supplemental oxygen requirement.",
@@ -352,8 +352,8 @@
     },
     {
       "id": "C24",
-      "setId": "CS-meridian-pneumonia",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-pneumonia",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "code": "PNA-03",
       "text": "Imaging finding: infiltrate involving more than one lobe, or associated parapneumonic effusion.",
@@ -363,8 +363,8 @@
     },
     {
       "id": "C25",
-      "setId": "CS-meridian-pneumonia",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-pneumonia",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "code": "PNA-04",
       "text": "Laboratory finding: urea nitrogen above 20 mg/dL, OR serum sodium below 130 mEq/L, OR serum glucose above 250 mg/dL.",
@@ -374,8 +374,8 @@
     },
     {
       "id": "C26",
-      "setId": "CS-meridian-pneumonia",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-pneumonia",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "code": "PNA-05",
       "text": "Neurologic finding: new impairment of orientation from baseline.",
@@ -385,8 +385,8 @@
     },
     {
       "id": "C27",
-      "setId": "CS-meridian-pneumonia",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-pneumonia",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "code": "PNA-06",
       "text": "Hemodynamic finding: systolic pressure below 90 mmHg or diastolic 60 mmHg or below, requiring intravenous fluid resuscitation.",
@@ -396,8 +396,8 @@
     },
     {
       "id": "C28",
-      "setId": "CS-meridian-pneumonia",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-pneumonia",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "code": "PNA-07",
       "text": "History finding: worsening or no improvement after 48 hours or more of oral antimicrobial therapy before presentation.",
@@ -407,8 +407,8 @@
     },
     {
       "id": "C29",
-      "setId": "CS-meridian-pneumonia",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-pneumonia",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "code": "PNA-08",
       "text": "Respiratory finding: breathing at 30 or more per minute.",
@@ -418,8 +418,8 @@
     },
     {
       "id": "C30",
-      "setId": "CS-meridian-pneumonia",
-      "payerId": "meridian",
+      "setId": "CS-pinnacle-pneumonia",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "code": "PNA-09",
       "text": "Treatment requirement: intravenous antimicrobials without a clinically appropriate oral alternative in the first 24 hours.",
@@ -1069,37 +1069,37 @@
   "payerNotes": [
     {
       "id": "N1",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "text": "Reviewers expect oral diuretic failure to be documented with doses and dates for the 72 hours before arrival. A history line saying the patient failed outpatient therapy is not accepted on its own."
     },
     {
       "id": "N2",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "condition": "chf_exacerbation",
       "text": "Medical directors discount natriuretic peptide values drawn after the first IV diuretic dose."
     },
     {
       "id": "N3",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "condition": "sepsis",
       "text": "Reviewers look for the lactate to be repeated within 6 hours. A single elevated value without a trend is frequently challenged."
     },
     {
       "id": "N4",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "condition": "copd_exacerbation",
       "text": "Noninvasive ventilation counts toward inpatient severity only when documented as continuous or near continuous for at least 4 hours."
     },
     {
       "id": "N5",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "text": "The severity score must be calculated in the admitting note itself, not reconstructed later in progress notes."
     },
     {
       "id": "N6",
-      "payerId": "meridian",
+      "payerId": "pinnacle",
       "condition": "pneumonia",
       "text": "Arguments citing new confusion are stronger when a baseline mental status from family or facility records is documented."
     },

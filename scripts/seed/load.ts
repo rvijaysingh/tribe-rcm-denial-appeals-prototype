@@ -154,6 +154,14 @@ export async function loadCriteria(
 
   // Parents before children on the way in.
   await upsertRows(tx, payers, payers.id, payerRows);
+
+  // Criteria set IDs embed the payer ID and condition, and the table has a
+  // unique(payer_id, condition). So when a set's ID changes, for example when a
+  // payer is renamed, inserting the new row collides with the old one that is
+  // still present. Drop obsolete sets before inserting, not after. Their
+  // clauses cascade and are re-inserted immediately below with the same IDs.
+  const removedSets = await deleteOrphans(tx, criteriaSets, criteriaSets.id, setRows.map((r) => r.id));
+
   await upsertRows(tx, criteriaSets, criteriaSets.id, setRows);
   await upsertRows(tx, criteriaClauses, criteriaClauses.id, clauseRows);
   await upsertRows(tx, payerNotes, payerNotes.id, noteRows);
@@ -166,7 +174,6 @@ export async function loadCriteria(
     criteriaClauses.id,
     clauseRows.map((r) => r.id),
   );
-  const removedSets = await deleteOrphans(tx, criteriaSets, criteriaSets.id, setRows.map((r) => r.id));
   const removedPayers = await deleteOrphans(tx, payers, payers.id, payerRows.map((r) => r.id));
 
   return {

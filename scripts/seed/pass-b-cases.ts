@@ -216,7 +216,7 @@ interface FixedCaseSpec {
 const FIXED_CASES: FixedCaseSpec[] = [
   {
     denialId: "DEMO-01",
-    payerId: "meridian",
+    payerId: "pinnacle",
     condition: "chf_exacerbation",
     category: "medical_necessity",
     rootCause: "severity_not_documented",
@@ -287,7 +287,7 @@ const FIXED_CASES: FixedCaseSpec[] = [
   },
   {
     denialId: "DEMO-04",
-    payerId: "meridian",
+    payerId: "pinnacle",
     condition: "pneumonia",
     category: "medical_necessity",
     rootCause: "severity_not_documented",
@@ -312,7 +312,7 @@ const FIXED_CASES: FixedCaseSpec[] = [
   },
   {
     denialId: "DNA-01",
-    payerId: "meridian",
+    payerId: "pinnacle",
     condition: "chf_exacerbation",
     category: "level_of_care",
     rootCause: "treatment_appropriate_at_lower_level",
@@ -414,7 +414,7 @@ function slotPlan(): Slot[] {
 }
 
 function generateCases(rng: Rng, criteria: CriteriaArtifact, usedMrns: Set<string>): CaseSeed[] {
-  const payerIds: PayerId[] = ["meridian", "cascade", "northgate"];
+  const payerIds: PayerId[] = ["pinnacle", "cascade", "northgate"];
   const conditions: Condition[] = ["chf_exacerbation", "sepsis", "copd_exacerbation", "pneumonia"];
 
   // 36 slots over 12 payer x condition combos: three of each, shuffled.
@@ -572,10 +572,10 @@ export function assertCaseInvariants(artifact: CasesArtifact, criteria: Criteria
 
   // PRD 8.3 demo table.
   const demoTable: [string, PayerId, Condition, number, Route][] = [
-    ["DEMO-01", "meridian", "chf_exacerbation", 18500, "ready"],
+    ["DEMO-01", "pinnacle", "chf_exacerbation", 18500, "ready"],
     ["DEMO-02", "cascade", "copd_exacerbation", 2400, "ready"],
     ["DEMO-03", "northgate", "sepsis", 22000, "needs_docs"],
-    ["DEMO-04", "meridian", "pneumonia", 9800, "needs_review"],
+    ["DEMO-04", "pinnacle", "pneumonia", 9800, "needs_review"],
   ];
   for (const [id, payer, condition, amount, route] of demoTable) {
     const c = byId.get(id);
