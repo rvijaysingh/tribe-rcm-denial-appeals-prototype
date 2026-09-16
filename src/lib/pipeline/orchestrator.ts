@@ -275,6 +275,7 @@ export async function runPipeline(denialId: string, options: RunOptions = {}): P
       clauses: c.clauses,
       precedents: c.precedents,
       chartText,
+      requiredClauseIds: c.requiredClauseIds,
     };
     const d = await draft(draftInput, (text) => emit({ type: "draft_token", text }));
     const letterText = renderLetter(d.data, letterContextFor(pipelineCase));

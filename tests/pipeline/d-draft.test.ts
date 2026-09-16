@@ -134,6 +134,28 @@ describe("checkDraft: unsupported_required", () => {
   });
 });
 
+describe("checkDraft: unsupported_required must be a required clause", () => {
+  const required = new Set(["C65", "C66"]);
+
+  it("accepts conceding a required clause", () => {
+    const d = structuredClone(sound);
+    d.unsupported_required = [{ clause_id: "C65", evidence_needed: "A serum lactate result." }];
+    expect(checkDraft(d, required)).toBeNull();
+  });
+
+  it("rejects conceding a clause that is not required", () => {
+    const d = structuredClone(sound);
+    d.unsupported_required = [{ clause_id: "C70", evidence_needed: "A blood gas." }];
+    expect(checkDraft(d, required)).toMatch(/C70 is in unsupported_required but is not a required clause/);
+  });
+
+  it("skips the check when the required set is not supplied", () => {
+    const d = structuredClone(sound);
+    d.unsupported_required = [{ clause_id: "C70", evidence_needed: "A blood gas." }];
+    expect(checkDraft(d)).toBeNull();
+  });
+});
+
 describe("checkDraft: confidence", () => {
   it.each([-0.1, 1.5, Number.NaN])("rejects draft_confidence %s", (draft_confidence) => {
     expect(checkDraft({ ...sound, draft_confidence })).toMatch(/draft_confidence/);
@@ -169,6 +191,7 @@ describe("renderDraftPrompt", () => {
       { id: "P25", summary: "A prior CHF appeal was overturned.", letterExcerpt: "x", outcome: "overturned", score: 0.4 },
     ],
     chartText: "L1: HPI:\nL10: SpO2 88% on RA.",
+    requiredClauseIds: ["C65"],
   };
 
   it("puts the criteria block in the system prompt, where it can be cached", () => {

@@ -42,6 +42,8 @@ export interface DraftInput {
   precedents: RetrievedPrecedent[];
   /** Chart lines already formatted as "L47: text". */
   chartText: string;
+  /** Required clauses for this payer and condition, from stage C. */
+  requiredClauseIds: string[];
 }
 
 /** The criteria block that goes in the cached system prefix. */
@@ -79,8 +81,14 @@ export function renderDraftPrompt(input: DraftInput): { system: string; user: st
 /**
  * Structural checks only. Citation existence is measured, not enforced; see the
  * module header.
+ *
+ * `requiredClauseIds`, when given, enforces that anything conceded to
+ * unsupported_required is actually a required clause from the payer's set. It
+ * cannot tell whether the chart is silent on a clause, which is a judgement
+ * about the record; the bright line for that is in the schema description and
+ * the prompt.
  */
-export function checkDraft(draft: Draft): string | null {
+export function checkDraft(draft: Draft, requiredClauseIds?: ReadonlySet<string>): string | null {
   const problems: string[] = [];
   const names = draft.sections.map((s) => s.name);
 
@@ -135,6 +143,14 @@ export function checkDraft(draft: Draft): string | null {
           `Either drop it from unsupported_required or stop arguing it.`,
       );
     }
+    // Conceding a clause routes the whole case to needs docs, so only a
+    // required clause may do it.
+    if (requiredClauseIds && !requiredClauseIds.has(gap.clause_id)) {
+      problems.push(
+        `${gap.clause_id} is in unsupported_required but is not a required clause for this payer and condition. ` +
+          `Only required clauses belong there; argue a supporting clause or leave it out.`,
+      );
+    }
   }
 
   if (!(draft.draft_confidence >= 0 && draft.draft_confidence <= 1)) {
@@ -166,7 +182,7 @@ export async function draft(input: DraftInput, onText?: (chunk: string) => void)
         })),
       })),
     }),
-    check: checkDraft,
+    check: (parsed) => checkDraft(parsed, new Set(input.requiredClauseIds)),
     onText,
   });
 }

@@ -15,11 +15,19 @@ import { z } from "zod";
 import { SECTION_NAMES } from "../domain";
 
 export const AssertionSchema = z.object({
-  text: z.string(),
-  /** Citation labels, e.g. ["L47"]. Never database keys. */
-  chart_line_ids: z.array(z.string()),
-  /** Clause IDs, e.g. ["C12"]. */
-  clause_ids: z.array(z.string()),
+  text: z
+    .string()
+    .describe(
+      "One claim the letter makes, stated in the chart's own terms. Never restate a finding in the criteria clause's wording.",
+    ),
+  chart_line_ids: z
+    .array(z.string())
+    .describe(
+      "Citation labels for the chart lines that state this claim, e.g. [\"L47\"]. Cite the exact line for each fact in the assertion, never a neighbouring line. Never a database key.",
+    ),
+  clause_ids: z
+    .array(z.string())
+    .describe("Criteria clause IDs this assertion argues, e.g. [\"C12\"]."),
 });
 export type Assertion = z.infer<typeof AssertionSchema>;
 
@@ -31,14 +39,32 @@ export type DraftSection = z.infer<typeof DraftSectionSchema>;
 
 export const DraftSchema = z.object({
   sections: z.array(DraftSectionSchema),
-  /** Required clauses the chart cannot support, with what evidence would close the gap. */
-  unsupported_required: z.array(
-    z.object({
-      clause_id: z.string(),
-      evidence_needed: z.string(),
-    }),
-  ),
-  draft_confidence: z.number(),
+  /**
+   * The bright line, stated for the model in the schema itself rather than
+   * only in the prompt: this array is for required clauses the chart is SILENT
+   * on. Thin support is not silence, and the difference decides the route.
+   */
+  unsupported_required: z
+    .array(
+      z.object({
+        clause_id: z
+          .string()
+          .describe("A REQUIRED clause ID, e.g. \"C65\". Never a clause you argued anywhere in sections."),
+        evidence_needed: z
+          .string()
+          .describe(
+            "The specific document or result that would close the gap, concrete enough for a nurse to request it.",
+          ),
+      }),
+    )
+    .describe(
+      "ONLY required clauses for which the chart contains no evidence whatsoever: the test was never performed, the value was never recorded, or the document is absent from the record you were given. " +
+        "A clause with thin, partial, borderline or indirect support does NOT belong here. Argue that clause in criteria_argument with the evidence that does exist and lower draft_confidence instead. " +
+        "Listing a clause here routes the whole case to 'needs docs', which sends a nurse to request records that may already be in the chart and discards the argument you could have made. Use an empty array when every required clause has some evidence.",
+    ),
+  draft_confidence: z
+    .number()
+    .describe("0 to 1: your confidence that what you wrote is accurate and complete enough to approve without edits."),
 });
 export type Draft = z.infer<typeof DraftSchema>;
 
