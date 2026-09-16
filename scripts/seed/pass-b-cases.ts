@@ -33,6 +33,7 @@ import {
   isAppealableCategory,
   winRate,
 } from "../../src/lib/economics";
+import { expectedValueCents, toCents } from "../../src/lib/money";
 import { buildCriteria, type ClauseRecord, type CriteriaArtifact } from "./pass-a-criteria";
 import { createRng, type Rng } from "./rng";
 
@@ -135,7 +136,9 @@ export function triageFromInputs(
   if (!seed.eligible) return "account_flagged";
   if (!isAppealableCategory(seed.payerId, seed.category)) return "ineligible_category";
   if (daysLeft <= 0) return "expired";
-  if (seed.amount * winRate(seed.payerId, seed.category) <= COST_PER_APPEAL_AI) return "below_ev";
+  // Cents, so this agrees with stage A exactly at the threshold.
+  const evCents = expectedValueCents(toCents(seed.amount), winRate(seed.payerId, seed.category));
+  if (evCents <= toCents(COST_PER_APPEAL_AI)) return "below_ev";
   return "appeal";
 }
 

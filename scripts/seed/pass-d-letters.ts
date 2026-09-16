@@ -666,7 +666,7 @@ export function letterDeadline(seed: CaseSeed, criteria: CriteriaArtifact): numb
 }
 
 if (process.argv[1]?.replace(/\\/g, "/").endsWith("scripts/seed/pass-d-letters.ts")) {
-  void (async () => {
+  const main = async (): Promise<void> => {
     await import("./load-env");
     const { buildCriteria } = await import("./pass-a-criteria");
     const { buildCaseSeeds } = await import("./pass-b-cases");
@@ -704,7 +704,8 @@ if (process.argv[1]?.replace(/\\/g, "/").endsWith("scripts/seed/pass-d-letters.t
         );
       }
     }
-  })().catch((error) => {
+  };
+  void main().catch((error) => {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;
   });

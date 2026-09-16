@@ -12,6 +12,7 @@
 
 import { getTableColumns, notInArray, sql, type SQL } from "drizzle-orm";
 import type { AnyPgColumn, PgTable } from "drizzle-orm/pg-core";
+import { lineKey } from "../../src/lib/citations";
 import type { db } from "../../src/lib/db/client";
 import {
   accounts,
@@ -228,7 +229,7 @@ export async function loadCharts(
       docRows.push({ id: docId, accountId: seed.accountId, docType: doc.docType, text: doc.lines.join("\n") });
       for (const text of doc.lines) {
         lineNo += 1;
-        lineRows.push({ id: `${seed.accountId}-L${lineNo}`, docId, lineNo, text });
+        lineRows.push({ id: lineKey(seed.accountId, lineNo), docId, lineNo, text });
       }
     });
   }

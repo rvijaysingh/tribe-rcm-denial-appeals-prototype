@@ -413,7 +413,7 @@ export async function runPassC(
 }
 
 if (process.argv[1]?.replace(/\\/g, "/").endsWith("scripts/seed/pass-c-charts.ts")) {
-  void (async () => {
+  const main = async (): Promise<void> => {
     await import("./load-env");
     const { buildCriteria } = await import("./pass-a-criteria");
     const { buildCaseSeeds } = await import("./pass-b-cases");
@@ -438,7 +438,8 @@ if (process.argv[1]?.replace(/\\/g, "/").endsWith("scripts/seed/pass-c-charts.ts
       for (const line of doc.lines) console.log(`L${++n}: ${line}`);
     }
     console.log(`\nmodel ${chart.model}, attempts ${chart.attempts}, ${chart.tokensIn} in / ${chart.tokensOut} out, $${chart.costUsd}`);
-  })().catch((error) => {
+  };
+  void main().catch((error) => {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;
   });

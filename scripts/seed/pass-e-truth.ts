@@ -245,7 +245,7 @@ function buildSpotCheckSheet(
 }
 
 if (process.argv[1]?.replace(/\\/g, "/").endsWith("scripts/seed/pass-e-truth.ts")) {
-  void (async () => {
+  const main = async (): Promise<void> => {
     const { buildCriteria } = await import("./pass-a-criteria");
     const criteria = buildCriteria();
     const { cases } = buildCaseSeeds(criteria);
@@ -258,7 +258,8 @@ if (process.argv[1]?.replace(/\\/g, "/").endsWith("scripts/seed/pass-e-truth.ts"
     );
     console.log(`  winnable ${result.artifact.cases.filter((c) => c.winnable).length}`);
     console.log(`  spot checks completed: ${result.spotChecked} of ${result.spotCheckTotal}`);
-  })().catch((error) => {
+  };
+  void main().catch((error) => {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;
   });
