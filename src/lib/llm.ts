@@ -15,7 +15,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { z } from "zod";
-import { SERVER_FALLBACK_BETA, SERVER_FALLBACK_MODELS, costOf } from "./models";
+import { SERVER_FALLBACK_BETA, SERVER_FALLBACK_MODELS, costOf, temperatureFor } from "./models";
 
 let client: Anthropic | undefined;
 
@@ -110,6 +110,8 @@ async function callOnce<S extends z.ZodType>(
   prompt: string,
 ): Promise<{ text: string; servedModel: string; tokensIn: number; tokensOut: number; cacheReadTokens: number }> {
   const useFallback = SERVER_FALLBACK_MODELS.has(opts.model);
+  // Undefined on models that removed sampling; see temperatureFor.
+  const temperature = temperatureFor(opts.model);
   debug(opts.label, "prompt", prompt);
 
   const stream = getClient().beta.messages.stream({
@@ -119,6 +121,7 @@ async function callOnce<S extends z.ZodType>(
       ? [{ type: "text", text: opts.system, cache_control: { type: "ephemeral" } }]
       : opts.system,
     messages: [{ role: "user", content: prompt }],
+    ...(temperature === undefined ? {} : { temperature }),
     output_config: {
       format: betaZodOutputFormat(opts.schema),
       ...(opts.effort ? { effort: opts.effort } : {}),

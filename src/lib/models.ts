@@ -30,6 +30,42 @@ export const SERVER_FALLBACK_MODELS: ReadonlySet<string> = new Set(["claude-opus
 export const SERVER_FALLBACK_BETA = "server-side-fallback-2026-07-01";
 
 /**
+ * Models that still accept sampling parameters.
+ *
+ * Sampling was removed on the Claude 5 generation. Sending `temperature` to
+ * claude-sonnet-5 or claude-opus-5 returns:
+ *
+ *   400 invalid_request_error: `temperature` is deprecated for this model.
+ *
+ * Verified against the live API on 2026-09-16. So LLM_TEMPERATURE only reaches
+ * a request when the configured model is one of these; on the Claude 5 models
+ * the knob is inert, and the parameter is never sent.
+ */
+export const SAMPLING_MODELS: ReadonlySet<string> = new Set([
+  "claude-opus-4-6",
+  "claude-sonnet-4-6",
+  "claude-haiku-4-5",
+]);
+
+/**
+ * Temperature for a model, or undefined when that model does not accept one.
+ *
+ * Defaults to 0: the same input should produce the same route as often as the
+ * API allows, which matters more for a live demo than sampling variety.
+ * Override with LLM_TEMPERATURE.
+ */
+export function temperatureFor(model: string): number | undefined {
+  if (!SAMPLING_MODELS.has(model)) return undefined;
+  const raw = process.env.LLM_TEMPERATURE;
+  if (raw === undefined || raw.trim() === "") return 0;
+  const value = Number(raw);
+  if (!Number.isFinite(value) || value < 0 || value > 1) {
+    throw new Error(`LLM_TEMPERATURE must be a number from 0 to 1; got ${JSON.stringify(raw)}`);
+  }
+  return value;
+}
+
+/**
  * Identifies which models produced a run, for persistence on PipelineRun and
  * EvalRun. Two runs with different model sets are not comparable.
  */
