@@ -8,7 +8,17 @@
 
 import { and, asc, desc, eq, sql } from "drizzle-orm";
 import { lineLabel } from "../citations";
-import type { Condition, DenialCategory, DocType, PayerId, RunStatus, Split, Stage } from "../domain";
+import type {
+  Condition,
+  DenialCategory,
+  DocType,
+  PayerId,
+  RootCause,
+  Route,
+  RunStatus,
+  Split,
+  Stage,
+} from "../domain";
 import { getDb } from "./client";
 import {
   accounts,
@@ -472,4 +482,45 @@ export async function loadEvalRuns(limit = 20): Promise<EvalRunRow[]> {
            reference, metrics_json AS "metricsJson", per_case_json AS "perCaseJson"
     FROM eval_runs ORDER BY created_at DESC LIMIT ${limit}
   `);
+}
+
+export type GroundTruthCase = {
+  denialId: string;
+  category: DenialCategory;
+  rootCause: RootCause;
+  metClauseIds: string[];
+  unmetRequiredClauseIds: string[];
+  expectedRoute: Route;
+  winnable: boolean;
+  approveAsIs: boolean;
+};
+
+/**
+ * Labeled cases for one split, for the eval harness only.
+ *
+ * Kept separate from loadPipelineCase, which never reads ground_truth: the
+ * pipeline must not be able to see a label even by accident. The harness is
+ * the one caller allowed to hold both sides.
+ */
+export async function loadGroundTruthForSplit(split: Split): Promise<GroundTruthCase[]> {
+  return getDb().execute<GroundTruthCase>(sql`
+    SELECT d.id AS "denialId",
+           g.category,
+           g.root_cause AS "rootCause",
+           g.met_clause_ids AS "metClauseIds",
+           g.unmet_required_clause_ids AS "unmetRequiredClauseIds",
+           g.expected_route AS "expectedRoute",
+           g.winnable,
+           g.approve_as_is AS "approveAsIs"
+    FROM denials d
+    JOIN ground_truth g ON g.denial_id = d.id
+    WHERE d.split = ${split}
+    ORDER BY d.id
+  `);
+}
+
+/** Next sequential eval run id, er-0001 upward. */
+export async function nextEvalRunId(): Promise<string> {
+  const rows = await getDb().execute<{ count: string }>(sql`SELECT count(*)::text AS count FROM eval_runs`);
+  return `er-${String(Number(rows[0]?.count ?? 0) + 1).padStart(4, "0")}`;
 }

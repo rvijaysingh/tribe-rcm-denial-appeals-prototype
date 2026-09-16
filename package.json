@@ -13,7 +13,7 @@
     "db:push": "tsx scripts/db/push.ts",
     "db:seed": "tsx scripts/seed/index.ts",
     "pipeline": "tsx scripts/pipeline.ts",
-    "eval": "node scripts/not-implemented.mjs eval",
+    "eval": "tsx scripts/eval/index.ts",
     "demo:reset": "tsx scripts/demo-reset.ts"
   },
   "dependencies": {
