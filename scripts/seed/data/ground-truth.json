@@ -33,11 +33,11 @@
         "C51"
       ],
       "unmetRequiredClauseIds": [],
-      "expectedRoute": "ready",
+      "expectedRoute": "needs_review",
       "winnable": true,
-      "approveAsIs": true,
-      "spotChecked": false,
-      "spotCheckNote": null
+      "approveAsIs": false,
+      "spotChecked": true,
+      "spotCheckNote": "Clause support is clean, so the derived route is ready. Relabelled to needs_review by review: the drafter reliably misattributes what the retrieved precedent was decided on, and the judge is correct to flag it. A letter that overstates a precedent's basis is not quick-read-and-approve material. Labelling this ready would require suppressing a correct flag or tuning the case until it stops firing, either of which compromises the eval. The demo value story is unchanged: DEMO-02 is the threshold case, and would_have_been_worked_old is what the audience is shown."
     },
     {
       "denialId": "DEMO-03",

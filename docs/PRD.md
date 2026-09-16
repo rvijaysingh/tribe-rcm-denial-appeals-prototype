@@ -261,9 +261,11 @@ Embeddings are computed at seed time with Voyage and stored.
 | # | Payer | Condition | Amount | Setup | Expected route | What it demonstrates |
 |---|---|---|---|---|---|---|
 | DEMO-01 | Pinnacle (InterQual-style) | CHF exacerbation | $18,500 | All required clauses strongly supported, 41 days left | ready | Clean end-to-end run, live with streaming |
-| DEMO-02 | Cascade (MCG-style) | COPD exacerbation | $2,400 | Supported, 60 days left. Under the old $5K capacity cutoff this was never worked | ready | Threshold story: `would_have_been_worked_old = false` shown on the card |
+| DEMO-02 | Cascade (MCG-style) | COPD exacerbation | $2,400 | Supported, 60 days left. Under the old $5K capacity cutoff this was never worked | needs review | Threshold story: `would_have_been_worked_old = false` shown on the card, plus a route that shows the reviewer earning their place |
 | DEMO-03 | Northgate | Sepsis | $22,000 | Chart lacks the lactate value and repeat vitals the payer's required clause needs | needs docs | Exact missing element named; RN can request records instead of arguing |
 | DEMO-04 | Pinnacle | Pneumonia | $9,800 | Supported but one assertion rests on a weak inference; judge flags it | needs review | RN edits the flagged sentence, diff is stored, agreement metric updates |
+
+DEMO-02's clause support is clean, so the route derived from the seed is `ready`. The ground truth label is `needs_review`, corrected by human review in `scripts/seed/data/spot-checks.json`. The drafter reliably misattributes what the retrieved precedent was decided on, and the judge is correct to flag it: a letter that overstates a precedent's basis is not quick-read-and-approve material. Labelling the case `ready` would mean suppressing a correct flag or tuning the case until it stops firing, and either compromises the eval. The demo value story is unchanged, because what the audience is shown on this case is the threshold flag.
 
 Plus three pre-triaged do-not-appeal rows in the queue, additional to the 40 and tagged `split = 'demo'`: expired window (day 184 of 180), EV below threshold ($700 at P(overturn) at or below the payer floor; at Northgate medical_necessity, P=0.38, EV = $266, under the $275 `COST_PER_APPEAL_AI`), ineligible category for that payer. Each gets a short chart so the account detail page renders.
 
@@ -332,8 +334,9 @@ Production deltas, stated in the README and the interview: runs in the client's 
 3. Review panel. Click two citation chips. Show the evidence matrix. Approve.
 4. Open DEMO-03 (cached). Needs docs. Show the named missing element.
 5. Open DEMO-04 (cached). Needs review. Show the flagged assertion, edit it, save. Show the feedback row.
-6. Metrics dashboard, measured panel. Then eval dashboard. Say the n=20 caveat before anyone asks.
-7. Return to the deck with one line: what was mock, what Phase 1 uses.
+6. Open DEMO-02 (cached). Two things at once: a $2,400 denial the old capacity cutoff never let anyone work, now sitting in the queue with a draft, and a needs-review route because the reviewer model caught the draft overstating what a precedent was decided on. The line to say: the threshold is what puts this case in front of a nurse at all, and the review gate is what keeps a weak sentence from going out under her name. A system that returned "ready" on every case would be telling you less, not more.
+7. Metrics dashboard, measured panel. Then eval dashboard. Say the n=20 caveat before anyone asks.
+8. Return to the deck with one line: what was mock, what Phase 1 uses.
 
 **Fallback**: if the live run fails, click Show cached and continue. If the site is down, play the recording.
 
