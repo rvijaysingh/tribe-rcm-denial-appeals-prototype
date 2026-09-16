@@ -58,9 +58,9 @@ export const DraftSchema = z.object({
       }),
     )
     .describe(
-      "ONLY required clauses for which the chart contains no evidence whatsoever: the test was never performed, the value was never recorded, or the document is absent from the record you were given. " +
-        "A clause with thin, partial, borderline or indirect support does NOT belong here. Argue that clause in criteria_argument with the evidence that does exist and lower draft_confidence instead. " +
-        "Listing a clause here routes the whole case to 'needs docs', which sends a nurse to request records that may already be in the chart and discards the argument you could have made. Use an empty array when every required clause has some evidence.",
+      "ONLY required clauses where the chart is silent on an element the clause requires, with no alternative prong satisfied: the test was never performed, the value was never recorded, or the document is absent. This applies even when the clause's other elements are well documented, because an AND element that is missing cannot be argued as met. " +
+        "A clause whose required elements all have some support does NOT belong here, however thin, borderline or indirect that support is. Argue it in criteria_argument and lower draft_confidence instead. A value recorded on the wrong side of a threshold is thin support, not a missing value. " +
+        "Listing a clause here routes the whole case to 'needs docs', which sends a nurse to request records. Use an empty array when every required element has some evidence.",
     ),
   draft_confidence: z
     .number()
