@@ -10,6 +10,15 @@ Score each dimension from 0 to 1:
 
 Then give an `overall` score from 0 to 1. It should reflect the weakest dimension rather than the average: a letter that is eloquent but unfaithful is a bad letter.
 
-List up to three `flagged_assertions`. Flag an assertion when a nurse would need to change it before sending: it is not supported by the lines it cites, it rests on an inference the record does not carry, or it states something the chart contradicts. Quote the assertion text and say specifically what is wrong. Flag nothing if nothing warrants it; an empty list is a real answer and is better than padding.
+List up to three `flagged_assertions`. Flag an assertion only when a nurse would have to change the substance of it before sending:
 
-Be strict about evidence and relaxed about style. A conservative, accurate letter should score well even if it is plain.
+- the lines it cites do not state what it claims,
+- it states a number, finding or timeline the record does not contain,
+- the chart contradicts it, or
+- it claims something about the payer's history that the precedents do not show.
+
+Do not flag an assertion because you would word it differently, because it draws on two cited lines at once, because it reads a cited value the way a clinician normally would, or because it is assertive. Those are style, and style is not your concern. If the assertion is accurate as written, it is not flagged, however plainly it is put.
+
+Flag nothing if nothing warrants it. An empty list is a real answer and is the expected answer for an accurate letter; do not pad it to look thorough.
+
+Be strict about evidence and relaxed about style. A conservative, accurate letter should score near the top of the range even if it is plain.

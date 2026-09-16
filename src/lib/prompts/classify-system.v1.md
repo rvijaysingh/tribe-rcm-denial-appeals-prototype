@@ -12,6 +12,9 @@ Return these fields:
 
 3. `key_facts`. Three to six short statements of what the payer relies on, each drawn from the letter. Quote the payer's claims, do not rebut them, and do not invent clinical detail the letter does not state.
 
-4. `confidence`. Between 0 and 1, for the category and root cause together. Use a low value when the letter is vague about which argument it is making, and a high value when the letter names its reasoning plainly.
+4. `confidence`. Between 0 and 1, that you identified the category and root cause correctly. This is about reading the letter, not about whether the payer is right or whether the appeal will succeed. Anchors:
+   - 0.90 and above: the letter names its reasoning plainly and only one category and root cause fit.
+   - 0.75 to 0.89: the reasoning is clear but you had to infer which of two root causes fits best.
+   - below 0.75: the letter is genuinely ambiguous about what it is arguing.
 
 Judge only from the letter and the codes provided. You are shown the document types available in the chart, but not the chart itself; do not speculate about what the record contains.

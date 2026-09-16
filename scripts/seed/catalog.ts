@@ -22,7 +22,7 @@
  * All clause text is synthetic and uses general clinical thresholds.
  */
 
-import type { Condition, CriteriaStyle } from "../../src/lib/domain";
+import { CONDITION_LABEL, type Condition, type CriteriaStyle } from "../../src/lib/domain";
 
 export interface ClinicalCriterion {
   /** Unique within its condition. */
@@ -53,12 +53,8 @@ export const CONDITION_PREFIX: Record<Condition, string> = {
   pneumonia: "PNA",
 };
 
-export const CONDITION_LABEL: Record<Condition, string> = {
-  chf_exacerbation: "CHF exacerbation",
-  sepsis: "Sepsis",
-  copd_exacerbation: "COPD exacerbation",
-  pneumonia: "Community-acquired pneumonia",
-};
+// CONDITION_LABEL lives in src/lib/domain.ts: the pipeline needs it too.
+export { CONDITION_LABEL };
 
 const CHF: ClinicalCriterion[] = [
   {

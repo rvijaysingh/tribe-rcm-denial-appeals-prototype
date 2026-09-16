@@ -103,3 +103,11 @@ export const ROOT_CAUSE_STATEMENT: Record<RootCause, string> = {
   los_exceeds_expected:
     "The length of stay exceeded what the documented clinical condition supported.",
 };
+
+/** Human-readable condition names for prompts and the UI. */
+export const CONDITION_LABEL: Record<Condition, string> = {
+  chf_exacerbation: "CHF exacerbation",
+  sepsis: "Sepsis",
+  copd_exacerbation: "COPD exacerbation",
+  pneumonia: "Community-acquired pneumonia",
+};

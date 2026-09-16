@@ -12,7 +12,7 @@
     "db:generate": "drizzle-kit generate",
     "db:push": "tsx scripts/db/push.ts",
     "db:seed": "tsx scripts/seed/index.ts",
-    "pipeline": "node scripts/not-implemented.mjs pipeline",
+    "pipeline": "tsx scripts/pipeline.ts",
     "eval": "node scripts/not-implemented.mjs eval",
     "demo:reset": "tsx scripts/demo-reset.ts"
   },

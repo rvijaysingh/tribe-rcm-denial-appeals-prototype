@@ -17,7 +17,7 @@ import { generateStructured } from "../llm";
 import { MODELS } from "../models";
 import { loadStagePrompts, renderTemplate } from "../prompts";
 import { allAssertions, type Draft } from "./draft-schema";
-import type { RetrievedClause } from "./c-retrieve";
+import type { RetrievedClause, RetrievedPrecedent } from "./c-retrieve";
 
 export const VERIFY_PROMPT_VERSION = "verify.v1";
 
@@ -122,6 +122,13 @@ export interface JudgeInput {
   letterText: string;
   chartText: string;
   clauses: RetrievedClause[];
+  /**
+   * The precedents stage C retrieved. The judge must see these. A judge shown
+   * only the chart and clauses flags every precedent reference in the letter as
+   * fabricated, because it has no way to check one. PRD 9.3 requires the judge
+   * to see the source material, and precedents are source material.
+   */
+  precedents: RetrievedPrecedent[];
 }
 
 export function renderJudgePrompt(input: JudgeInput): { system: string; user: string } {
@@ -130,6 +137,12 @@ export function renderJudgePrompt(input: JudgeInput): { system: string; user: st
     system,
     user: renderTemplate(userTemplate, {
       clauses: input.clauses.map((c) => `${c.id} (${c.code})${c.required ? " [REQUIRED]" : ""}: ${c.text}`).join("\n"),
+      precedents_block:
+        input.precedents.length > 0
+          ? `PRECEDENTS the drafter was given. A reference to one of these is supported. A claim about this payer's history that is not here is not.\n${input.precedents
+              .map((p) => `${p.id}: ${p.summary}`)
+              .join("\n")}\n`
+          : "PRECEDENTS the drafter was given: none. Any claim about this payer's prior decisions is unsupported.\n",
       chart: input.chartText,
       letter: input.letterText.trim(),
     }),
@@ -145,7 +158,9 @@ export async function judge(input: JudgeInput, onText?: (chunk: string) => void)
     prompt: user,
     schema: JudgeSchema,
     maxTokens: 8000,
-    effort: "medium",
+    // The judge reads the whole chart against the letter. At medium effort it
+    // skimmed and flagged accurate assertions on phrasing.
+    effort: "high",
     cacheSystem: true,
     check: checkJudge,
     onText,
@@ -256,7 +271,12 @@ export async function verify(input: VerifyInput, onText?: (chunk: string) => voi
   }
 
   const result = await judge(
-    { letterText: input.letterText, chartText: input.chartText, clauses: input.clauses },
+    {
+      letterText: input.letterText,
+      chartText: input.chartText,
+      clauses: input.clauses,
+      precedents: input.precedents,
+    },
     onText,
   );
 
