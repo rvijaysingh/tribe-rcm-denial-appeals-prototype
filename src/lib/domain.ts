@@ -91,3 +91,15 @@ export type PrecedentOutcome = (typeof PRECEDENT_OUTCOMES)[number];
 /** Clause support status in the evidence matrix (PRD 6.3). */
 export const CLAUSE_SUPPORT = ["supported", "weak", "unsupported"] as const;
 export type ClauseSupport = (typeof CLAUSE_SUPPORT)[number];
+
+/** How a payer states each root cause. Shared by the seed letters and the drafter. */
+export const ROOT_CAUSE_STATEMENT: Record<RootCause, string> = {
+  severity_not_documented:
+    "The medical record does not document clinical severity sufficient to require inpatient admission.",
+  criteria_not_met_at_admission:
+    "The documentation available at the time of admission did not meet inpatient criteria.",
+  treatment_appropriate_at_lower_level:
+    "The services provided could have been delivered safely at a lower level of care, such as observation.",
+  los_exceeds_expected:
+    "The length of stay exceeded what the documented clinical condition supported.",
+};

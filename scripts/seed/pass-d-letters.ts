@@ -22,6 +22,7 @@ import {
   CONDITIONS,
   DENIAL_CATEGORIES,
   PAYER_IDS,
+  ROOT_CAUSE_STATEMENT,
   type Condition,
   type DenialCategory,
   type PayerId,
@@ -58,17 +59,9 @@ const CATEGORY_LABEL: Record<DenialCategory, string> = {
   level_of_care: "level of care, inpatient versus observation",
 };
 
-/** The payer's overall rationale for each root cause. */
-export const ROOT_CAUSE_STATEMENT: Record<RootCause, string> = {
-  severity_not_documented:
-    "The medical record does not document clinical severity sufficient to require inpatient admission.",
-  criteria_not_met_at_admission:
-    "The documentation available at the time of admission did not meet inpatient criteria.",
-  treatment_appropriate_at_lower_level:
-    "The services provided could have been delivered safely at a lower level of care, such as observation.",
-  los_exceeds_expected:
-    "The length of stay exceeded what the documented clinical condition supported.",
-};
+// ROOT_CAUSE_STATEMENT lives in src/lib/domain.ts: the drafter needs the same
+// phrasing, and the pipeline must not import from scripts/.
+export { ROOT_CAUSE_STATEMENT };
 
 const SIGNATURE_ROLE = "Medical Director, Utilization Management";
 
