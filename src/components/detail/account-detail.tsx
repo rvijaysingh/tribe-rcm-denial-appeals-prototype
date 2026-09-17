@@ -431,7 +431,7 @@ export function AccountDetail(props: AccountDetailProps) {
 
   return (
     <div>
-      <div className="sticky top-[50px] z-20 flex items-center gap-3 border-b border-zinc-200 bg-zinc-50 px-[14px] py-[9px]">
+      <div className="sticky top-[64px] z-20 flex items-center gap-3 border-b border-zinc-200 bg-zinc-50 px-[14px] py-[9px]">
         <Link
           href="/"
           className="flex h-[26px] items-center rounded-[5px] border border-zinc-300 bg-white px-[9px] text-[12px] text-zinc-700 hover:bg-zinc-50"

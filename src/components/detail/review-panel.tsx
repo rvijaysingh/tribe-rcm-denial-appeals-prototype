@@ -323,7 +323,7 @@ export function ReviewPanel({
                           assertionNodes.current.set(key, node);
                         }}
                         className={cn(
-                          "mb-[8px] scroll-mt-[60px] text-[12px] leading-[1.7] text-zinc-800 transition-shadow duration-500",
+                          "mb-[8px] scroll-mt-[74px] text-[12px] leading-[1.7] text-zinc-800 transition-shadow duration-500",
                           isFlagged && "rounded-[4px] border-l-2 border-amber-400 bg-amber-50 py-[5px] pr-[6px] pl-[8px]",
                           isJumpTarget && "shadow-[0_0_0_3px_rgba(245,158,11,0.45)]",
                         )}

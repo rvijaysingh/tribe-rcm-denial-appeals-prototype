@@ -44,7 +44,7 @@ function ClientMark() {
 export function AppShell({ pathname, children }: { pathname: string; children: React.ReactNode }) {
   return (
     <div className="mx-auto min-h-screen min-w-[1240px] max-w-[1440px] border-x border-zinc-200 bg-white">
-      <header className="sticky top-0 z-30 flex h-[50px] items-center gap-[18px] border-b border-zinc-200 bg-white px-[14px]">
+      <header className="sticky top-0 z-30 flex h-[64px] items-center gap-[18px] border-b border-zinc-200 bg-white px-[14px]">
         <ClientMark />
         <span className="h-[22px] w-px bg-zinc-200" />
         <span className="text-[12.5px] whitespace-nowrap text-zinc-600">Clinical Denials Appeal Automation</span>
