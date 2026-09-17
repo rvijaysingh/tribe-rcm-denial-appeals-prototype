@@ -8,7 +8,10 @@
     {
       "denialId": "DEMO-02",
       "checked": true,
-      "note": "Reviewed and the derived label confirmed: ready. All required clauses are strongly supported. This case was briefly relabelled needs_review while the drafter was misattributing what the retrieved precedent was decided on, which the judge correctly flagged. That was a defect in the drafter, not a property of the case: once the precedent citation rule was tightened, the case ran clean at judge 0.92 with nothing flagged and 100% citation validity. No correction applied."
+      "note": "Reviewed and corrected to needs_review. The clause support is strong, so the derived label is ready and pass B still derives it that way. The correction records observed behaviour instead: across three consecutive live runs the judge flagged an assertion and the case routed needs_review every time. The flag is not about this case's clinical support, it is a drafting pattern the judge is right to catch, where the letter attributes a rationale to the payer that the denial letter does not state. Fixing the drafter is the real remedy and belongs in prompt work on the dev split, not in a demo-case label. Until then needs_review is the honest expectation. The demo story is unchanged: this case is in the script for the threshold flag, not for its route.",
+      "corrections": {
+        "expectedRoute": "needs_review"
+      }
     },
     {
       "denialId": "DEMO-03",

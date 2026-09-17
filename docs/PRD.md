@@ -263,11 +263,21 @@ Embeddings are computed at seed time with Voyage and stored.
 | # | Payer | Condition | Amount | Setup | Expected route | What it demonstrates |
 |---|---|---|---|---|---|---|
 | DEMO-01 | Pinnacle (InterQual-style) | CHF exacerbation | $18,500 | All required clauses strongly supported, 41 days left | ready | Clean end-to-end run, live with streaming |
-| DEMO-02 | Cascade (MCG-style) | COPD exacerbation | $2,400 | Supported, 60 days left. Under the old $5K capacity cutoff this was never worked | ready | Threshold story: `would_have_been_worked_old = false` shown on the card |
+| DEMO-02 | Cascade (MCG-style) | COPD exacerbation | $2,400 | Supported, 60 days left. Under the old $5K capacity cutoff this was never worked | needs review | Threshold story: `would_have_been_worked_old = false` shown on the card |
 | DEMO-03 | Northgate | Sepsis | $22,000 | Chart lacks the lactate value and repeat vitals the payer's required clause needs | needs docs | Exact missing element named; RN can request records instead of arguing |
 | DEMO-04 | Pinnacle | Pneumonia | $9,800 | Supported but one assertion rests on a weak inference; judge flags it | needs review | RN edits the flagged sentence, diff is stored, agreement metric updates |
 
-DEMO-02 was briefly relabelled `needs_review` during M2, while the drafter was misattributing what the retrieved precedent had been decided on and the judge was correctly flagging it. That turned out to be a defect in the drafter rather than a property of the case: once the precedent citation rule was tightened, DEMO-02 ran clean at judge 0.92 with nothing flagged. The label is `ready`, and `spot-checks.json` records the review that confirmed it. The episode is worth keeping in mind when a demo case and a metric disagree: relabelling the case is sometimes right, but check the pipeline first.
+DEMO-02 has been relabelled twice, and both episodes are worth keeping.
+
+During M2 it was briefly `needs_review` while the drafter was misattributing what the retrieved precedent had been decided on. That was a defect in the drafter rather than a property of the case: once the precedent citation rule was tightened it ran clean at judge 0.92, and the label went back to `ready`.
+
+During M5 it settled on `needs_review` again, for a different reason, across three consecutive live runs. The judge flags an assertion in which the letter attributes a rationale to the payer that the denial letter does not state. That is a real drafting habit and the judge is right to catch it; the same complaint appeared on CASE-036 in the reference eval. The remedy is prompt work on the dev split, not a demo-case label, so until that lands `needs_review` is the honest expectation.
+
+The clause support has not changed and is still strong, so pass B still derives `ready` from it. The correction lives in `spot-checks.json`, which is where a human judgement about observed behaviour belongs; the derived label and the observed label are deliberately allowed to differ.
+
+The demo story is unchanged. DEMO-02 is in the script for the threshold flag, not for its route: a $2,400 denial nobody would have worked under the old cutoff, now drafted and cited for cents. A nurse reading one flagged sentence before approving is a fair picture of the product.
+
+The general lesson: when a demo case and a metric disagree, check the pipeline before relabelling the case. Sometimes it is the pipeline, as in M2. Sometimes it really is the label, as here.
 
 Plus three pre-triaged do-not-appeal rows in the queue, additional to the 40 and tagged `split = 'demo'`: expired window (day 184 of 180), EV below threshold ($700 at P(overturn) at or below the payer floor; at Northgate medical_necessity, P=0.38, EV = $266, under the $275 `COST_PER_APPEAL_AI`), ineligible category for that payer. Each gets a short chart so the account detail page renders.
 
@@ -336,7 +346,7 @@ Production deltas, stated in the README and the interview: runs in the client's 
 3. Review panel. Click two citation chips. Show the evidence matrix. Approve.
 4. Open DEMO-03 (cached). Needs docs. Show the named missing element.
 5. Open DEMO-04 (cached). Needs review. Show the flagged assertion, edit it, save. Show the feedback row.
-6. Open DEMO-02 (cached). A $2,400 denial the old capacity cutoff never let anyone work, now in the queue with a clean cited draft and a ready route. The line to say: nobody would have touched this case last year, and it took minutes and cents to produce something a nurse can approve on a quick read.
+6. Open DEMO-02 (cached). A $2,400 denial the old capacity cutoff never let anyone work, now in the queue with a fully cited draft routed needs review, with the flagged sentence shown and its reason. The line to say: nobody would have touched this case last year, and it took minutes and cents to produce something a nurse can check in a couple of reads. The flag is the system declining to overclaim, not a failure.
 7. Metrics dashboard, measured panel. Then eval dashboard. Say the n=20 caveat before anyone asks.
 8. Return to the deck with one line: what was mock, what Phase 1 uses.
 
