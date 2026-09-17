@@ -152,3 +152,9 @@ vite.config.ts.timestamp-*
 # a real client name and real payer names, so they stay out of the repo.
 docs/ui-designs.zip
 docs/design/
+
+# Client logo. Supplied through NEXT_PUBLIC_CLIENT_LOGO_URL, never committed:
+# the client is not identifiable from this repo.
+logo.png
+*-logo.png
+client-logo.*
