@@ -77,6 +77,7 @@ docs/                     PRD, demo script
 - Never tune prompts against the test split or the four demo cases. Use the dev split only. The split is fixed at seed time.
 - Ask before changing the database schema, the routing thresholds, or anything in `economics.ts`.
 - Commit small with descriptive messages. Push to `main` only when build, typecheck, lint, and test are green.
+- Stage named paths only. Never `git add -A` or `git add .` in this repo: a blanket add once swept the client's `logo.png` into a public commit, which is exactly the anonymity rule this project is built around.
 - The host is Windows 11 with PowerShell 7. Do not use bash-only syntax in scripts or `package.json`. Prefer Node scripts over shell scripts.
 - When a milestone in `docs/PRD.md` is complete, summarize what was built, what was skipped, and any deviations from the PRD before starting the next one.
 - Milestones live in `docs/PRD.md` §13. M1 to M3 are done. M3 also built the metrics and eval dashboard screens that §13 first assigned to M4, so M4 is now the eval harness, EvalRun persistence, `npm run eval`, and marking the reference run.

@@ -33,7 +33,7 @@ export const PRODUCTION_TARGETS: ProductionTarget[] = [
   {
     label: "Days to submission",
     baseline: "Days from denial to draft",
-    target: "Same day",
+    target: "~40% faster",
     note: "Filing windows run 90 to 180 days; each payer round takes 45 to 60.",
   },
   {
