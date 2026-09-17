@@ -508,7 +508,7 @@ export function AccountDetail(props: AccountDetailProps) {
                   !reviewReady && "cursor-not-allowed text-zinc-400 hover:bg-white",
                 )}
               >
-                Review panel {reviewReady ? "" : "· locked"}
+                Appeals Workbench {reviewReady ? "" : "· locked"}
               </button>
             </div>
             <span className="flex-1" />

@@ -2,6 +2,7 @@
 
 import { RouteBadge } from "@/components/route-badge";
 import type { Stage } from "@/lib/domain";
+import { AI_BREAKEVEN, MANUAL_BREAKEVEN } from "@/lib/economics";
 import type { VerifyPhase } from "@/lib/pipeline/e-verify";
 import { formatCost, formatDollars, formatPercent, formatSeconds } from "@/lib/ui/format";
 import { cn } from "@/lib/utils";
@@ -286,7 +287,11 @@ export function StageCards({
                     <span className="text-[12px] text-amber-700">&#9873;</span>
                     <span className="text-[11px] leading-[1.55] text-amber-900">
                       <span className="font-mono font-semibold">would_have_been_worked_old = false</span>. This account
-                      sits below the old capacity cutoff and would not have been worked under the previous process.
+                      sits below the {formatDollars(oldCutoffDollars)} cutoff and would not have been worked under the
+                      previous process, even though {formatDollars(triage.amount_cents / 100)} clears the{" "}
+                      {formatDollars(MANUAL_BREAKEVEN)} manual breakeven. The cutoff sits 2.5x to 3x above breakeven to
+                      cover RN opportunity cost and timely-filing risk, so cases in that range were economic and still
+                      never worked. At {formatDollars(AI_BREAKEVEN)} AI breakeven the range closes.
                     </span>
                   </div>
                 ) : null}

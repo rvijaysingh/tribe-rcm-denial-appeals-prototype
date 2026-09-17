@@ -32,14 +32,14 @@ export const PRODUCTION_TARGETS: ProductionTarget[] = [
   },
   {
     label: "Days to submission",
-    baseline: "Days per draft",
-    target: "~40% faster",
-    note: "Filing windows run 90 to 180 days.",
+    baseline: "Days from denial to draft",
+    target: "Same day",
+    note: "Filing windows run 90 to 180 days; each payer round takes 45 to 60.",
   },
   {
     label: "Physician escalations",
     baseline: "Attestations and peer to peer",
-    target: "Fewer, on cases the letter should win",
+    target: "Reduced",
     note: "Phase 1 targets the first four leaks; this one follows.",
   },
 ];

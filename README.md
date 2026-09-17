@@ -1,6 +1,6 @@
-# Clinical denial appeals assistant
+# Clinical Appeals Engine
 
-A working prototype of a GenAI assistant for clinical denial appeals in healthcare revenue cycle management. A mock billing workqueue runs a five-stage pipeline over each denied account, drafts a fully cited appeal letter, and routes it to a nurse reviewer who approves, edits, or escalates.
+A working prototype of a GenAI engine for clinical denial appeals in healthcare revenue cycle management. A mock billing workqueue runs a five-stage pipeline over each denied account, drafts a fully cited appeal letter, and routes it to a nurse reviewer who approves, edits, or escalates.
 
 **Nothing auto-submits.** Every letter ends at a human.
 
@@ -95,6 +95,27 @@ Nothing was marked `ready` that should not have been, and nothing winnable was w
 
 ---
 
+## The economics this is built around
+
+Rates and per-appeal figures only; no book-level numbers appear in this repo.
+
+| Figure | Value |
+|---|---|
+| Loaded cost per manual appeal | ~$735 |
+| Cost per AI-assisted appeal | ~$275 |
+| Win rate on low-value claims | ~40% |
+| **Manual breakeven** | **~$1,800** ($735 / 40%) |
+| **AI breakeven** | **~$700** ($275 / 40%) |
+| Capacity cutoff in practice | **~$5,000** |
+
+The gap between those last two lines is the whole argument. A manually worked appeal breaks even near $1,800, but the minimum-balance threshold sits around $5,000, roughly 2.8x breakeven. RCM shops set it there deliberately, to cover the RN opportunity cost of the next case in the queue and the timely-filing risk carried while it waits. RN hours are the binding constraint, not economics.
+
+So the $1,800 to $5,000 range fills with denials that are economic to appeal and never appealed. About 30% of clinical denials are never appealed at all, averaging ~$3K, all of them under the cutoff. Dropping the cost of an appeal to ~$275 moves breakeven to ~$700; it does not move the cutoff, it removes the reason to have one that high.
+
+On the claims that do get appealed, ~60% are won by count but only ~47% by dollars, because the high-value inpatient claims are fought hardest and lost most often. Across all clinical denied dollars the overturn rate is 42%. Each payer round runs 45 to 60 days, three rounds on average, so a contested claim sits in A/R for four to six months.
+
+DEMO-02 in the workqueue is this case in miniature: a $2,400 denial, comfortably above manual breakeven, below the capacity cutoff, and therefore never worked.
+
 ## Production deltas
 
 What a real deployment changes, stated plainly because the prototype does none of it.
@@ -161,7 +182,7 @@ Live runs from the web UI are capped at 20 per rolling hour per server process, 
 ## Layout
 
 ```
-src/app/(workqueue)/   workqueue, account detail, review panel
+src/app/(workqueue)/   workqueue, account detail, Appeals Workbench
 src/app/dashboard/     metrics and eval dashboards
 src/app/api/           pipeline (SSE), feedback, demo reset
 src/lib/pipeline/      the five stages and the orchestrator

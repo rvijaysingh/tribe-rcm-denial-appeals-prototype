@@ -47,7 +47,7 @@ export function AppShell({ pathname, children }: { pathname: string; children: R
       <header className="sticky top-0 z-30 flex h-[64px] items-center gap-[18px] border-b border-zinc-200 bg-white px-[14px]">
         <ClientMark />
         <span className="h-[22px] w-px bg-zinc-200" />
-        <span className="text-[12.5px] whitespace-nowrap text-zinc-600">Clinical Denials Appeal Automation</span>
+        <span className="text-[12.5px] whitespace-nowrap text-zinc-600">Clinical Appeals Engine</span>
         <nav className="ml-[14px] flex items-center gap-[2px]">
           {NAV.map((item) => {
             const active = item.match(pathname);

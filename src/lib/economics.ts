@@ -21,6 +21,42 @@ export const COST_PER_APPEAL_AI = 275;
  */
 export const OLD_CAPACITY_CUTOFF = 5000;
 
+/**
+ * Win rate assumed when deriving a breakeven amount.
+ *
+ * Deliberately not the WIN_RATE table: breakeven is about the low-value claims
+ * sitting near the cutoff, and those run near 40%. The table's per-payer rates
+ * describe the cases actually being appealed, which skew higher.
+ */
+export const LOW_VALUE_WIN_RATE = 0.4;
+
+/**
+ * Breakeven claim amounts, rounded to the nearest hundred because they are
+ * quoted as round numbers and nothing routes on them.
+ *
+ *   manual: $735 / 40% = $1,838, quoted as ~$1,800
+ *   AI:     $275 / 40% = $688,   quoted as ~$700
+ *
+ * Below these amounts the expected recovery does not cover the cost of working
+ * the appeal, so the work is uneconomic however much capacity exists.
+ *
+ * The capacity cutoff sits well above either. RCM shops set minimum-balance
+ * thresholds at roughly 2.5x to 3x breakeven to cover the RN opportunity cost
+ * of the next case in the queue and the timely-filing risk carried while it
+ * waits. At $5,000 against a $1,800 manual breakeven the cutoff is 2.8x, which
+ * is why a case can be comfortably economic and still never worked. That gap
+ * is the threshold story the demo tells, and lowering the cost of an appeal
+ * moves the breakeven, not the cutoff.
+ *
+ * Nothing in the pipeline routes on these. Stage A compares expected value
+ * against COST_PER_APPEAL_AI directly; these exist for the UI and the docs.
+ */
+export const MANUAL_BREAKEVEN = Math.round(COST_PER_APPEAL_MANUAL / LOW_VALUE_WIN_RATE / 100) * 100;
+export const AI_BREAKEVEN = Math.round(COST_PER_APPEAL_AI / LOW_VALUE_WIN_RATE / 100) * 100;
+
+/** How far the capacity cutoff sits above manual breakeven. Expected 2.5x to 3x. */
+export const CUTOFF_MULTIPLE = OLD_CAPACITY_CUTOFF / MANUAL_BREAKEVEN;
+
 /** Composite score at or above which a draft routes "ready" (PRD 7 stage E). */
 export const READY_THRESHOLD = 0.85;
 

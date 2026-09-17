@@ -15,7 +15,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Clinical Denials Appeal Automation",
+  title: "Clinical Appeals Engine",
   description: "Prototype appeals assistant for inpatient clinical denials. Synthetic data only.",
 };
 

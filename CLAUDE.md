@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Demo prototype of a GenAI clinical denial appeals assistant for a large healthcare revenue cycle management (RCM) operator. It is shown live in a case-presentation interview. A mock billing workqueue runs a five-stage pipeline (rules plus LLM) that drafts a fully cited appeal letter and routes it to a nurse reviewer who approves, edits, or escalates. Nothing auto-submits.
+Demo prototype of the Clinical Appeals Engine, a GenAI clinical denial appeals system for a healthcare revenue cycle management (RCM) operator. It is shown live in a case-presentation interview. A mock billing workqueue runs a five-stage pipeline (rules plus LLM) that drafts a fully cited appeal letter and routes it to a nurse reviewer who approves, edits, or escalates. Nothing auto-submits.
 
 Synthetic data only. No PHI. No real client names anywhere in code, data, or docs.
 
@@ -34,7 +34,7 @@ Full spec: `docs/PRD.md`. Read the relevant section before building any feature.
 ## Architecture map
 
 ```
-src/app/(workqueue)/      workqueue list, account detail, RN review panel
+src/app/(workqueue)/      workqueue list, account detail, RN Appeals Workbench
 src/app/dashboard/        metrics dashboard and eval dashboard
 src/app/api/              route handlers: run pipeline (SSE streaming), feedback, reset
 src/components/           screen components; ui/ holds the shadcn primitives
