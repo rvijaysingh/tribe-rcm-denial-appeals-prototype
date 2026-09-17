@@ -21,8 +21,12 @@ function ClientMark() {
   if (logoUrl) {
     // Intentionally a plain img: the URL is operator-supplied at deploy time
     // and next/image would need it whitelisted in next.config.
+    //
+    // A cap rather than a fixed height: the operator supplies the file, so let
+    // a small mark render at its own size and only bring an oversized one down.
+    // Width is auto so the aspect ratio survives whatever they upload.
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={logoUrl} alt="Client logo" className="h-[22px] w-auto" />;
+    return <img src={logoUrl} alt="Client logo" className="max-h-12 w-auto" />;
   }
   return (
     <span className="flex items-center gap-2">
