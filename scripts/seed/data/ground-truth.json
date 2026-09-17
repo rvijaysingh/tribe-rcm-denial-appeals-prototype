@@ -35,9 +35,9 @@
       "unmetRequiredClauseIds": [],
       "expectedRoute": "needs_review",
       "winnable": true,
-      "approveAsIs": true,
+      "approveAsIs": false,
       "spotChecked": true,
-      "spotCheckNote": "Reviewed and corrected to needs_review. The clause support is strong, so the derived label is ready and pass B still derives it that way. The correction records observed behaviour instead: across three consecutive live runs the judge flagged an assertion and the case routed needs_review every time. The flag is not about this case's clinical support, it is a drafting pattern the judge is right to catch, where the letter attributes a rationale to the payer that the denial letter does not state. Fixing the drafter is the real remedy and belongs in prompt work on the dev split, not in a demo-case label. Until then needs_review is the honest expectation. The demo story is unchanged: this case is in the script for the threshold flag, not for its route."
+      "spotCheckNote": "Reviewed and corrected to needs_review with approve_as_is false. The clause support is strong, so the derived label is ready and pass B still derives it that way. The correction records observed behaviour instead: across three consecutive live runs the judge flagged an assertion and the case routed needs_review every time. The flag is not about this case's clinical support, it is a drafting pattern the judge is right to catch, where the letter attributes a rationale to the payer that the denial letter does not state. A nurse reading that sentence would edit it rather than approve as written, so approve_as_is is false: the route and the approve label now agree about the same draft. Fixing the drafter is the real remedy and belongs in prompt work on the dev split, not in a demo-case label. The demo story is unchanged: this case is in the script for the threshold flag, not for its route."
     },
     {
       "denialId": "DEMO-03",
