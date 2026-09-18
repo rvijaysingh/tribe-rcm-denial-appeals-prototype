@@ -21,7 +21,7 @@ Where the value leaks (from the outside-in diagnostic):
 
 | Leak | Mechanism | Metric that moves |
 |---|---|---|
-| Denials never worked | Dollar threshold (~$5K) sits 2.5x to 3x above manual breakeven (~$1.8K) because RN hours are the binding constraint | Share of denials worked |
+| Denials never worked | Work threshold (~$5K) sits 2.5 to 3x above breakeven (~$1.8K); the buffer covers RN opportunity cost, timely-filing risk, and rework. RN hours are the binding constraint | Share of denials worked |
 | Cost per appeal | $700 to $1,000 of RN, ops, and physician labor per fully worked appeal | Cost per appeal |
 | Low overturn rate | ~60% of appealed claims won by count, ~47% by dollars; 42% of all clinical denied dollars recovered; ~30% of denials cite payer rules that live only in nurse memory | Overturn rate |
 | Slow submission | Days from denial to appeal; windows are 90 to 180 days | Days to submission |
@@ -29,21 +29,36 @@ Where the value leaks (from the outside-in diagnostic):
 
 The threshold arithmetic, since it is the heart of the walk:
 
-- A manually worked appeal costs ~$735 loaded. At the ~40% win rate on low-value claims that is a **manual breakeven near $1,800**.
-- The capacity cutoff sits at **~$5,000**, roughly 2.8x breakeven. RCM shops set minimum-balance thresholds at 2.5x to 3x to cover the RN opportunity cost of the next case in the queue and the timely-filing risk carried while it waits.
-- So the range between $1,800 and $5,000 is full of denials that are economic to appeal and never appealed. About **30% of clinical denials are never appealed at all**, averaging ~$3K, all of them under the cutoff.
-- An AI-assisted appeal at ~$275 moves the **breakeven to ~$700**. It does not move the cutoff; it removes the reason for one.
+Two numbers, and they are not the same number:
+
+- **Breakeven** is pure economics: the claim value at which expected recovery equals the cost to appeal, that is cost per appeal divided by the win rate on that tier of claim. Nothing else enters it.
+- **Work threshold** is the operating rule: the minimum claim value a denials shop actually files on. It sits above breakeven by a buffer covering three things breakeven ignores, namely RN opportunity cost, timely-filing risk, and rework rounds.
+
+Today a manually worked appeal costs ~$735 loaded. At the ~40% win rate on low-value claims that is a **breakeven near $1,800**, and the **work threshold sits at ~$5,000**, roughly 2.7x. With the pipeline an appeal costs ~$300, so **breakeven falls to ~$750** and the **work threshold falls to ~$1,200**, roughly 1.6x. The threshold falls further than the breakeven does, because RN minutes replace RN hours so opportunity cost collapses, and same-day filing removes the expiry risk.
+
+That gap is where the leak lives. The range between ~$1,800 and ~$5,000 is full of denials that are economic to appeal and never appealed: about **30% of clinical denials are never appealed at all**, averaging ~$3K, all of them under the work threshold.
 
 On the claims that do get appealed, ~60% are won by count but only ~47% by dollars, because the high-value inpatient claims are fought hardest and lost most often. Across all clinical denied dollars the overturn rate is 42%. The losses run the other way: 40% of appealed claims by count, ~53% of appealed dollars. Each payer round takes 45 to 60 days, three rounds on average, so a contested claim sits in A/R for four to six months.
 
-Phase 1 targets the first four leaks. Deck targets: cost per appeal $700 to 1,000 down to $200 to 350; overturn 42% to 46 to 48%; submission ~40% faster.
+Phase 1 targets the first four leaks. The levers and where they are meant to go:
+
+| Lever | Today | 2027 | 2028 |
+|---|---|---|---|
+| Net $ denial recovery rate | 42% | 55% | 60% |
+| Appeal rate (share worked) | 70% | 87% | 87% |
+| Appeal win rate (by count) | 60% | 65% | 69% |
+| Cost per appeal (fully loaded) | $735 | $300 | $300 |
+| RN touch time per appeal | ~210 min | 10 to 15 min | 10 to 15 min |
+| Net $ recovered per RN hour | Guardrail, no target, must rise each quarter | | |
+
+The appeal-rate jump is driven by the work threshold falling from ~$5K to ~$1.2K. Targets illustrative, validated in discovery.
 
 ## 3. Users
 
 | User | Role in prototype | What they see |
 |---|---|---|
 | Clinical appeals nurse (primary) | Reviews drafts | Workqueue, account detail, Appeals Workbench |
-| Denials manager | Watches throughput and quality | Metrics dashboard |
+| Denials manager | Watches throughput and quality | Claim Denial Dashboard |
 | Technical reviewer (panel) | Judges the build | Run log, eval dashboard, repo |
 
 The presenter plays the nurse during the demo.
@@ -78,7 +93,7 @@ The presenter plays the nurse during the demo.
 - Denial family: inpatient clinical denials, two categories: medical necessity (admission not justified) and level of care (inpatient vs observation).
 - 3 payers, 4 clinical conditions (CHF exacerbation, sepsis, COPD exacerbation, community-acquired pneumonia).
 - Stages A to E, orchestrator, persistence, run log.
-- Workqueue, account detail, Appeals Workbench, metrics dashboard, eval dashboard.
+- Workqueue, account detail, Appeals Workbench, Claim Denial Dashboard, eval dashboard.
 - Synthetic data generation, eval harness, demo controls.
 
 **Out**
@@ -118,15 +133,21 @@ Header: route badge with its definition on hover ("Ready: quick read and approve
 
 Actions: **Approve**, **Edit** (opens the letter in a textarea; on save, store the diff), **Escalate to physician** (requires a reason from a short list). All three write a ReviewerFeedback row and stamp reviewer minutes from panel-open to action.
 
-### 6.4 Metrics dashboard
+### 6.4 Claim Denial Dashboard
 
-Two panels, clearly separated.
+Route `/dashboard/denials`. `/dashboard/metrics` redirects to it.
 
-**Measured in this prototype** (live from the DB): cases processed, route distribution, pipeline seconds per case (median, p90), cost per case (median), citation validity rate, reviewer minutes per case (from feedback rows), reviewer agreement rate (approved as-is / all reviewed), share of denials worked under prototype triage vs old capacity cutoff.
+**A. Two charts, side by side, the hero of the page.**
 
-**Production targets (from the proposal, not measured here)**: cost per appeal, overturn rate, days to submission, physician escalations, each with baseline and Phase 1 target. Footnote: validated in discovery.
+*RN touch time per appeal (daily average).* Weekdays only, the last four weeks ending today, generated at render time so the axis never goes stale. Historical points are mock, seeded deterministically so a given day always draws the same chart, noisy around 210 minutes within 180 to 245, labeled "Manual process (mock history)". A dashed line marks the four-week average. Today's point is real: the mean RN touch time across every case approved today, where touch time is the minutes from opening the account detail page to clicking Approve. Only approvals count; edits and escalations do not add a point. Today's point is drawn in a distinct colour with its value and a delta against the four-week average. With no approvals yet, no point and a note saying so. Linear Y axis in minutes, because the drop is the point.
 
-Note under cost per case: "Synthetic charts are 2 to 4 pages. Production charts run to hundreds of pages; the proposal assumes $2 to 5 per appeal."
+*Denied dollar recovery rate (trailing 12 months).* The last twelve months ending this month, generated at render time. Points are mock, seeded, drifting between 40% and 43%, labeled "TTM recovery rate (mock history)". Dashed target lines at 55% (2027) and 60% (2028). The demo does not move this chart, and a note says why: $ overturned / $ initially denied, dollar-weighted, and payer outcomes lag 45 to 60 days so they are not measurable here.
+
+**B. Phase 1 levers table.** The levers from section 2, with a "Measured here" column carrying a real figure where the prototype has one (cost per case, RN touch time today) and a dash where it does not.
+
+**C. Measured in this prototype.** Cases processed, route distribution, pipeline seconds (median and p90), cost per case, citation validity, RN touch time today, reviewer agreement, and share of denials worked under the new triage against the old cutoff.
+
+Reset behaviour: the Reset case button on any case also deletes every feedback row created today across all cases, so the RN touch-time chart returns to "no approvals yet today". `npm run demo:reset` does the same. The button's tooltip says so.
 
 ### 6.5 Eval dashboard
 
@@ -145,10 +166,10 @@ Logic:
 - Days left = deadline days minus days since received. Expired if ≤ 0.
 - P(overturn) = lookup in `WIN_RATE[payer][category]` (seeded from the synthetic precedent store, values between 0.35 and 0.75).
 - Expected value = amount × P(overturn).
-- Appeal if eligible, not expired, and EV > `COST_PER_APPEAL_AI` (default 275).
+- Appeal if eligible, not expired, and EV > `COST_PER_APPEAL_AI` (default 300).
 - Also compute `would_have_been_worked_old` = EV > `COST_PER_APPEAL_MANUAL` (735) AND amount ≥ `OLD_CAPACITY_CUTOFF` (5000). Stored for the threshold story.
 
-The three numbers the threshold story turns on, all derived in `economics.ts`: capacity cutoff $5,000, manual breakeven ~$1,800, AI breakeven ~$700. A case between breakeven and cutoff was economic to work and still never worked.
+The threshold story in one line, all derived in `economics.ts`: the **work threshold falls from ~$5K to ~$1.2K** (breakeven ~$1.8K to ~$750). A case between breakeven and the work threshold was economic to file and still never filed.
 
 Output: `{ decision: "appeal" | "do_not_appeal", reason, days_left, p_overturn, expected_value, would_have_been_worked_old }`.
 
@@ -274,7 +295,7 @@ Embeddings are computed at seed time with Voyage and stored.
 | # | Payer | Condition | Amount | Setup | Expected route | What it demonstrates |
 |---|---|---|---|---|---|---|
 | DEMO-01 | Pinnacle (InterQual-style) | CHF exacerbation | $18,500 | All required clauses strongly supported, 41 days left | ready | Clean end-to-end run, live with streaming |
-| DEMO-02 | Cascade (MCG-style) | COPD exacerbation | $2,400 | Supported, 60 days left. Above the ~$1,800 manual breakeven, below the $5,000 capacity cutoff: economic to work and never worked | needs review | Threshold story: `would_have_been_worked_old = false` shown on the card |
+| DEMO-02 | Cascade (MCG-style) | COPD exacerbation | $2,400 | Supported, 60 days left. Above today's ~$1,800 breakeven, below today's ~$5K work threshold: economic but never filed | needs review | Threshold story: `would_have_been_worked_old = false` shown on the card |
 | DEMO-03 | Northgate | Sepsis | $22,000 | Chart lacks the lactate value and repeat vitals the payer's required clause needs | needs docs | Exact missing element named; RN can request records instead of arguing |
 | DEMO-04 | Pinnacle | Pneumonia | $9,800 | Supported but one assertion rests on a weak inference; judge flags it | needs review | RN edits the flagged sentence, diff is stored, agreement metric updates |
 
@@ -290,7 +311,7 @@ The demo story is unchanged. DEMO-02 is in the script for the threshold flag, no
 
 The general lesson: when a demo case and a metric disagree, check the pipeline before relabelling the case. Sometimes it is the pipeline, as in M2. Sometimes it really is the label, as here.
 
-Plus three pre-triaged do-not-appeal rows in the queue, additional to the 40 and tagged `split = 'demo'`: expired window (day 184 of 180), EV below threshold ($700 at P(overturn) at or below the payer floor; at Northgate medical_necessity, P=0.38, EV = $266, under the $275 `COST_PER_APPEAL_AI`), ineligible category for that payer. Each gets a short chart so the account detail page renders.
+Plus three pre-triaged do-not-appeal rows in the queue, additional to the 40 and tagged `split = 'demo'`: expired window (day 184 of 180), EV below threshold ($700 at P(overturn) at or below the payer floor; at Northgate medical_necessity, P=0.38, EV = $266, under the $300 `COST_PER_APPEAL_AI`), ineligible category for that payer. Each gets a short chart so the account detail page renders.
 
 ## 9. Evaluation
 
@@ -339,7 +360,7 @@ EMBEDDING_MODEL = "voyage-3.5"; EMBEDDING_DIM = 1024
 PRICES = { per-million input/output per model, updated by hand, date-stamped }
 ```
 
-- `src/lib/economics.ts`: `COST_PER_APPEAL_MANUAL = 735`, `COST_PER_APPEAL_AI = 275`, `OLD_CAPACITY_CUTOFF = 5000`, `WIN_RATE` table, routing thresholds `READY = 0.85`, `REVIEW = 0.60`.
+- `src/lib/economics.ts`: `COST_PER_APPEAL_MANUAL = 735`, `COST_PER_APPEAL_AI = 300`, `OLD_CAPACITY_CUTOFF = 5000` (today's work threshold), `WORK_THRESHOLD_AI = 1200`, `WIN_RATE` table, routing thresholds `READY = 0.85`, `REVIEW = 0.60`. Derived: `LOW_VALUE_WIN_RATE = 0.40`, `MANUAL_BREAKEVEN` and `AI_BREAKEVEN` (cost per appeal over that win rate, ~$1,838 and $750). Breakeven is pure economics; the work threshold is the operating rule, sitting above breakeven by a buffer for RN opportunity cost, timely-filing risk and rework. Triage routes on `COST_PER_APPEAL_AI` alone; the threshold constants are display and the `would_have_been_worked_old` flag only.
 - Prompt caching on system prompt and criteria block.
 - All runs persisted; UI reads from DB. SSE for live runs.
 - Env: `ANTHROPIC_API_KEY`, `VOYAGE_API_KEY`, `DATABASE_URL`, `NEXT_PUBLIC_CLIENT_LOGO_URL` (optional), `NEXT_PUBLIC_DEMO_CONTROLS` (default false in prod, true in dev).
@@ -357,8 +378,8 @@ Production deltas, stated in the README and the interview: runs in the client's 
 3. Appeals Workbench. Click two citation chips. Show the evidence matrix. Approve.
 4. Open DEMO-03 (cached). Needs docs. Show the named missing element.
 5. Open DEMO-04 (cached). Needs review. Show the flagged assertion, edit it, save. Show the feedback row.
-6. Open DEMO-02 (cached). A $2,400 denial: above the ~$1,800 manual breakeven, below the $5,000 capacity cutoff, so economic to work and never worked, now in the queue with a fully cited draft routed needs review, with the flagged sentence shown and its reason. The line to say: nobody would have touched this case last year, and it took minutes and cents to produce something a nurse can check in a couple of reads. The flag is the system declining to overclaim, not a failure.
-7. Metrics dashboard, measured panel. Then eval dashboard. Say the n=20 caveat before anyone asks.
+6. Open DEMO-02 (cached). A $2,400 denial: above today's ~$1,800 breakeven, below today's ~$5K work threshold, so economic but never filed, now in the queue with a fully cited draft routed needs review, with the flagged sentence shown and its reason. The line to say: nobody would have touched this case last year, and it took minutes and cents to produce something a nurse can check in a couple of reads. The flag is the system declining to overclaim, not a failure.
+7. Claim Denial Dashboard. Lead with the RN touch-time chart and today's point. Then eval dashboard. Say the n=20 caveat before anyone asks.
 8. Return to the deck with one line: what was mock, what Phase 1 uses.
 
 **Fallback**: if the live run fails, click Show cached and continue. If the site is down, play the recording.
@@ -381,7 +402,7 @@ Production deltas, stated in the README and the interview: runs in the client's 
 
 **M2: Pipeline.** Stages A to E, orchestrator, persistence, `npm run pipeline -- --case`. Unit tests for A, renderer, E gates and routing. Exit: all four demo cases produce the expected route from the CLI.
 
-**M3: UI.** Workqueue, account detail with SSE streaming, Appeals Workbench with citation chips and evidence matrix, feedback actions, demo controls, logo from env, plus the metrics dashboard with the two-panel split and the eval dashboard. Both dashboard screens moved here from M4 and read from the DB; the eval screen shows an empty state until the harness writes its first run. Exit: full demo script runs on localhost and on Railway.
+**M3: UI.** Workqueue, account detail with SSE streaming, Appeals Workbench with citation chips and evidence matrix, feedback actions, demo controls, logo from env, plus the Claim Denial Dashboard and the eval dashboard. Both dashboard screens moved here from M4 and read from the DB; the eval screen shows an empty state until the harness writes its first run. Exit: full demo script runs on localhost and on Railway.
 
 **M4: Evals.** Harness, metric functions, EvalRun persistence, `npm run eval`, and marking the reference run. The dashboards that render the output were built in M3. Exit: `npm run eval` produces every metric in 9.2; dashboards render from DB.
 

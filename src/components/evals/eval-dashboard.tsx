@@ -177,6 +177,9 @@ export function EvalDashboard({ runs }: { runs: EvalRunView[] }) {
                             <div className="mt-[2px] font-mono text-[10.5px] text-zinc-400">
                               {spec.read(latestMetrics).note}
                             </div>
+                            <div className="mt-[4px] text-[10.5px] leading-[1.45] text-zinc-500">
+                              {spec.description}
+                            </div>
                           </div>
                         );
                       })}

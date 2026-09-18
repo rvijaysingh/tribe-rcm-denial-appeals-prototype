@@ -27,7 +27,7 @@ These are genuinely running, not simulated.
 - **All data is synthetic.** Every patient, chart, denial letter, payer and precedent was generated for this prototype. **No PHI, and no real patient ever existed.** Payer names (Pinnacle Health Plan, Cascade, Northgate Advantage) are invented.
 - **The criteria sets are synthetic.** They are labeled "InterQual-style" and "MCG-style" because they imitate the *shape* of such criteria. No proprietary criteria text is reproduced anywhere in this repo.
 - **The workqueue is mock.** A real deployment reads the client's worklist; this reads a seeded table.
-- **The production targets panel** on the metrics dashboard is from the proposal. Those four numbers are not measured by this prototype and the panel says so on screen.
+- **The Phase 1 levers table** on the Claim Denial Dashboard is from the proposal. Those figures are not measured by this prototype and the panel says so on screen. So is the recovery-rate chart, and the history behind the RN touch-time chart.
 - **Reviewer actions are a single-user simulation.** There is no auth, no real nurse, no RBAC.
 - **The client is never named.** The header reads "The RCM operator" unless `NEXT_PUBLIC_CLIENT_LOGO_URL` is set.
 
@@ -102,19 +102,20 @@ Rates and per-appeal figures only; no book-level numbers appear in this repo.
 | Figure | Value |
 |---|---|
 | Loaded cost per manual appeal | ~$735 |
-| Cost per AI-assisted appeal | ~$275 |
+| Cost per AI-assisted appeal | ~$300 |
 | Win rate on low-value claims | ~40% |
 | **Manual breakeven** | **~$1,800** ($735 / 40%) |
-| **AI breakeven** | **~$700** ($275 / 40%) |
-| Capacity cutoff in practice | **~$5,000** |
+| **AI breakeven** | **~$750** ($300 / 40%) |
+| **Work threshold today** | **~$5,000** (2.7x breakeven) |
+| **Work threshold with the pipeline** | **~$1,200** (1.6x breakeven) |
 
 The gap between those last two lines is the whole argument. A manually worked appeal breaks even near $1,800, but the minimum-balance threshold sits around $5,000, roughly 2.8x breakeven. RCM shops set it there deliberately, to cover the RN opportunity cost of the next case in the queue and the timely-filing risk carried while it waits. RN hours are the binding constraint, not economics.
 
-So the $1,800 to $5,000 range fills with denials that are economic to appeal and never appealed. About 30% of clinical denials are never appealed at all, averaging ~$3K, all of them under the cutoff. Dropping the cost of an appeal to ~$275 moves breakeven to ~$700; it does not move the cutoff, it removes the reason to have one that high.
+So the $1,800 to $5,000 range fills with denials that are economic to appeal and never appealed. About 30% of clinical denials are never appealed at all, averaging ~$3K, all of them under the work threshold. Dropping the cost of an appeal to ~$300 moves breakeven to ~$750 and the work threshold to ~$1,200. The threshold falls further than the breakeven does, because RN minutes replace RN hours so opportunity cost collapses, and same-day filing removes the expiry risk.
 
 On the claims that do get appealed, ~60% are won by count but only ~47% by dollars, because the high-value inpatient claims are fought hardest and lost most often. Across all clinical denied dollars the overturn rate is 42%. Each payer round runs 45 to 60 days, three rounds on average, so a contested claim sits in A/R for four to six months.
 
-DEMO-02 in the workqueue is this case in miniature: a $2,400 denial, comfortably above manual breakeven, below the capacity cutoff, and therefore never worked.
+DEMO-02 in the workqueue is this case in miniature: a $2,400 denial, comfortably above today's breakeven, below today's work threshold, and therefore never filed.
 
 ## Production deltas
 
@@ -131,7 +132,7 @@ What a real deployment changes, stated plainly because the prototype does none o
 | Chart size | 2 to 4 pages | Hundreds of pages, which is why cost per case here is not the production figure |
 | Criteria | Synthetic, "InterQual-style" | The client's licensed criteria, under their license |
 
-The chart-size point is the one most likely to be misread. Cost per case here is cents. The proposal assumes $2 to $5 per appeal in production, because production charts are two orders of magnitude longer. The metrics dashboard carries that note under the figure.
+The chart-size point is the one most likely to be misread. Cost per case here is cents. The proposal assumes $2 to $5 per appeal in production, because production charts are two orders of magnitude longer. The Claim Denial Dashboard carries that note under the figure.
 
 ---
 

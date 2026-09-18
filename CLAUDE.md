@@ -35,13 +35,14 @@ Full spec: `docs/PRD.md`. Read the relevant section before building any feature.
 
 ```
 src/app/(workqueue)/      workqueue list, account detail, RN Appeals Workbench
-src/app/dashboard/        metrics dashboard and eval dashboard
+src/app/dashboard/        denials/ (Claim Denial Dashboard), evals/, metrics/ (redirect)
 src/app/api/              route handlers: run pipeline (SSE streaming), feedback, reset
 src/components/           screen components; ui/ holds the shadcn primitives
 src/lib/pipeline/         a-triage.ts, b-classify.ts, c-retrieve.ts, d-draft.ts, e-verify.ts, orchestrator.ts
 src/lib/prompts/          prompt templates, one file per prompt, version in filename
 src/lib/db/               drizzle schema, client, typed queries
 src/lib/eval/metrics.ts   eval metric contract, shared by the harness and the eval dashboard
+src/lib/dashboard/        chart geometry and seeded mock series for the denial dashboard
 src/lib/models.ts         model IDs, embedding config, price table (single source of truth)
 src/lib/economics.ts      triage constants: cost per appeal, thresholds, win-rate table
 src/lib/money.ts          integer-cent parsing, comparison and display

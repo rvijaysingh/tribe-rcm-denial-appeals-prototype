@@ -97,6 +97,12 @@ export interface MetricSpec {
   group: string;
   /** Card label. */
   label: string;
+  /**
+   * One line of plain English, for a reader who knows denials but not evals.
+   * Shown under the metric rather than in a tooltip: a panellist should not
+   * have to hover to find out what a number means.
+   */
+  description: string;
   /** History table column header, kept short. */
   short: string;
   direction: Direction;
@@ -114,6 +120,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "falseWriteOff",
     group: "A",
     label: "False write-off rate",
+    description:
+      "Winnable denials that triage declined to appeal. 0% means rules left no revenue on the table.",
     short: "False w/o",
     direction: "down",
     format: "percent",
@@ -123,6 +131,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "ruleTests",
     group: "A",
     label: "Rule test pass rate",
+    description:
+      "Deterministic triage rules verified by unit tests.",
     short: "Rule tests",
     direction: "up",
     format: "percent",
@@ -132,6 +142,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "categoryAccuracy",
     group: "B",
     label: "Category accuracy",
+    description:
+      "Denial category (medical necessity vs level of care) matched the label.",
     short: "Cat acc",
     direction: "up",
     format: "percent",
@@ -141,6 +153,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "rootCauseAccuracy",
     group: "B",
     label: "Root-cause accuracy",
+    description:
+      "The specific criterion the payer cited matched the label.",
     short: "Root cause",
     direction: "up",
     format: "percent",
@@ -150,6 +164,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "confidence",
     group: "B",
     label: "Confidence calibration",
+    description:
+      "Mean confidence on correct vs incorrect classifications. Should be higher on correct.",
     short: "Calibration",
     direction: "none",
     format: "decimal",
@@ -170,6 +186,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "clauseRecallAt8",
     group: "C",
     label: "Clause recall@8",
+    description:
+      "Relevant criteria clauses that appeared in the top 8 retrieved.",
     short: "Clause R@8",
     direction: "up",
     format: "decimal",
@@ -179,6 +197,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "precedentRecallAt3",
     group: "C",
     label: "Precedent recall@3",
+    description:
+      "A relevant overturned precedent appeared in the top 3 retrieved.",
     short: "Prec R@3",
     direction: "up",
     format: "percent",
@@ -188,6 +208,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "citationValidity",
     group: "D",
     label: "Citation validity",
+    description:
+      "Every cited chart line and clause exists. Deterministic check.",
     short: "Cite valid",
     direction: "up",
     format: "percent",
@@ -197,6 +219,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "criteriaCoverage",
     group: "D",
     label: "Criteria coverage",
+    description:
+      "Required clauses with at least one supporting assertion in the draft.",
     short: "Coverage",
     direction: "up",
     format: "percent",
@@ -206,6 +230,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "faithfulness",
     group: "D",
     label: "Faithfulness (judge)",
+    description:
+      "Assertions whose cited lines actually support them, scored by the judge model.",
     short: "Faithful",
     direction: "up",
     format: "percent",
@@ -215,6 +241,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "routeAccuracy",
     group: "E",
     label: "Route accuracy",
+    description:
+      "Pipeline route matched the expected route.",
     short: "Route acc",
     direction: "up",
     format: "percent",
@@ -224,6 +252,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "judgeAgreement",
     group: "E",
     label: "Judge agreement",
+    description:
+      "Judge verdict matched the human approve-as-is label.",
     short: "Judge agr",
     direction: "up",
     format: "percent",
@@ -233,6 +263,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "pipelineSeconds",
     group: "∑",
     label: "Pipeline seconds (median)",
+    description:
+      "End-to-end time per case, median and p90.",
     short: "Sec (med)",
     direction: "down",
     format: "seconds",
@@ -245,6 +277,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "costPerCase",
     group: "∑",
     label: "Cost per case (median)",
+    description:
+      "Inference cost from token counts, median.",
     short: "$ (med)",
     direction: "down",
     format: "cost",
@@ -257,6 +291,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "reviewerAgreement",
     group: "∑",
     label: "Reviewer agreement",
+    description:
+      "Drafts approved as-is by the reviewer.",
     short: "Rev agr",
     direction: "up",
     format: "percent",
@@ -269,6 +305,8 @@ export const METRIC_SPECS: MetricSpec[] = [
     key: "completed",
     group: "∑",
     label: "Cases completed",
+    description:
+      "Cases that ran to completion without an error.",
     short: "Done",
     direction: "up",
     format: "count",
