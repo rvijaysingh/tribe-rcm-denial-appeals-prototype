@@ -41,12 +41,12 @@ describe("expectedValueCents", () => {
     expect(Number.isInteger(expectedValueCents(70000, 0.38))).toBe(true);
   });
 
-  it("is exactly at the threshold for $500 at 0.55", () => {
-    expect(expectedValueCents(toCents(500), 0.55)).toBe(toCents(COST_PER_APPEAL_AI));
+  it("is exactly at the threshold for $625 at 0.48", () => {
+    expect(expectedValueCents(toCents(625), 0.48)).toBe(toCents(COST_PER_APPEAL_AI));
   });
 
-  it("is one cent above the threshold for $500.02 at 0.55", () => {
-    expect(expectedValueCents(toCents(500.02), 0.55)).toBe(toCents(COST_PER_APPEAL_AI) + 1);
+  it("is one cent above the threshold for $625.03 at 0.48", () => {
+    expect(expectedValueCents(toCents(625.03), 0.48)).toBe(toCents(COST_PER_APPEAL_AI) + 1);
   });
 
   it("does not drift on a rate with more decimals", () => {

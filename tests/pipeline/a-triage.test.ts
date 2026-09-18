@@ -56,7 +56,7 @@ describe("triage: appeal path", () => {
 
   it("explains the decision with the numbers behind it", () => {
     expect(triage(base, NOW).reason).toBe(
-      "Expected value $11,470.00 ($18,500.00 x 0.62) clears the $275.00 cost to work it, with 41 days left to file.",
+      "Expected value $11,470.00 ($18,500.00 x 0.62) clears the $300.00 cost to work it, with 41 days left to file.",
     );
   });
 });
@@ -102,14 +102,14 @@ describe("triage: do-not-appeal branches", () => {
 
 describe("triage: boundaries", () => {
   it("does not appeal when EV equals the threshold exactly", () => {
-    // Pinnacle level_of_care is 0.55, and $500.00 x 0.55 is exactly $275.00.
-    const out = triage({ ...base, category: "level_of_care", amount: "500.00" }, NOW);
+    // Cascade level_of_care is 0.48, and $625.00 x 0.48 is exactly $300.00.
+    const out = triage({ ...base, payerId: "cascade", category: "level_of_care", amount: "625.00" }, NOW);
     expect(out.expected_value_cents).toBe(toCents(COST_PER_APPEAL_AI));
     expect(out.decision).toBe("do_not_appeal");
   });
 
   it("appeals one cent above the threshold", () => {
-    const out = triage({ ...base, category: "level_of_care", amount: "500.02" }, NOW);
+    const out = triage({ ...base, payerId: "cascade", category: "level_of_care", amount: "625.03" }, NOW);
     expect(out.expected_value_cents).toBe(toCents(COST_PER_APPEAL_AI) + 1);
     expect(out.decision).toBe("appeal");
   });

@@ -178,16 +178,16 @@ describe("triageFromInputs", () => {
   });
 
   it("returns below_ev when EV equals the threshold exactly", () => {
-    // Pinnacle level_of_care is 0.55, and 500 x 0.55 is exactly 275 in floating
+    // Cascade level_of_care is 0.48, and 625 x 0.48 is exactly 300 in floating
     // point. The PRD rule is appeal only when EV is strictly greater.
     expect(
-      triageFromInputs({ ...base, category: "level_of_care", amount: 500 }, criteria),
+      triageFromInputs({ ...base, payerId: "cascade", category: "level_of_care", amount: 625 }, criteria),
     ).toBe("below_ev");
   });
 
   it("returns appeal when EV is one dollar of amount above the threshold", () => {
     expect(
-      triageFromInputs({ ...base, category: "level_of_care", amount: 501 }, criteria),
+      triageFromInputs({ ...base, payerId: "cascade", category: "level_of_care", amount: 626 }, criteria),
     ).toBe("appeal");
   });
 });

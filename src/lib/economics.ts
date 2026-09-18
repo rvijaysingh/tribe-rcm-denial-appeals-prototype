@@ -13,7 +13,7 @@ import type { DenialCategory, PayerId } from "./domain";
 export const COST_PER_APPEAL_MANUAL = 735;
 
 /** Target blended cost per appeal under the AI pipeline (PRD 10). */
-export const COST_PER_APPEAL_AI = 275;
+export const COST_PER_APPEAL_AI = 300;
 
 /**
  * The dollar amount below which denials were never worked under the old
@@ -25,37 +25,53 @@ export const OLD_CAPACITY_CUTOFF = 5000;
  * Win rate assumed when deriving a breakeven amount.
  *
  * Deliberately not the WIN_RATE table: breakeven is about the low-value claims
- * sitting near the cutoff, and those run near 40%. The table's per-payer rates
- * describe the cases actually being appealed, which skew higher.
+ * sitting near the threshold, and those run near 40%. The table's per-payer
+ * rates describe the cases actually being appealed, which skew higher.
  */
 export const LOW_VALUE_WIN_RATE = 0.4;
 
 /**
- * Breakeven claim amounts, rounded to the nearest hundred because they are
- * quoted as round numbers and nothing routes on them.
+ * Breakeven and work threshold are two different numbers, and conflating them
+ * is what makes the denials-never-worked leak look irrational.
  *
- *   manual: $735 / 40% = $1,838, quoted as ~$1,800
- *   AI:     $275 / 40% = $688,   quoted as ~$700
+ * BREAKEVEN is pure economics: the claim value at which expected recovery
+ * equals the cost to appeal, that is cost per appeal divided by the win rate on
+ * that tier of claim. Nothing else enters it.
  *
- * Below these amounts the expected recovery does not cover the cost of working
- * the appeal, so the work is uneconomic however much capacity exists.
+ * WORK THRESHOLD is the operating rule: the minimum claim value a denials shop
+ * actually files on. It sits above breakeven by a buffer covering three things
+ * breakeven ignores:
+ *   - RN opportunity cost, the next case in the queue that does not get worked
+ *   - timely-filing risk carried while the case waits
+ *   - rework rounds, since a contested claim rarely settles on the first pass
  *
- * The capacity cutoff sits well above either. RCM shops set minimum-balance
- * thresholds at roughly 2.5x to 3x breakeven to cover the RN opportunity cost
- * of the next case in the queue and the timely-filing risk carried while it
- * waits. At $5,000 against a $1,800 manual breakeven the cutoff is 2.8x, which
- * is why a case can be comfortably economic and still never worked. That gap
- * is the threshold story the demo tells, and lowering the cost of an appeal
- * moves the breakeven, not the cutoff.
- *
- * Nothing in the pipeline routes on these. Stage A compares expected value
- * against COST_PER_APPEAL_AI directly; these exist for the UI and the docs.
+ * Today that buffer runs ~2.5x to 3x breakeven. With the pipeline it falls to
+ * ~1.5x, because RN minutes replace RN hours so opportunity cost collapses, and
+ * same-day filing removes the expiry risk. The threshold falls further than the
+ * breakeven does, which is the actual shape of the win.
  */
-export const MANUAL_BREAKEVEN = Math.round(COST_PER_APPEAL_MANUAL / LOW_VALUE_WIN_RATE / 100) * 100;
-export const AI_BREAKEVEN = Math.round(COST_PER_APPEAL_AI / LOW_VALUE_WIN_RATE / 100) * 100;
+export const MANUAL_BREAKEVEN = COST_PER_APPEAL_MANUAL / LOW_VALUE_WIN_RATE;
+export const AI_BREAKEVEN = COST_PER_APPEAL_AI / LOW_VALUE_WIN_RATE;
 
-/** How far the capacity cutoff sits above manual breakeven. Expected 2.5x to 3x. */
-export const CUTOFF_MULTIPLE = OLD_CAPACITY_CUTOFF / MANUAL_BREAKEVEN;
+/**
+ * Work thresholds. OLD_CAPACITY_CUTOFF is today's; WORK_THRESHOLD_AI is where
+ * the pipeline puts it. Neither is a routing input: stage A compares expected
+ * value against COST_PER_APPEAL_AI directly, and these drive display and the
+ * would_have_been_worked_old flag only.
+ */
+export const WORK_THRESHOLD_AI = 1200;
+
+/**
+ * Rounded for copy. MANUAL_BREAKEVEN is $1,837.50 and is quoted as ~$1,800;
+ * AI_BREAKEVEN is exactly $750. A test keeps each within a few percent of the
+ * value it stands in for, so the copy cannot drift from the arithmetic.
+ */
+export const MANUAL_BREAKEVEN_DISPLAY = 1800;
+export const AI_BREAKEVEN_DISPLAY = 750;
+
+/** How far each work threshold sits above its breakeven. */
+export const MANUAL_THRESHOLD_MULTIPLE = OLD_CAPACITY_CUTOFF / MANUAL_BREAKEVEN;
+export const AI_THRESHOLD_MULTIPLE = WORK_THRESHOLD_AI / AI_BREAKEVEN;
 
 /** Composite score at or above which a draft routes "ready" (PRD 7 stage E). */
 export const READY_THRESHOLD = 0.85;
@@ -96,7 +112,7 @@ export const APPEALABLE_CATEGORIES: Record<PayerId, readonly DenialCategory[]> =
 /**
  * Lowest win rate in the table (the payer floor). The seed's "below economic
  * threshold" do-not-appeal row is a $700 Northgate medical_necessity denial at
- * this floor: EV = $700 x 0.38 = $266, under COST_PER_APPEAL_AI. A low-dollar
+ * this floor: EV = $700 x 0.38 = $266, under COST_PER_APPEAL_AI ($300). A low-dollar
  * denial that is not economic to work even at the AI-lowered cost (PRD 8.3).
  * The seed asserts that inequality so a WIN_RATE change cannot silently flip
  * that row to "appeal".

@@ -2,7 +2,11 @@
 
 import { RouteBadge } from "@/components/route-badge";
 import type { Stage } from "@/lib/domain";
-import { AI_BREAKEVEN, MANUAL_BREAKEVEN } from "@/lib/economics";
+import {
+  AI_BREAKEVEN_DISPLAY,
+  MANUAL_BREAKEVEN_DISPLAY,
+  WORK_THRESHOLD_AI,
+} from "@/lib/economics";
 import type { VerifyPhase } from "@/lib/pipeline/e-verify";
 import { formatCost, formatDollars, formatPercent, formatSeconds } from "@/lib/ui/format";
 import { cn } from "@/lib/utils";
@@ -276,6 +280,14 @@ export function StageCards({
                     <span className="font-mono font-semibold tabular-nums">{daysLeft}</span> days remaining in the
                     appeal window
                   </span>
+                  <span>
+                    Work threshold:{" "}
+                    <span className="font-semibold">{formatDollars(WORK_THRESHOLD_AI)} with the pipeline</span>, down
+                    from {formatDollars(oldCutoffDollars)}{" "}
+                    <span className="text-zinc-500">
+                      (breakeven {formatDollars(AI_BREAKEVEN_DISPLAY)}, from {formatDollars(MANUAL_BREAKEVEN_DISPLAY)})
+                    </span>
+                  </span>
                   <span className={wouldHaveBeenWorkedOld ? "text-zinc-600" : "text-amber-800"}>
                     Old system: this case{" "}
                     <span className="font-semibold">{wouldHaveBeenWorkedOld ? "WOULD" : "would NOT"}</span> have been
@@ -289,9 +301,10 @@ export function StageCards({
                       <span className="font-mono font-semibold">would_have_been_worked_old = false</span>. This account
                       sits below the {formatDollars(oldCutoffDollars)} cutoff and would not have been worked under the
                       previous process, even though {formatDollars(triage.amount_cents / 100)} clears the{" "}
-                      {formatDollars(MANUAL_BREAKEVEN)} manual breakeven. The cutoff sits 2.5x to 3x above breakeven to
-                      cover RN opportunity cost and timely-filing risk, so cases in that range were economic and still
-                      never worked. At {formatDollars(AI_BREAKEVEN)} AI breakeven the range closes.
+                      {formatDollars(MANUAL_BREAKEVEN_DISPLAY)} manual breakeven. The work threshold sits 2.5x to 3x
+                      above breakeven to cover RN opportunity cost, timely-filing risk and rework rounds, so cases in
+                      that range were economic and still never filed. The pipeline drops the threshold to{" "}
+                      {formatDollars(WORK_THRESHOLD_AI)}.
                     </span>
                   </div>
                 ) : null}

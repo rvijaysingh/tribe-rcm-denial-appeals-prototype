@@ -1,9 +1,10 @@
 import { AppShell } from "@/components/app-shell";
-import { MockBadge, RouteBadge } from "@/components/route-badge";
+import { RouteBadge } from "@/components/route-badge";
 import { loadMeasuredMetrics, loadWorkqueue } from "@/lib/db/queries";
 import { OLD_CAPACITY_CUTOFF } from "@/lib/economics";
 import { triage } from "@/lib/pipeline/a-triage";
-import { COST_PER_CASE_CAVEAT, PRODUCTION_TARGETS } from "@/lib/targets";
+import { LeversTable } from "@/components/dashboard/levers-table";
+import { COST_PER_CASE_CAVEAT } from "@/lib/targets";
 import { formatCost, formatDollars, formatPercent, formatSeconds } from "@/lib/ui/format";
 
 export const dynamic = "force-dynamic";
@@ -164,42 +165,11 @@ export default async function MetricsPage() {
           </div>
         </section>
 
-        <section>
-          <div className="mb-[9px] flex items-center gap-[7px]">
-            <span className="font-mono text-[11px] font-semibold tracking-wide text-zinc-600 uppercase">
-              Production targets
-            </span>
-            <MockBadge label="FROM THE PROPOSAL, NOT MEASURED HERE" />
-            <span className="h-px flex-1 bg-zinc-200" />
-          </div>
-
-          <div className="overflow-hidden rounded-md border border-zinc-200">
-            <table className="w-full border-collapse text-[12px]">
-              <thead>
-                <tr className="bg-zinc-50 text-left font-mono text-[9.5px] tracking-wide text-zinc-500 uppercase">
-                  <th className="px-[10px] py-[7px] font-semibold">Measure</th>
-                  <th className="px-[10px] py-[7px] font-semibold">Baseline today</th>
-                  <th className="px-[10px] py-[7px] font-semibold">Phase 1 target</th>
-                  <th className="px-[10px] py-[7px] font-semibold">Note</th>
-                </tr>
-              </thead>
-              <tbody>
-                {PRODUCTION_TARGETS.map((target) => (
-                  <tr key={target.label} className="border-t border-zinc-100">
-                    <td className="px-[10px] py-[7px] font-medium text-zinc-800">{target.label}</td>
-                    <td className="px-[10px] py-[7px] text-zinc-600">{target.baseline}</td>
-                    <td className="px-[10px] py-[7px] text-zinc-800">{target.target}</td>
-                    <td className="px-[10px] py-[7px] text-zinc-500">{target.note}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="mt-[8px] text-[11px] text-zinc-500">
-            These four are the proposal&rsquo;s numbers, validated in discovery. Nothing on this row is produced by the
-            prototype, and no number above was derived from them.
-          </div>
-        </section>
+        <LeversTable
+          measured={{
+            costPerCase: metrics.medianCostUsd === null ? undefined : formatCost(metrics.medianCostUsd),
+          }}
+        />
       </div>
     </AppShell>
   );

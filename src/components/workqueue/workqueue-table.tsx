@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { MockBadge, RouteBadge } from "@/components/route-badge";
-import { MANUAL_BREAKEVEN, OLD_CAPACITY_CUTOFF } from "@/lib/economics";
+import { MANUAL_BREAKEVEN_DISPLAY, OLD_CAPACITY_CUTOFF } from "@/lib/economics";
 import { CATEGORY_LABEL, formatCost, formatDollars, formatSeconds } from "@/lib/ui/format";
 import { cn } from "@/lib/utils";
 
@@ -219,7 +219,7 @@ export function WorkqueueTable({ items }: { items: WorkqueueItem[] }) {
                     {!dna && !item.wouldHaveBeenWorkedOld ? (
                       <span
                         className="ml-[6px] inline-flex h-[16px] items-center rounded-[3px] border border-violet-200 bg-violet-50 px-[4px] font-mono text-[9px] font-semibold text-violet-700"
-                        title={`Below the old ${formatDollars(OLD_CAPACITY_CUTOFF)} capacity cutoff, though above the ${formatDollars(MANUAL_BREAKEVEN)} manual breakeven: economic to work, and nobody worked it under the previous process.`}
+                        title={`Below the old ${formatDollars(OLD_CAPACITY_CUTOFF)} capacity cutoff, though above the ${formatDollars(MANUAL_BREAKEVEN_DISPLAY)} manual breakeven: economic to work, and nobody worked it under the previous process.`}
                       >
                         NEW
                       </span>
