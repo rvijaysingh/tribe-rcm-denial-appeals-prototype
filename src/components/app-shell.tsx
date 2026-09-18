@@ -14,7 +14,9 @@ const NAV = [
   { href: "/", label: "Workqueue", match: (p: string) => p === "/" || p.startsWith("/accounts") },
   {
     href: "/dashboard/denials",
-    label: "Claim Denial Dashboard",
+    // Short label so the nav stays balanced; the page heading keeps the full
+    // name "Claim Denial Dashboard".
+    label: "Denials Dashboard",
     match: (p: string) => p === "/dashboard/denials" || p === "/dashboard/metrics",
   },
   { href: "/dashboard/evals", label: "Evals", match: (p: string) => p === "/dashboard/evals" },
