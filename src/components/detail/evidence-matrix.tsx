@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import type { Draft } from "@/lib/pipeline/draft-schema";
 import type { RetrieveOutput } from "@/lib/pipeline/c-retrieve";
 import type { VerifyResult } from "@/lib/pipeline/e-verify";
+import { resolveFlagTargets } from "@/lib/flagged";
 
 /**
  * Evidence matrix (PRD 6.3): one row per required clause, with how well the
@@ -54,14 +55,27 @@ export function buildMatrix(
 ): ClauseRow[] {
   const required = (retrieval?.clauses ?? []).filter((c) => c.required);
   const conceded = new Map(draft.unsupported_required.map((g) => [g.clause_id, g.evidence_needed]));
-  const flaggedText = new Set((verify?.judge?.flagged_assertions ?? []).map((f) => f.assertion_text.trim()));
+  // Resolved rather than string-matched: the judge rarely quotes an assertion
+  // back verbatim, and exact matching silently marked every paraphrased flag as
+  // unflagged here.
+  const everyAssertion = draft.sections.flatMap((s, si) =>
+    s.assertions.map((a, ai) => ({ id: `${si}-${ai}`, text: a.text })),
+  );
+  const { flaggedIds } = resolveFlagTargets(
+    (verify?.judge?.flagged_assertions ?? []).map((f) => f.assertion_text),
+    everyAssertion,
+  );
+  const idOf = new Map(everyAssertion.map((a) => [a.text, a.id]));
 
   return required.map((clause) => {
     const citing = draft.sections
       .flatMap((s) => s.assertions)
       .filter((a) => a.clause_ids.includes(clause.id));
     const lines = [...new Set(citing.flatMap((a) => a.chart_line_ids))];
-    const isFlagged = citing.some((a) => flaggedText.has(a.text.trim()));
+    const isFlagged = citing.some((a) => {
+      const id = idOf.get(a.text);
+      return id !== undefined && flaggedIds.has(id);
+    });
 
     let status: ClauseStatus;
     let note: string | null = null;

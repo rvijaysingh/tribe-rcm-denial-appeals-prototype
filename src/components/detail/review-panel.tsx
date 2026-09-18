@@ -6,6 +6,7 @@ import { SECTION_NAMES, type SectionName } from "@/lib/domain";
 import { PAYER_HISTORY_WARN_THRESHOLD } from "@/lib/economics";
 import { CATEGORY_LABEL, formatCost, formatPercent, formatSeconds } from "@/lib/ui/format";
 import { cn } from "@/lib/utils";
+import { resolveFlagTargets, type AssertionRef } from "@/lib/flagged";
 import { EvidenceMatrix, buildMatrix } from "./evidence-matrix";
 import {
   STAGE_META,
@@ -36,6 +37,42 @@ const SECTION_HEADING: Record<SectionName, string> = {
   precedent: "PRECEDENT",
   request: "REQUEST",
 };
+
+/** Nearest ancestor that actually scrolls, so the letter box is found rather than the page. */
+function scrollableAncestor(node: HTMLElement): HTMLElement | null {
+  let el: HTMLElement | null = node.parentElement;
+  while (el) {
+    const overflowY = getComputedStyle(el).overflowY;
+    if ((overflowY === "auto" || overflowY === "scroll") && el.scrollHeight > el.clientHeight) return el;
+    el = el.parentElement;
+  }
+  return null;
+}
+
+/**
+ * Centre an assertion in the letter box.
+ *
+ * Deliberately not scrollIntoView. The draft tab usually mounts in the same
+ * commit that sets the jump target, and scrollIntoView on a subtree whose
+ * layout has not settled silently does nothing: the identical call a moment
+ * later scrolls correctly. Rect arithmetic against the scroller is
+ * deterministic, and works regardless of which ancestor is positioned.
+ */
+function centreInScroller(node: HTMLElement): void {
+  const scroller = scrollableAncestor(node);
+  if (!scroller) {
+    node.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+  const nodeRect = node.getBoundingClientRect();
+  const scrollerRect = scroller.getBoundingClientRect();
+  const delta = nodeRect.top - scrollerRect.top - (scroller.clientHeight - nodeRect.height) / 2;
+  // Smooth only when the tab is actually on screen. A hidden tab suppresses
+  // the animation and the scroll never lands, which is both a silent failure
+  // and impossible to verify from an automation driver.
+  const behavior: ScrollBehavior = document.visibilityState === "visible" ? "smooth" : "auto";
+  scroller.scrollTo({ top: scroller.scrollTop + delta, behavior });
+}
 
 const ESCALATION_REASONS = [
   "Needs a physician attestation",
@@ -79,7 +116,6 @@ export function ReviewPanel({
   const openedAt = useRef<number | null>(null);
   // One node per rendered assertion, keyed by its trimmed text, so a flag can
   // scroll to the sentence it is about.
-  const assertionNodes = useRef(new Map<string, HTMLParagraphElement | null>());
   const editRef = useRef<HTMLTextAreaElement | null>(null);
   const [jumpTarget, setJumpTarget] = useState<string | null>(null);
 
@@ -94,8 +130,30 @@ export function ReviewPanel({
 
   useEffect(() => {
     if (!jumpTarget) return;
-    const timer = setTimeout(() => setJumpTarget(null), 2000);
-    return () => clearTimeout(timer);
+
+    /**
+     * Centre the flagged sentence. Looked up from the DOM each attempt rather
+     * than captured: the draft tab unmounts when another tab is shown, so a
+     * held reference can be the detached node from the previous mount.
+     */
+    const attempt = () => {
+      const node = document.querySelector<HTMLElement>(`[data-assertion-id="${CSS.escape(jumpTarget)}"]`);
+      if (node) centreInScroller(node);
+    };
+
+    // Timeouts rather than requestAnimationFrame. rAF does not fire in a
+    // background tab, so an rAF-based scroll silently does nothing there, and
+    // it cannot be verified by an automation driver either. The first attempt
+    // covers a draft tab that was already mounted; the retries cover one that
+    // mounted in this same commit and has not laid out yet.
+    attempt();
+    const retries = [setTimeout(attempt, 50), setTimeout(attempt, 200)];
+    const fade = setTimeout(() => setJumpTarget(null), 2400);
+
+    return () => {
+      for (const id of retries) clearTimeout(id);
+      clearTimeout(fade);
+    };
   }, [jumpTarget]);
 
   const matrix = useMemo(
@@ -104,18 +162,38 @@ export function ReviewPanel({
   );
 
   const flags = useMemo(() => verify?.judge?.flagged_assertions ?? [], [verify]);
-  const flaggedText = useMemo(() => new Set(flags.map((f) => f.assertion_text.trim())), [flags]);
 
-  /** Scroll a flagged sentence into view in the Draft tab and flash it. */
-  const jumpToAssertion = (text: string) => {
-    const key = text.trim();
+  /**
+   * Assertions in the order the draft tab renders them, each with a stable id.
+   * The id is positional rather than text-derived: the judge rarely quotes an
+   * assertion back verbatim, so text is not a usable key.
+   */
+  const assertionRefs = useMemo<AssertionRef[]>(() => {
+    if (!draft) return [];
+    return SECTION_NAMES.flatMap((name) =>
+      draft.draft.sections
+        .filter((s) => s.name === name)
+        .flatMap((s) => s.assertions)
+        .filter((a) => a.text.trim())
+        .map((a, i) => ({ id: `${name}-${i}`, text: a.text })),
+    );
+  }, [draft]);
+
+  const { targets: flagTargets, flaggedIds } = useMemo(
+    () => resolveFlagTargets(flags.map((f) => f.assertion_text), assertionRefs),
+    [flags, assertionRefs],
+  );
+
+  /**
+   * Show a flagged sentence in the Draft tab and flash it. The scroll happens
+   * in an effect rather than here: setTab may be mounting the draft tab for the
+   * first time, and the node does not exist until React has committed it.
+   */
+  const jumpToAssertion = (assertionId: string | null) => {
+    if (!assertionId) return;
     setTab("draft");
     setEditing(false);
-    setJumpTarget(key);
-    // The Draft tab may have just been mounted by setTab, so wait a frame.
-    requestAnimationFrame(() => {
-      assertionNodes.current.get(key)?.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
+    setJumpTarget(assertionId);
   };
 
   /**
@@ -128,9 +206,14 @@ export function ReviewPanel({
     setEditText(draft.letterText);
     setEditing(true);
     setTab("draft");
-    const first = flags[0]?.assertion_text.trim();
+    // The letter contains the assertion's own words, not the judge's
+    // paraphrase of them, so search for the resolved assertion.
+    const firstTargetId = flagTargets.find((id) => id !== null) ?? null;
+    const first = assertionRefs.find((a) => a.id === firstTargetId)?.text.trim();
     if (!first) return;
-    requestAnimationFrame(() => {
+    // setTimeout, not requestAnimationFrame, for the same reason as the jump
+    // above: rAF does not fire in a background tab.
+    setTimeout(() => {
       const node = editRef.current;
       if (!node) return;
       const at = node.value.indexOf(first);
@@ -140,7 +223,7 @@ export function ReviewPanel({
       // Selecting alone does not scroll, so put the caret line near the middle.
       const ratio = at / Math.max(1, node.value.length);
       node.scrollTop = Math.max(0, ratio * node.scrollHeight - node.clientHeight / 2);
-    });
+    }, 0);
   };
 
   if (!run || !draft) {
@@ -222,13 +305,20 @@ export function ReviewPanel({
                   &ldquo;{flag.assertion_text}&rdquo;
                 </div>
                 <div className="mt-[4px] pl-[10px] text-[11.5px] leading-[1.55] text-amber-900">{flag.reason}</div>
-                <button
-                  type="button"
-                  onClick={() => jumpToAssertion(flag.assertion_text)}
-                  className="mt-[5px] ml-[10px] rounded-[4px] border border-amber-300 bg-white px-[7px] py-[2px] text-[11px] font-medium text-amber-900 hover:bg-amber-100"
-                >
-                  Jump to assertion
-                </button>
+                {flagTargets[i] ? (
+                  <button
+                    type="button"
+                    onClick={() => jumpToAssertion(flagTargets[i])}
+                    className="mt-[5px] ml-[10px] rounded-[4px] border border-amber-300 bg-white px-[7px] py-[2px] text-[11px] font-medium text-amber-900 hover:bg-amber-100"
+                  >
+                    Jump to assertion
+                  </button>
+                ) : (
+                  <div className="mt-[5px] ml-[10px] text-[11px] text-amber-800">
+                    The judge paraphrased this one, so it could not be matched to a single sentence. Read the draft in
+                    full before approving.
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -319,15 +409,13 @@ export function ReviewPanel({
                     {SECTION_HEADING[name]}
                   </div>
                   {assertions.map((assertion, i) => {
-                    const key = assertion.text.trim();
-                    const isFlagged = flaggedText.has(key);
-                    const isJumpTarget = jumpTarget === key;
+                    const assertionId = `${name}-${i}`;
+                    const isFlagged = flaggedIds.has(assertionId);
+                    const isJumpTarget = jumpTarget === assertionId;
                     return (
                       <p
-                        key={i}
-                        ref={(node) => {
-                          assertionNodes.current.set(key, node);
-                        }}
+                        key={assertionId}
+                        data-assertion-id={assertionId}
                         className={cn(
                           "mb-[8px] scroll-mt-[74px] text-[12px] leading-[1.7] text-zinc-800 transition-shadow duration-500",
                           isFlagged && "rounded-[4px] border-l-2 border-amber-400 bg-amber-50 py-[5px] pr-[6px] pl-[8px]",
