@@ -1,6 +1,7 @@
 import { eq, inArray } from "drizzle-orm";
 import type { NextRequest } from "next/server";
 import { getDb } from "@/lib/db/client";
+import { deleteTodaysFeedback } from "@/lib/db/queries";
 import { denials, pipelineRuns, reviewerFeedback } from "@/lib/db/schema";
 
 /**
@@ -9,6 +10,10 @@ import { denials, pipelineRuns, reviewerFeedback } from "@/lib/db/schema";
  * Deletes runs and feedback for one demo case so it can be run live again
  * during a rehearsal, the same operation as npm run demo:reset. Seed data is
  * untouched.
+ *
+ * It also clears every feedback row created today across all cases. The RN
+ * touch-time chart plots today's approvals, so resetting one case has to clear
+ * the day or the chart keeps a point from a rehearsal that has been undone.
  *
  * Two guards, both deliberate:
  * - Only demo-split cases can be reset. Deleting runs for a dev or test case
@@ -57,5 +62,12 @@ export async function POST(_request: NextRequest, ctx: RouteContext<"/api/demo/r
     await db.delete(pipelineRuns).where(inArray(pipelineRuns.id, runIds));
   }
 
-  return Response.json({ denialId, runsDeleted: runIds.length, feedbackDeleted });
+  const todaysFeedbackDeleted = await deleteTodaysFeedback();
+
+  return Response.json({
+    denialId,
+    runsDeleted: runIds.length,
+    feedbackDeleted,
+    todaysFeedbackDeleted,
+  });
 }

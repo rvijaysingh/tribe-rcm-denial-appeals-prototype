@@ -14,6 +14,7 @@
 import "./seed/load-env";
 import { eq, inArray } from "drizzle-orm";
 import { closeDb, getDb } from "../src/lib/db/client";
+import { deleteTodaysFeedback } from "../src/lib/db/queries";
 import { denials, pipelineRuns, reviewerFeedback } from "../src/lib/db/schema";
 
 export interface ResetArgs {
@@ -81,10 +82,20 @@ async function main(): Promise<void> {
     await db.delete(pipelineRuns).where(inArray(pipelineRuns.id, runIds));
   }
 
+  // Also clear the rest of today's feedback, across every case. The RN
+  // touch-time chart plots today's approvals, so a reset that left another
+  // case's approval behind would leave a point on a chart that is meant to
+  // read "no approvals yet today".
+  const todaysFeedbackDeleted = await deleteTodaysFeedback();
+
   console.log(
-    `Reset ${targets.length} case(s): ${targets.join(", ")}\n` +
-      `  ${runIds.length} pipeline run(s) and ${feedbackDeleted} feedback row(s) deleted ` +
-      `in ${Date.now() - started}ms`,
+    `Reset ${targets.length} case(s): ${targets.join(", ")}` +
+      `
+  ${runIds.length} pipeline run(s) and ${feedbackDeleted} feedback row(s) deleted` +
+      `
+  ${todaysFeedbackDeleted} feedback row(s) from today cleared across all cases` +
+      `
+  in ${Date.now() - started}ms`,
   );
 }
 

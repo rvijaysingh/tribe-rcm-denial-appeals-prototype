@@ -143,6 +143,12 @@ export function AccountDetail(props: AccountDetailProps) {
   // them, so writing here costs nothing and never triggers a render.
   const tabRef = useRef<"pipeline" | "review">("pipeline");
   const lastActivityRef = useRef(Date.now());
+  /**
+   * When this account page was opened. RN touch time is measured from here to
+   * the Approve click, not from when the workbench tab happened to mount: the
+   * nurse's work starts when the case does.
+   */
+  const pageOpenedAt = useRef<number | null>(null);
 
   // router.refresh() re-renders the server component but leaves this client
   // component's state alone, so without this the run started above would never
@@ -287,7 +293,11 @@ export function AccountDetail(props: AccountDetailProps) {
 
   const resetCase = useCallback(async () => {
     const response = await fetch(`/api/demo/reset/${props.denialId}`, { method: "POST" });
-    const body = (await response.json()) as { error?: string; runsDeleted?: number };
+    const body = (await response.json()) as {
+      error?: string;
+      runsDeleted?: number;
+      todaysFeedbackDeleted?: number;
+    };
     if (!response.ok) {
       setBanner({ tone: "error", text: body.error ?? "Reset failed." });
       return;
@@ -300,7 +310,12 @@ export function AccountDetail(props: AccountDetailProps) {
     setTab("pipeline");
     setLiveRun(false);
     setResetArmed(false);
-    setBanner({ tone: "info", text: `Reset: ${body.runsDeleted} run(s) deleted.` });
+    setBanner({
+      tone: "info",
+      text:
+        `Reset: ${body.runsDeleted} run(s) deleted` +
+        (body.todaysFeedbackDeleted ? `, ${body.todaysFeedbackDeleted} feedback row(s) from today cleared.` : "."),
+    });
     router.refresh();
   }, [props.denialId, router]);
 
@@ -393,6 +408,10 @@ export function AccountDetail(props: AccountDetailProps) {
   }, [autoJumpArmed, liveRun, reviewReady, changeTab]);
 
   // Let the arrival highlight fade on its own.
+  useEffect(() => {
+    pageOpenedAt.current = Date.now();
+  }, [props.denialId]);
+
   useEffect(() => {
     if (!justJumped) return;
     const timer = setTimeout(() => setJustJumped(false), 1400);
@@ -534,6 +553,7 @@ export function AccountDetail(props: AccountDetailProps) {
               <button
                 type="button"
                 onClick={resetCase}
+                title="Deletes this case's runs and feedback, and clears every feedback row from today across all cases so the RN touch-time chart returns to no approvals yet today."
                 className="h-[28px] rounded-[6px] border border-red-200 bg-white px-[9px] text-[11.5px] text-red-700 hover:bg-red-50"
               >
                 Reset case
@@ -594,6 +614,7 @@ export function AccountDetail(props: AccountDetailProps) {
                 payerName={props.payerName}
                 category={props.category}
                 payerOverturnRate={props.payerOverturnRate}
+                pageOpenedAt={pageOpenedAt}
               />
             </div>
           )}

@@ -12,7 +12,11 @@ import { cn } from "@/lib/utils";
 
 const NAV = [
   { href: "/", label: "Workqueue", match: (p: string) => p === "/" || p.startsWith("/accounts") },
-  { href: "/dashboard/metrics", label: "Metrics", match: (p: string) => p === "/dashboard/metrics" },
+  {
+    href: "/dashboard/denials",
+    label: "Claim Denial Dashboard",
+    match: (p: string) => p === "/dashboard/denials" || p === "/dashboard/metrics",
+  },
   { href: "/dashboard/evals", label: "Evals", match: (p: string) => p === "/dashboard/evals" },
 ];
 

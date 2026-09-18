@@ -534,3 +534,46 @@ export async function nextEvalRunId(): Promise<string> {
   }, 0);
   return `er-${String(highest + 1).padStart(4, "0")}`;
 }
+
+export type RnTouchTimeToday = {
+  /** Mean minutes from opening the account to clicking Approve. */
+  meanMinutes: number | null;
+  /** How many approvals that mean is over. */
+  approvals: number;
+};
+
+/**
+ * RN touch time for cases approved today (PRD 6.4, chart 1).
+ *
+ * Approvals only. An edit or an escalation is a different piece of work and
+ * averaging them together would understate what an approval costs.
+ *
+ * "Today" is the server's local day, which is the presenter's day: a demo run
+ * at 6pm should land on the point labeled today, not tomorrow's.
+ */
+export async function loadRnTouchTimeToday(): Promise<RnTouchTimeToday> {
+  const rows = await getDb().execute<{ mean: string | null; approvals: number }>(sql`
+    SELECT avg(reviewer_minutes)::text AS mean, count(*)::int AS approvals
+    FROM reviewer_feedback
+    WHERE action = 'approve' AND created_at >= date_trunc('day', now())
+  `);
+  const row = rows[0];
+  return {
+    meanMinutes: row?.mean == null ? null : Number(row.mean),
+    approvals: Number(row?.approvals ?? 0),
+  };
+}
+
+/**
+ * Delete every feedback row created today, across all cases.
+ *
+ * The RN touch-time chart shows today's approvals, so resetting one case has to
+ * clear the whole day or the chart keeps a point from a rehearsal that has
+ * otherwise been undone (PRD 6.4).
+ */
+export async function deleteTodaysFeedback(): Promise<number> {
+  const rows = await getDb().execute<{ id: string }>(sql`
+    DELETE FROM reviewer_feedback WHERE created_at >= date_trunc('day', now()) RETURNING id
+  `);
+  return rows.length;
+}

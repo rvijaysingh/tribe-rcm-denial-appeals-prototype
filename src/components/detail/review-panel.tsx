@@ -53,6 +53,7 @@ export function ReviewPanel({
   payerName,
   category,
   payerOverturnRate,
+  pageOpenedAt,
 }: {
   run: RunView | null;
   denialId: string;
@@ -62,6 +63,8 @@ export function ReviewPanel({
   payerName: string;
   category: string;
   payerOverturnRate: number | null;
+  /** When the account page opened, for open-to-approve RN touch time. */
+  pageOpenedAt: { current: number | null };
 }) {
   const [tab, setTab] = useState<"draft" | "evidence" | "log">("draft");
   const [editing, setEditing] = useState(false);
@@ -152,7 +155,10 @@ export function ReviewPanel({
     setBusy(true);
     setError(null);
     try {
-      const reviewerMinutes = Math.max(0, (Date.now() - (openedAt.current ?? Date.now())) / 60000);
+      // Open-to-action, falling back to panel-open if the page stamp is
+      // missing, so a demo never records a zero.
+      const startedAt = pageOpenedAt.current ?? openedAt.current ?? Date.now();
+      const reviewerMinutes = Math.max(0, (Date.now() - startedAt) / 60000);
       const response = await fetch(`/api/feedback/${run.id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
